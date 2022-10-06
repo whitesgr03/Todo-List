@@ -61,7 +61,7 @@ nav {
 
 li:not(.selectMenu li) {
     display: grid;
-    grid-template: auto / 1fr 30px;
+    grid-template: auto / 6fr 1fr;
     grid-template-areas: 'firstChild lastChild';
     column-gap: 10px;
     align-items: center;
