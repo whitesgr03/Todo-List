@@ -4,6 +4,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
 :root {
+    --main-color: rgb(255, 255, 255);
+    --main-dark-color: rgb(0, 0, 0);
+    --checkbox-color: rgb(0, 128, 0);
+    --header-background-color: rgb(219, 76, 63);
+    --nav-background-color: rgb(250, 250, 250);
     --nav-hover-color: rgb(238, 238, 238);
 }
 
@@ -42,7 +47,7 @@ button {
 header {
     grid-area: header;
     padding: 0px 30px;
-    background-color: rgb(219, 76, 63);
+    background-color: var(--header-background-color)
 }
 
 main {
@@ -56,7 +61,7 @@ main {
 nav {
     grid-area: nav;
     padding: 10px 30px;
-    background-color: rgb(250, 250, 250);
+    background-color: var(--nav-background-color)
 }
 
 li:not(.selectMenu li) {
@@ -158,7 +163,6 @@ li > :nth-child(2){
     opacity: 1;
 }
 
-
 .products > li > .title::before {
     content: '';
     border-radius: 100%;
@@ -179,8 +183,8 @@ li > :nth-child(2){
 .selectMenu { 
     display: none;
     position: absolute;
-    border: 1px solid black;
-    background-color: #fff;
+    border: 1px solid var(--main-dark-color);
+    background-color: var(--main-color);
     border-radius: 10px;
     white-space: nowrap;
     padding: 15px 0;
@@ -227,7 +231,7 @@ li > :nth-child(2){
     margin-right: 15px;
     width: 25px;
     height: 25px;
-    border: 2px solid black;
+    border: 2px solid var(--main-dark-color);
     border-radius: 50px;
     display: grid;
     place-content: center;
@@ -250,7 +254,7 @@ li > :nth-child(2){
 }
 
 .list input[type="checkbox"]:checked {
-    border-color: green;
+    border-color: var(--checkbox-color);
 }
 
 .list input[type="checkbox"]:hover {
@@ -259,7 +263,7 @@ li > :nth-child(2){
 }
 
 .list > ul {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--main-dark-color);
 }
 
 .list li:hover .option {
