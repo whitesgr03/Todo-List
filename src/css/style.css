@@ -143,12 +143,24 @@ li > :nth-child(2){
 .productList button {
     padding: 3px 10px;
     border-radius: 10px;
-    font-size: 1.5rem;
 }
+
+.productList button,
+.wrap > button,
+.option>button {
+    font-size: 1.5rem;
+    opacity: .5;
+}
+
+.productList button:hover,
+.wrap>button:hover,
+.option>button:hover {
+    opacity: 1;
+}
+
 
 .products > li > .title::before {
     content: '';
-    border: 2px solid black;
     border-radius: 100%;
     background-color: blue;
     width: 10px;
