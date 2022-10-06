@@ -99,7 +99,7 @@ li > :nth-child(2){
 
 .menu li:hover,
 .productList button:hover,
-.products li:hover {
+.selectMenu li:hover {
     background-color: var(--nav-hover-color);
 }
 
@@ -163,9 +163,10 @@ li > :nth-child(2){
 }
 
 .selectMenu { 
-    /* display: none; */
+    display: none;
     position: absolute;
     border: 1px solid black;
+    background-color: #fff;
     border-radius: 10px;
     white-space: nowrap;
     padding: 15px 0;
@@ -173,15 +174,19 @@ li > :nth-child(2){
     transform: translateX(-50%);
 }
 
+.selectMenu.open {
+    display: block;
+}
+
 .selectMenu li {
     padding: 10px 20px;
 }
 
-.products .selectMenu li:nth-child(1) .title::before {
+.selectMenu li:nth-child(1) .title::before {
     background-image: url('../img/edit.png');
 }
 
-.products .selectMenu li:nth-child(2) .title::before {
+.selectMenu li:nth-child(2) .title::before {
     background-image: url('../img/delete.png');
 }
 
