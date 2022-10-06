@@ -41,7 +41,7 @@ button {
 
 header {
     grid-area: header;
-    padding: 20px 30px;
+    padding: 0px 30px;
     background-color: rgb(219, 76, 63);
 }
 
