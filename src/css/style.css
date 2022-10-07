@@ -202,8 +202,8 @@ li > :nth-child(2){
 
 .content {
     grid-area: content;
-    padding: 30px;
-    margin: 0 10%;
+    padding: 30px 10%;
+    overflow: scroll;
 }
 
 .top .selectMenu li:nth-child(1) .title::before {
