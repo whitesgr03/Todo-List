@@ -37,7 +37,7 @@ button {
 
 .container {
     display: grid;
-    grid-template: auto 1fr / 1fr;
+    grid-template: auto 85vh / 1fr;
     grid-template-areas: 
     'header'
     'main';
