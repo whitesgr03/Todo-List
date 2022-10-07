@@ -210,6 +210,11 @@ li > :nth-child(2){
     background-image: url('../img/completed.png');
 }
 
+.top .wrap > button {
+    margin-right: 20px;
+    font-size: 2rem;
+}
+
 .list {
     margin: 30px 0;
 }
