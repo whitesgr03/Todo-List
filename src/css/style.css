@@ -57,7 +57,6 @@ main {
     display: grid;
     grid-template: 1fr / 1fr 3fr;
     grid-template-areas:'nav content';
-    
 }
 
 nav {
@@ -109,14 +108,6 @@ li > :nth-child(2){
 .productList button:hover,
 .selectMenu li:hover {
     background-color: var(--nav-hover-color);
-}
-
-.products li:hover .total{
-    display: none;
-}
-
-.products li:hover button {
-    display: flex;
 }
 
 .menu .title::before,
@@ -285,5 +276,32 @@ li > :nth-child(2){
 }
 .option > button:nth-child(2) {
     background-image: url('../img/calendar.png');
+}
 
+.item:hover .total {
+    display: none;
+}
+
+.item.showSelectMenu .total {
+    display: none;
+}
+
+.products .item:hover  .wrap > button {
+    display: flex;
+}
+
+.products .item.showSelectMenu  .wrap > button {
+    display: flex;
+}
+
+.item.showSelectMenu .selectMenu {
+    display: block;
+}
+
+.item:hover .option {
+    display: flex;
+}
+
+.item.showSelectMenu .option {
+    display: flex;
 }
