@@ -148,6 +148,7 @@ li > :nth-child(2){
 .option>button {
     font-size: 1.5rem;
     opacity: .5;
+    vertical-align: middle;
 }
 
 .productList button:hover,
@@ -173,6 +174,7 @@ li > :nth-child(2){
     position: relative;
 }
 
+
 .selectMenu { 
     display: none;
     position: absolute;
@@ -183,10 +185,7 @@ li > :nth-child(2){
     padding: 15px 0;
     left: 50%;
     transform: translateX(-50%);
-}
-
-.selectMenu.open {
-    display: block;
+    z-index: 1;
 }
 
 .selectMenu li {
@@ -257,10 +256,6 @@ li > :nth-child(2){
 
 .list > ul {
     border-bottom: 1px solid var(--main-dark-color);
-}
-
-.list li:hover .option {
-    display: flex;
 }
 
 .option {
