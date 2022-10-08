@@ -8,7 +8,7 @@
     --main-dark-color: rgb(0, 0, 0);
     --checkbox-color: rgb(0, 128, 0);
     --header-background-color: rgb(219, 76, 63);
-    --nav-background-color: rgb(250, 250, 250);
+    --nav-background-color: rgb(245, 245, 245);
     --nav-hover-color: rgb(238, 238, 238);
 }
 
@@ -259,6 +259,7 @@ li > :nth-child(2){
     outline-offset: 2px;
 }
 
+
 .list > ul {
     border-bottom: 1px solid var(--main-dark-color);
 }
@@ -304,4 +305,79 @@ li > :nth-child(2){
 
 .item.showSelectMenu .option {
     display: flex;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.overlay.active {
+    display: block;
+}
+
+.addTask {
+    width: 600px;
+    padding: 30px;
+    margin-top: 10%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 3px 10px 10px rgba(0, 0, 0, .1);
+}
+
+.addTask label {
+    display: block;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+}
+
+.addTask textarea{
+    font-size: 1rem;
+    margin-top: 10px;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid var(--main-dark-color);
+    resize: none;
+    overflow-y: hidden;
+    min-height: 1.8rem;
+    padding-bottom: 5px;
+}
+
+.addTask div {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+.addTask button {
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.addTask button:hover {
+    filter: brightness(95%);
+}
+
+.addTask > div > div:first-of-type button{
+    border: 1px solid var(--main-dark-color);
+    background-color: var(--main-color)
+}
+
+.cancelButton {
+    background-color: var(--nav-background-color)
+}
+
+.addButton {
+    color: var(--main-color);
+    background-color: var(--header-background-color)
 }
