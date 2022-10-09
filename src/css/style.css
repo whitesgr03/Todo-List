@@ -23,8 +23,7 @@ h2,h3 {
     margin: 0;
 }
 
-ul {
-
+ul, li {
     list-style: none;
 }
 
@@ -65,7 +64,7 @@ nav {
     background-color: var(--nav-background-color)
 }
 
-li:not(.selectMenu li) {
+li:not(.selectMenu li, .addTask li) {
     display: grid;
     grid-template: auto / 6fr 1fr;
     grid-template-areas: 'firstChild lastChild';
@@ -184,6 +183,7 @@ li > :nth-child(2){
     white-space: nowrap;
     padding: 15px 0;
     left: 50%;
+    top: 100%;
     transform: translateX(-50%);
     z-index: 1;
 }
@@ -264,6 +264,8 @@ li > :nth-child(2){
     border-bottom: 1px solid var(--main-dark-color);
 }
 
+
+
 .option {
     display: none;
     align-self: flex-start;
@@ -278,6 +280,8 @@ li > :nth-child(2){
 .option > button:nth-child(2) {
     background-image: url('../img/calendar.png');
 }
+
+
 
 .item:hover .total {
     display: none;
