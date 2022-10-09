@@ -310,18 +310,18 @@ li > :nth-child(2){
 
 .overlay {
     position: fixed;
+    display: none;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     z-index: 1;
-    display: flex;
     justify-content: center;
     align-items: flex-start;
 }
 
 .overlay.active {
-    display: block;
+    display: flex;
 }
 
 .addTask {
@@ -334,7 +334,6 @@ li > :nth-child(2){
 }
 
 .addTask label {
-    display: block;
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
