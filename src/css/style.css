@@ -353,31 +353,92 @@ li > :nth-child(2){
     padding-bottom: 5px;
 }
 
-.addTask div {
-    display: flex;
-    justify-content: space-between;
-    column-gap: 10px;
+
+
+.selectButton .wrap > button{
+    border: 1px solid var(--main-dark-color);
 }
 
-.addTask button {
+.selectButton .wrap > button,
+.submitButton > button {
     border-radius: 10px;
     padding: 5px 10px;
-}
-
-.addTask button:hover {
-    filter: brightness(95%);
-}
-
-.addTask > div > div:first-of-type button{
-    border: 1px solid var(--main-dark-color);
     background-color: var(--main-color)
 }
 
-.cancelButton {
+.selectButton .title::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+}
+
+.selectButton .wrap>button:hover,
+.submitButton>button:hover {
+    filter: brightness(80%);
+}
+
+.selectButton > li:nth-child(1) .title::before {
+    background-image: url('../img/clock.png');
+}
+
+.selectButton > li:nth-child(2) .title::before {
+    background-image: url('../img/flag.png');
+}
+
+.submitButton .cancelButton {
     background-color: var(--nav-background-color)
 }
 
-.addButton {
+.submitButton .addButton {
     color: var(--main-color);
     background-color: var(--header-background-color)
+}
+
+
+.buttons {
+    display: grid;
+    grid-template: 1fr 1fr / auto 1fr 1fr;
+    grid-template-areas: 
+    'datePicker selectButton ............'
+    'timePicker ............ submitButton';
+    align-items: center;
+    gap: 20px 10px;
+}
+
+.datePicker {
+    grid-area: datePicker;
+    
+}
+
+
+.timePicker {
+    display: none;
+    grid-area: timePicker;
+}
+
+.timePicker.active {
+    display: block;
+}
+
+.selectButton {
+    grid-area: selectButton;
+}
+
+.submitButton {
+    justify-self: end;
+    grid-area: submitButton;
+}
+
+.selectButton,
+.submitButton {
+    display: flex;
+    column-gap: 10px;
+}
+
+input[type="date"],
+input[type="time"] {
+    width: 100%;
+    appearance: none;
+    border: 0;
 }
