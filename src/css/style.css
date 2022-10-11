@@ -64,7 +64,7 @@ nav {
     background-color: var(--nav-background-color)
 }
 
-li:not(.selectMenu li, .addTask li) {
+li:not(.selectMenu li, .taskForm li) {
     display: grid;
     grid-template: auto / 6fr 1fr;
     grid-template-areas: 'firstChild lastChild';
@@ -324,11 +324,25 @@ li > :nth-child(2){
     align-items: flex-start;
 }
 
-.overlay.active {
+.overlay.task,
+.overlay.product{
     display: flex;
+    background-color: rgba(0, 0, 0, .2);
+    
+    
 }
 
-.addTask {
+.overlay.product {
+    backdrop-filter: blur(8px);
+}
+
+.overlay.task .taskForm,
+.overlay.product .productForm {
+    display: block;
+}
+
+.taskForm {
+    display: none;
     width: 600px;
     padding: 30px;
     margin-top: 10%;
@@ -337,14 +351,14 @@ li > :nth-child(2){
     box-shadow: 0px 3px 10px 10px rgba(0, 0, 0, .1);
 }
 
-.addTask label {
+.taskForm label {
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     font-size: 1.2rem;
 }
 
-.addTask textarea{
+.taskForm textarea{
     font-size: 1rem;
     margin-top: 10px;
     border: 0;
@@ -381,13 +395,33 @@ li > :nth-child(2){
     filter: brightness(80%);
 }
 
-.selectButton > li:nth-child(1) .title::before {
+.selectButton > li:nth-child(1) .selectMenuButton::before {
+    color:red;
     background-image: url('../img/clock.png');
 }
 
-.selectButton > li:nth-child(2) .title::before {
+.selectButton > li:nth-child(2) .selectMenuButton::before {
     background-image: url('../img/flag.png');
 }
+
+
+.selectButton > li:nth-child(2) .selectMenu .title::before {
+    background-image: url('../img/flag.png')
+}
+
+.selectButton>li:nth-child(2) .title.critical::before {
+    filter: invert(32%) sepia(68%) saturate(1344%) hue-rotate(333deg) brightness(94%) contrast(90%);
+}
+.selectButton>li:nth-child(2) .title.high::before{
+    filter: invert(48%) sepia(95%) saturate(1851%) hue-rotate(10deg) brightness(106%) contrast(94%);
+}
+.selectButton>li:nth-child(2) .title.medium::before{
+    filter: invert(34%) sepia(93%) saturate(2503%) hue-rotate(205deg) brightness(92%) contrast(89%);
+}
+.selectButton>li:nth-child(2) .title.low::before{
+    filter: invert(65%) sepia(12%) saturate(2183%) hue-rotate(87deg) brightness(106%) contrast(82%);
+}
+
 
 .submitButton .cancelButton {
     background-color: var(--nav-background-color)
@@ -429,7 +463,7 @@ li > :nth-child(2){
 }
 
 .submitButton {
-    justify-self: end;
+    justify-content: flex-end;
     grid-area: submitButton;
 }
 
@@ -444,4 +478,40 @@ input[type="time"] {
     width: 100%;
     appearance: none;
     border: 0;
+}
+
+input[type="time"]:focus,
+input[type="date"]:focus {
+    outline: none;
+}
+
+
+.productForm {
+    display: none;
+    width: 300px;
+    padding: 30px;
+    margin-top: 10%;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.productForm h3 {
+    padding-bottom: 30px;
+}
+
+.productForm label {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+}
+
+.productForm input {
+    margin-top: 10px;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid var(--main-dark-color);
+    overflow-y: hidden;
+    min-height: 1.8rem;
+    padding-bottom: 5px;
 }
