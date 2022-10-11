@@ -28,7 +28,7 @@
                     <ul class="productList">
                         <li>
                             <span class="title right">Products</span>
-                            <button type="button">+</button>
+                            <button type="button" class="addProduct">+</button>
                         </li>
                     </ul>
                     <ul class="products">
@@ -52,51 +52,7 @@
                     </ul>
                 </nav>
                 <div class="content">
-                    <div class="overlay active">
-                        <form class="addTask">
-                            <label for="taskName">
-                                Task name
-                                <textarea id="taskName" rows="1" ></textarea>
-                            </label>
-                            <label for="descript">
-                                Description
-                                <textarea id="descript" rows="1"></textarea>
-                            </label>
-                            <div class="buttons">
-                                <div class="datePicker">
-                                    <input class="date" type="date">
-                                </div>
-                                <div class="timePicker">
-                                    <input class="time" type="time">
-                                </div>
-                                <div class="selectButton">
-                                    <li class="item">
-                                        <div class="wrap">
-                                            <button type="button" class="type title selectMenuButton">Inbox</button>
-                                            <ul class="selectMenu">
-                                                <li>
-                                                    <button type="button" class="">Show completed tasks</button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="item">
-                                        <div class="wrap">
-                                            <button type="button" class="priority title selectMenuButton">Low</button>
-                                            <ul class="selectMenu">
-                                                <li>
-                                                    <button type="button" class="">Show tasks</button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </div>
-                                <div class="submitButton">
-                                    <button type="button" class="cancelButton">Cancel</button>
-                                    <button type="submit" class="addButton">Add task</button>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="overlay">
                     </div>
                 </div>
             </main>
