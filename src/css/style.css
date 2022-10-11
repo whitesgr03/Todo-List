@@ -143,15 +143,16 @@ li > :nth-child(2){
 }
 
 .productList button,
-.wrap > button,
-.option>button {
+.top>button,
+.option>button{
+
     font-size: 1.5rem;
     opacity: .5;
     vertical-align: middle;
 }
 
 .productList button:hover,
-.wrap>button:hover,
+.top>button:hover,
 .option>button:hover {
     opacity: 1;
 }
