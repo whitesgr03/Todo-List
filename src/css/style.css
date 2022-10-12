@@ -362,13 +362,6 @@ li > :nth-child(2){
     box-shadow: 0px 3px 10px 10px rgba(0, 0, 0, .1);
 }
 
-.taskForm label {
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    font-size: 1.2rem;
-}
-
 .taskForm textarea{
     font-size: 1rem;
     margin-top: 10px;
@@ -499,7 +492,7 @@ input[type="date"]:focus {
 
 .productForm {
     display: none;
-    width: 300px;
+    width: 400px;
     padding: 30px;
     margin-top: 10%;
     background-color: #fff;
@@ -510,14 +503,17 @@ input[type="date"]:focus {
     padding-bottom: 30px;
 }
 
-.productForm label {
+.productForm label,
+.taskForm label,
+.colorSelect {
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     font-size: 1.2rem;
 }
 
-.productForm input {
+.productForm input,
+.productForm .colorButton {
     margin-top: 10px;
     border: 0;
     outline: 0;
@@ -526,3 +522,28 @@ input[type="date"]:focus {
     min-height: 1.8rem;
     padding-bottom: 5px;
 }
+
+.productForm .colorButton {
+    border-radius: 5px;
+    border: 1px solid var(--main-dark-color);
+    padding: 0;
+    padding: 5px 15px;
+}
+
+.productForm.showList .colorList{
+    visibility: visible;
+    overflow: scroll;
+}
+
+.colorList {
+    visibility: hidden;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid var(--main-dark-color);
+    max-height: 100px;
+    border-top: 0;
+}
+
+.colorList li {
+    border-radius: 0;
+}
+
