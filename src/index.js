@@ -8,6 +8,7 @@ import * as inbox from './js/inbox'
     // bind events
     document.documentElement.addEventListener('click', showAddForm)
     document.documentElement.addEventListener('pointerdown', closeAddForm)
+    document.documentElement.addEventListener('click', showColorList)
 
 })()
 
@@ -29,6 +30,8 @@ function showAddForm(e) {
         overlay.append(inbox.formTemplate('productForm'))
         overlay.classList.add('product');
     }
+
+    document.body.style.overflow = "hidden"
 }
     
 function closeAddForm(e) {
@@ -40,4 +43,28 @@ function closeAddForm(e) {
     overlay = e.target.closest('.overlay')
     overlay.textContent = '';
     overlay.className = 'overlay';
+    document.body.style.overflow = "auto"
+}
+
+
+function showColorList(e) {
+    const colorButton = e.target.closest('.colorButton')
+    const showList = document.querySelector('.showList')
+
+
+    if (colorButton) {
+
+        const productForm = document.querySelector('.productForm');
+        productForm.classList.toggle('showList');
+
+        colorButton.style.borderRadius = '5px 5px 0 0';
+        return
+    }
+
+    if (showList) {
+        const colorButton = document.querySelector('.colorButton');
+        showList.classList.remove('showList')
+        colorButton.style.removeProperty('border-radius')
+    }
+    
 }
