@@ -62,15 +62,15 @@ function formTemplate(type) {
                 Name
                 <input type="text" id="productName" maxlength="50">
             </label>
-            <label for="productColor">
+            <div class="colorSelect">
                 Color
-                <select name="color" id="productColor">
-                    <option value="">--Please choose an color--</option>
-                    <option class="title" value="red">red</option>
-                    <option class="blue" value="blue">blue</option>
-                    <option class="yellow" value="yellow">yellow</option>
-                </select>
-            </label>
+                <button type="button" class="colorButton title">origin</button>
+                <ul class="colorList">
+                    <li>
+                        <button type="button" class="title">red</button>
+                    </li>
+                </ul>
+            </div>
             <div class="submitButton">
                 <button type="button" class="cancelButton">Cancel</button>
                 <button type="submit" class="addButton">Add task</button>
