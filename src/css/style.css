@@ -70,7 +70,7 @@ li:not(.selectMenu li, .taskForm li) {
     grid-template-areas: 'firstChild lastChild';
     column-gap: 10px;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px 15px;
 }
 
@@ -105,7 +105,8 @@ li > :nth-child(2){
 
 .menu li:hover,
 .productList button:hover,
-.selectMenu li:hover {
+.selectMenu li:hover,
+.colorList li:hover {
     background-color: var(--nav-hover-color);
 }
 
@@ -137,27 +138,34 @@ li > :nth-child(2){
     background-image: url('../img/chevron-down.svg');
 }
 
-.productList button {
-    padding: 3px 10px;
+.productList button,
+.total {
+    padding: 0 10px;
     border-radius: 10px;
+}
+
+
+
+.productList button:hover,
+.top>button:hover,
+.option button:not(.selectMenu button):hover,
+.products .wrap>button:hover {
+    opacity: 1;
 }
 
 .productList button,
 .top>button,
-.option>button{
-
+.option button:not(.selectMenu button),
+.products .wrap>button
+ {
     font-size: 1.5rem;
     opacity: .5;
     vertical-align: middle;
 }
 
-.productList button:hover,
-.top>button:hover,
-.option>button:hover {
-    opacity: 1;
-}
-
-.products > li > .title::before {
+.products > li > .title::before,
+.colorButton::before,
+.colorList .title::before {
     content: '';
     border-radius: 100%;
     background-color: blue;
