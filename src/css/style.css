@@ -64,7 +64,7 @@ nav {
     background-color: var(--nav-background-color)
 }
 
-li:not(.selectMenu li, .taskForm li) {
+li:not(.selectMenu li, .taskForm li, .colorList li) {
     display: grid;
     grid-template: auto / 6fr 1fr;
     grid-template-areas: 'firstChild lastChild';
@@ -156,8 +156,7 @@ li > :nth-child(2){
 .productList button,
 .top>button,
 .option button:not(.selectMenu button),
-.products .wrap>button
- {
+.products .wrap>button {
     font-size: 1.5rem;
     opacity: .5;
     vertical-align: middle;
@@ -168,7 +167,7 @@ li > :nth-child(2){
 .colorList .title::before {
     content: '';
     border-radius: 100%;
-    background-color: blue;
+    background-color: var(--color-list);
     width: 10px;
     height: 10px;
     margin: 0 7.5px;
@@ -219,8 +218,13 @@ li > :nth-child(2){
     background-image: url('../img/completed.png');
 }
 
+.top .wrap {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
 .top .wrap > button {
-    margin-right: 20px;
     font-size: 2rem;
 }
 
@@ -339,8 +343,6 @@ li > :nth-child(2){
 .overlay.product{
     display: flex;
     background-color: rgba(0, 0, 0, .2);
-    
-    
 }
 
 .overlay.product {
@@ -357,7 +359,7 @@ li > :nth-child(2){
     width: 600px;
     padding: 30px;
     margin-top: 10%;
-    background-color: #fff;
+    background-color: var(--main-color);
     border-radius: 10px;
     box-shadow: 0px 3px 10px 10px rgba(0, 0, 0, .1);
 }
@@ -545,5 +547,10 @@ input[type="date"]:focus {
 
 .colorList li {
     border-radius: 0;
+    
 }
 
+.colorList .title {
+    padding: 5px 15px;
+        width: 100%;
+}
