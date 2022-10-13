@@ -64,11 +64,8 @@ function formTemplate(type) {
             </label>
             <div class="colorSelect">
                 Color
-                <button type="button" class="colorButton title">origin</button>
+                <button type="button" class="colorButton title"  style="--color-list:#000000">Black</button>
                 <ul class="colorList">
-                    <li>
-                        <button type="button" class="title">red</button>
-                    </li>
                 </ul>
             </div>
             <div class="submitButton">
@@ -81,6 +78,25 @@ function formTemplate(type) {
     const element = document.createElement('form');
     element.classList.add(type, 'active')
     element.innerHTML = template[type];
+
+    if (type === 'productForm') {
+
+        const colorList = element.querySelector('.colorList')
+
+        let colors = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#244653', '#000000']
+
+        for (let hax of colors) {
+
+            const color = namedColors.find(color => color.hex === hax);
+            const li = document.createElement('li');
+            const button = `<button type="button" class="title" style="--color-list:${color.hex}">${color.name}</button>`
+            
+            li.innerHTML = button;
+
+            colorList.append(li);
+        }
+
+    }
 
     return element
 }
