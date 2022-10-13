@@ -46,14 +46,11 @@ function closeAddForm(e) {
     document.body.style.overflow = "auto"
 }
 
-
 function showColorList(e) {
-    const colorButton = e.target.closest('.colorButton')
     const showList = document.querySelector('.showList')
+    const colorButton = document.querySelector('.colorButton');
 
-
-    if (colorButton) {
-
+    if (e.target.closest('.colorButton')) {
         const productForm = document.querySelector('.productForm');
         productForm.classList.toggle('showList');
 
@@ -61,10 +58,18 @@ function showColorList(e) {
         return
     }
 
+    
     if (showList) {
-        const colorButton = document.querySelector('.colorButton');
         showList.classList.remove('showList')
         colorButton.style.removeProperty('border-radius')
+
+        if (e.target.closest('.colorList')) {
+            const hex = e.target.getAttribute('style');
+            const name = e.target.textContent;
+
+            colorButton.textContent = name;
+            colorButton.style = hex;
+        }
     }
-    
+
 }
