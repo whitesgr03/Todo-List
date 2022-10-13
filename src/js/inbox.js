@@ -83,7 +83,7 @@ function formTemplate(type) {
 
         const colorList = element.querySelector('.colorList')
 
-        let colors = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#244653', '#000000']
+        let colors = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
 
         for (let hax of colors) {
 
