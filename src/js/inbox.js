@@ -1,5 +1,9 @@
 'use strict'
 
+// library
+import namedColors from 'color-name-list';
+
+
 function topTemplate() {
     const template = `
         <li class="item">
