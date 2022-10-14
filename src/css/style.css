@@ -64,7 +64,7 @@ nav {
     background-color: var(--nav-background-color)
 }
 
-li:not(.selectMenu li, .taskForm li, .colorList li) {
+li:not(.selectMenu li, .taskForm li, .dropdown li) {
     display: grid;
     grid-template: auto / 6fr 1fr;
     grid-template-areas: 'firstChild lastChild';
@@ -106,7 +106,9 @@ li > :nth-child(2){
 .menu li:hover,
 .productList button:hover,
 .selectMenu li:hover,
-.colorList li:hover {
+.colorList li:hover,
+.dropdown li:hover {
+    
     background-color: var(--nav-hover-color);
 }
 
@@ -164,7 +166,7 @@ li > :nth-child(2){
 
 .products > li > .title::before,
 .colorButton::before,
-.colorList .title::before {
+.dropdown .title::before {
     content: '';
     border-radius: 100%;
     background-color: var(--color-list);
@@ -532,12 +534,13 @@ input[type="date"]:focus {
     padding: 5px 15px;
 }
 
-.productForm.showList .colorList{
+.productForm.showDropdown .dropdown{
     visibility: visible;
     overflow: scroll;
 }
 
-.colorList {
+
+.dropdown {
     visibility: hidden;
     border-radius: 0 0 5px 5px;
     border: 1px solid var(--main-dark-color);
@@ -545,12 +548,12 @@ input[type="date"]:focus {
     border-top: 0;
 }
 
-.colorList li {
+.dropdown li {
     border-radius: 0;
     
 }
 
-.colorList .title {
+.dropdown .title {
     padding: 5px 15px;
-        width: 100%;
+    width: 100%;
 }
