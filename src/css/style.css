@@ -539,6 +539,9 @@ input[type="date"]:focus {
     overflow: scroll;
 }
 
+.productForm.showDropdown .colorButton{
+    border-radius: 5px 5px 0 0;
+}
 
 .dropdown {
     visibility: hidden;
