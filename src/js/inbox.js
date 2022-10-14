@@ -65,7 +65,7 @@ function formTemplate(type) {
             <div class="colorSelect">
                 Color
                 <button type="button" class="colorButton title"  style="--color-list:#000000">Black</button>
-                <ul class="colorList">
+                <ul class="dropdown">
                 </ul>
             </div>
             <div class="submitButton">
@@ -81,7 +81,7 @@ function formTemplate(type) {
 
     if (type === 'productForm') {
 
-        const colorList = element.querySelector('.colorList')
+        const dropdown = element.querySelector('.dropdown')
 
         let colors = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
 
@@ -93,7 +93,7 @@ function formTemplate(type) {
             
             li.innerHTML = button;
 
-            colorList.append(li);
+            dropdown.append(li);
         }
 
     }
