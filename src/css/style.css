@@ -406,7 +406,6 @@ li > :nth-child(2){
     background-image: url('../img/flag.png');
 }
 
-
 .selectButton > li:nth-child(2) .selectMenu .title::before {
     background-image: url('../img/flag.png')
 }
