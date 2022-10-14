@@ -128,5 +128,6 @@ function formTemplate(type) {
 }
 
 export {
+    topTemplate,
     formTemplate,
 } 
