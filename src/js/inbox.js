@@ -1,5 +1,27 @@
 'use strict'
 
+function topTemplate() {
+    const template = `
+        <li class="item">
+            <h2>Inbox</h2>
+            <div class="wrap">
+                <button type="button" data-form="taskForm">+</button>
+                <button type="button" class="selectMenuButton">◦◦◦</button>
+                <ul class="selectMenu">
+                    <li>
+                        <button type="button" class="title">Show completed tasks</button>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    `
+
+    const element = document.createElement('ul');
+    element.className = 'top'
+    element.innerHTML = template;
+
+    return element
+}
 function formTemplate(type) {
 
     const template = {
