@@ -404,7 +404,6 @@ li > :nth-child(2){
 }
 
 .selectButton > li:nth-child(1) .selectMenuButton::before {
-    color:red;
     background-image: url('../img/clock.png');
 }
 
