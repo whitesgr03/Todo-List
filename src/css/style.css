@@ -341,18 +341,13 @@ li > :nth-child(2){
     align-items: flex-start;
 }
 
-.overlay.task,
-.overlay.product{
+.overlay.showForm{
     display: flex;
     background-color: rgba(0, 0, 0, .2);
 }
 
-.overlay.product {
-    backdrop-filter: blur(8px);
-}
-
-.overlay.task .taskForm,
-.overlay.product .productForm {
+.overlay.showForm .taskForm,
+.overlay.showForm .productForm {
     display: block;
 }
 
