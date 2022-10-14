@@ -29,64 +29,92 @@ import * as inbox from './js/inbox'
 
 })()
 
-function showAddForm(e) {
-    
-    const addTask = e.target.closest('.addTask')
-    const addProduct = e.target.closest('.addProduct')
+function showSelectMenu(menuButton) {
 
-    if (!addTask && !addProduct) return
+    const item = menuButton.closest('.item');
+
+    item.classList.toggle('showSelectMenu');
+
+    document.addEventListener('pointerdown', closeSelectMenu);
     
+    function closeSelectMenu(e) {
+
+        const selectMenuOpened = document.querySelector('.showSelectMenu');
+
+        if (e.target !== menuButton) {
+            selectMenuOpened?.classList.remove('showSelectMenu');
+        }
+
+        this.removeEventListener('pointerdown', closeSelectMenu);
+    }   
+}
+
+function showForm(form) {
+
     const overlay = document.querySelector('.overlay');
 
-    if (addTask) {
-        overlay.append(inbox.formTemplate('taskForm'))
-        overlay.classList.add('task');
-    }
-
-    if (addProduct) {
-        overlay.append(inbox.formTemplate('productForm'))
-        overlay.classList.add('product');
-    }
+    overlay.append(inbox.formTemplate(form))
+    overlay.classList.add('showForm');
 
     document.body.style.overflow = "hidden"
-}
-    
-function closeAddForm(e) {
-    const cancel = e.target.classList.contains('cancelButton');
-    let overlay = e.target.classList.contains('overlay');
 
-    if (!cancel && !overlay) return
-
-    overlay = e.target.closest('.overlay')
-    overlay.textContent = '';
-    overlay.className = 'overlay';
-    document.body.style.overflow = "auto"
-}
-
-function showColorList(e) {
-    const showList = document.querySelector('.showList')
-    const colorButton = document.querySelector('.colorButton');
-
-    if (e.target.closest('.colorButton')) {
-        const productForm = document.querySelector('.productForm');
-        productForm.classList.toggle('showList');
-
-        colorButton.style.borderRadius = '5px 5px 0 0';
-        return
+    if (form === 'productForm') {
+        overlay.querySelector('.productForm').addEventListener('click', showDropdown)
     }
 
-    
-    if (showList) {
-        showList.classList.remove('showList')
-        colorButton.style.removeProperty('border-radius')
+    overlay.addEventListener('pointerdown', closeForm)
 
-        if (e.target.closest('.colorList')) {
-            const hex = e.target.getAttribute('style');
-            const name = e.target.textContent;
+    function closeForm(e) {
 
-            colorButton.textContent = name;
-            colorButton.style = hex;
+        const cancelButton = document.querySelector('.cancelButton');
+
+        if (e.target !== this && e.target !== cancelButton) return
+
+        if (document.querySelector('.productForm')) {
+            this.querySelector('.productForm').removeEventListener('click', showDropdown)
         }
+
+        this.textContent = '';
+        this.className = 'overlay';
+
+        document.body.style.overflow = "auto";  
+
+        this.removeEventListener('pointerdown', closeForm)
     }
+}
+    
+function showDropdown(e) {
+        
+    const button = e.target.closest('.colorButton');
+
+    if (!button) return
+
+    this.classList.toggle('showDropdown')
+    
+    this.addEventListener('pointerup', closeDropdown)
+    this.addEventListener('pointerdown', changeColor)
+
+    function closeDropdown(e) {
+
+        if (e.target !== button) {
+            this.classList.remove('showDropdown')
+        }
+        
+        this.removeEventListener('pointerup', closeDropdown)
+        this.removeEventListener('pointerdown', changeColor);
+    }
+
+    function changeColor(e) {
+
+        const target = e.target.closest('.title')
+        if (!target || target === button) return
+
+        const hex = e.target.getAttribute('style');
+        const name = e.target.textContent;
+
+        button.textContent = name;
+        button.style = hex;
+    }
+}
 
 }
