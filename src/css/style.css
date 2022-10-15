@@ -112,7 +112,6 @@ li > :nth-child(2){
 .selectMenu li:hover,
 .colorList li:hover,
 .dropdown li:hover {
-    
     background-color: var(--nav-hover-color);
 }
 
