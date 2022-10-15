@@ -332,6 +332,9 @@ li > :nth-child(2){
     display: flex;
 }
 
+.item.showSelectMenu .selectMenuButton {
+    opacity: 1;
+}
 
 .overlay {
     position: fixed;
