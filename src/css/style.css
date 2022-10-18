@@ -18,7 +18,7 @@
 }
 
 ul,
-h2,h3 {
+h2, h3, p {
     padding: 0;
     margin: 0;
 }
@@ -194,7 +194,7 @@ li > :nth-child(2){
     background-color: var(--main-color);
     border-radius: 10px;
     white-space: nowrap;
-    padding: 15px 0;
+    padding: 5px 0;
     left: 50%;
     top: 100%;
     transform: translateX(-50%);
@@ -279,12 +279,20 @@ li > :nth-child(2){
     outline-offset: 2px;
 }
 
-
-.taskList > ul {
+.taskList li.item {
     border-bottom: 1px solid var(--main-dark-color);
+    border-radius: 0;
+    padding: 20px;
 }
 
+.taskForm .title {
+    padding: 10px 20px;
+    width: 100%;
+}
 
+.task p:nth-of-type(1) {
+    margin: 20px 0;
+}
 
 .option {
     display: none;
@@ -367,19 +375,12 @@ li > :nth-child(2){
     box-shadow: 0px 3px 10px 10px rgba(0, 0, 0, .1);
 }
 
-.taskForm textarea{
+
+.taskForm textarea {
     font-size: 1rem;
-    margin-top: 10px;
-    border: 0;
-    outline: 0;
-    border-bottom: 1px solid var(--main-dark-color);
     resize: none;
     overflow-y: hidden;
-    min-height: 1.8rem;
-    padding-bottom: 5px;
 }
-
-
 
 .selectButton .wrap > button{
     border: 1px solid var(--main-dark-color);
@@ -516,14 +517,18 @@ input[type="date"]:focus {
 }
 
 .productForm input,
-.productForm .colorButton {
+.productForm .colorButton,
+.taskForm textarea {
     margin-top: 10px;
     border: 0;
-    outline: 0;
     border-bottom: 1px solid var(--main-dark-color);
-    overflow-y: hidden;
     min-height: 1.8rem;
-    padding-bottom: 5px;
+    padding: 5px;
+}
+
+.productForm input.disableOutline,
+.taskForm textarea.disableOutline {
+    outline: 0;
 }
 
 .productForm .colorButton {
