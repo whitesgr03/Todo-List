@@ -7,26 +7,23 @@ import * as inbox from './js/inbox'
 
     // cache DOM
     const main = document.querySelector('main');
+    const content = document.querySelector('.content');
 
     // bind events
     main.addEventListener('click', function (e) {
 
-        const menuButton = e.target.closest('.selectMenuButton');
-        const form = e.target.dataset.form;
+        const addTaskButton = e.target.closest('.createForm');
 
-            if (menuButton) {
-                inbox.showSelectMenu(menuButton);
-                return
-            }
-            
-            if (form) {
-                inbox.showForm(form)
+            if (addTaskButton) {
+                inbox.showTaskForm()
+                addTaskButton.blur();
                 return
             }
 
         })
 
-
+    content.append(inbox.createNav());
+    // add task
+    inbox.getTasks(content);
 })()
-
 
