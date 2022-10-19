@@ -23,7 +23,6 @@ import * as inbox from './js/inbox'
         })
 
     content.append(inbox.createNav());
-    // add task
-    inbox.getTasks(content);
+    content.append(inbox.createTask());
 })()
 
