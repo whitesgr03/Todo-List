@@ -126,6 +126,22 @@ li > :nth-child(2){
     background-size: cover;
 }
 
+.productList .title::before {
+    background-image: url('../img/chevron-right.svg');  
+}
+
+.products {
+    max-height: 0;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+}
+
+
+.products.active {
+    max-height: 500px;
+    transition: max-height 0.25s ease-in;
+}
+
 .menu li:nth-child(1) .title::before {
     background-image: url('../img/box.png');
 }
@@ -136,9 +152,6 @@ li > :nth-child(2){
     background-image: url('../img/calendar.png');
 }
 
-.productList .title.right::before {
-    background-image: url('../img/chevron-right.svg');
-}
 .productList .title.down::before {
     background-image: url('../img/chevron-down.svg');
 }
@@ -178,6 +191,7 @@ li > :nth-child(2){
     margin: 0 7.5px;
 }
 
+
 .products .wrap > button {
     display: none;
 }
@@ -201,9 +215,6 @@ li > :nth-child(2){
     z-index: 1;
 }
 
-.selectMenu li {
-    padding: 10px 20px;
-}
 
 .selectMenu li:nth-child(1) .title::before {
     background-image: url('../img/edit.png');
@@ -217,6 +228,7 @@ li > :nth-child(2){
     grid-area: content;
     padding: 30px 10%;
     overflow: scroll;
+    position: relative;
 }
 
 .top .selectMenu li:nth-child(1) .title::before {
@@ -294,6 +306,13 @@ li > :nth-child(2){
     margin: 20px 0;
 }
 
+.noTask {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .option {
     display: none;
     align-self: flex-start;
@@ -360,8 +379,8 @@ li > :nth-child(2){
     background-color: rgba(0, 0, 0, .2);
 }
 
-.overlay.showForm .taskForm,
-.overlay.showForm .productForm {
+.overlay.showForm .taskForm.active,
+.overlay.showForm .productForm.active {
     display: block;
 }
 
