@@ -1,8 +1,5 @@
 'use strict'
 
-// library
-import namedColors from 'color-name-list';
-
 // private method
 
 function getLocalTasks() {
@@ -13,7 +10,7 @@ function getLocalTasks() {
     return JSON.parse(item)
 }
 
-function createTaskForm() {
+function createForm() {
     const template = `
         <label for="taskName">
             Task name
@@ -69,7 +66,7 @@ function createTaskForm() {
         `;
     
     const form = document.createElement('form');
-    form.classList.add('taskForm', 'active')
+    form.classList.add('taskForm')
     form.innerHTML = template;
 
     const textareas = form.querySelectorAll('textarea')
@@ -159,8 +156,6 @@ function validation(e) {
             const elem = this.elements[field]
             
             elem.focus(); 
-                elem.focus(); 
-            elem.focus(); 
             elem.classList.remove('disableOutline')
 
             elem.addEventListener('blur',disableOutLine)
@@ -181,7 +176,7 @@ function validation(e) {
 
     addTask('task', formProps)
     this.reset();
-    closeTaskForm();
+    closeForm();
 }
 
 function activeCloseButton(e) {
@@ -189,12 +184,14 @@ function activeCloseButton(e) {
 
     if (e.target !== cancelButton && e.target !== this) return
 
-    closeTaskForm();
+    closeForm();
 }
 
-function closeTaskForm() {
+function closeForm() {
 
     const overlay = document.querySelector('.overlay');
+    const currentForm = overlay.querySelector('.taskForm')
+    currentForm.classList.remove('active');
     
     overlay.className = 'overlay';
     document.body.style.overflow = "auto";
@@ -218,12 +215,12 @@ function addTask(name, data) {
 
 // public method
 
-function createNav() {
+function createNavbar() {
     const template = `
         <li class="item">
             <h2>Inbox</h2>
             <div class="wrap">
-                <button type="button" class="createForm"  data-form="taskForm">+</button>
+                <button type="button" class="createTask"  data-form="taskForm">+</button>
                 <button type="button" class="selectMenuButton">◦◦◦</button>
                 <ul class="selectMenu">
                     <li>
@@ -238,13 +235,11 @@ function createNav() {
     element.className = 'top'
     element.innerHTML = template;
 
-    createTaskForm()
+    createForm()
 
     return element
 }
 function createTask() {
-
-    const data = getLocalTasks()
 
     let taskList = document.querySelector('.taskList');
 
@@ -255,9 +250,18 @@ function createTask() {
         taskList.className = 'taskList';
     }
 
-    for (let task of data) {
+    const data = getLocalTasks()
+    
 
-        const template = `
+    if (!data) {
+        const div = document.createElement('div')
+        div.className = 'noTask';
+        div.innerHTML = '尚未建立任何任務'
+        taskList.append(div)
+    } else {
+
+        for (let task of data) {
+            const template = `
             <div class="task">
                 <input type="checkbox">
                 <button type="button" class="title"></button>
@@ -282,35 +286,42 @@ function createTask() {
             </div>
         `;
 
-        const li = document.createElement('li');
+            const li = document.createElement('li');
 
-        li.className = 'item'
-        li.innerHTML = template;
-        li.querySelector('.name').textContent = task.name;
-        li.querySelector('.description').textContent = task.descript;
-        li.querySelector('.dueDate').textContent = task.date;
+            li.className = 'item'
+            li.innerHTML = template;
+            li.querySelector('.name').textContent = task.name;
+            li.querySelector('.description').textContent = task.descript;
+            li.querySelector('.dueDate').textContent = task.date;
 
-        taskList.append(li);
+            taskList.append(li);
+        }
     }
 
     return taskList
 }
-function showTaskForm() {
+function showForm(e) {
+
+    const target = e.target.closest('.createTask');
+
+    if (!target) return
+
     const overlay = document.querySelector('.overlay');
     overlay.classList.add('showForm');
 
     document.body.style.overflow = "hidden"
 
     const currentForm = overlay.querySelector('.taskForm')
+    currentForm.classList.add('active');
     const firstField = currentForm.querySelector('[tabIndex]')
 
     firstField.focus();
 }
 
 export {
-    createNav,
+    createNavbar,
     createTask,
-    showTaskForm,
+    showForm,
 }
 
 
