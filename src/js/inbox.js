@@ -3,7 +3,7 @@
 // private method
 
 function getLocalTasks() {
-    const item = localStorage.getItem('task');
+    const item = localStorage.getItem('tasks');
 
     if (!item) return
 
@@ -97,6 +97,8 @@ function autoResize() {
 function focusForm(e) {
     const target = e.relatedTarget;
 
+    const firstField = this.querySelector('[tabIndex]')
+
     if (target && !target.closest('.taskForm')) firstField.focus()
 }
 
@@ -174,13 +176,13 @@ function validation(e) {
     // const type = currentForm.querySelector('[data-type]');
     // formProps.type = priority.dataset.type;
 
-    addTask('task', formProps)
+    addTask('tasks', formProps)
     this.reset();
     closeForm();
 }
 
 function activeCloseButton(e) {
-    const cancelButton = this.querySelector('.cancelButton');
+    const cancelButton = e.target.closest('.cancelButton');
 
     if (e.target !== cancelButton && e.target !== this) return
 
