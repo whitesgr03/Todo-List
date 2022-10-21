@@ -5,24 +5,39 @@ import * as inbox from './js/inbox'
 
 (function init() {
 
+    nav.createPages('inbox')
+
     // cache DOM
-    const main = document.querySelector('main');
-    const content = document.querySelector('.content');
+    const navbar = document.querySelector('nav');
 
     // bind events
-    main.addEventListener('click', function (e) {
+    navbar.addEventListener('click', changePage)
+    navbar.addEventListener('click', createProduct)
 
-        const addTaskButton = e.target.closest('.createForm');
+    function changePage(e) {
 
-            if (addTaskButton) {
-                inbox.showTaskForm()
-                addTaskButton.blur();
-                return
-            }
+        const target = e.target.closest('.title')
 
-        })
+        if (!target) return
 
-    content.append(inbox.createNav());
-    content.append(inbox.createTask());
+        const name = target.textContent.toLowerCase();
+
+        if (name === 'products') {
+            e.target.closest('.products').classList.toggle('down');
+            nav.createProduct();
+            return
+        }
+        
+        nav.createPages(name)
+    }
+
+    function createProduct(e) {
+        const target = e.target.closest('.createProduct')
+
+        if (!target) return
+
+        nav.showForm();
+    }
+
 })()
 
