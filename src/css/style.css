@@ -93,8 +93,8 @@ li > :nth-child(2){
 }
 
 .menu .title,
-.productList .title,
 .products .title,
+.productList .title,
 .taskList li {
     cursor: pointer;
     padding: 10px 0;
@@ -108,7 +108,7 @@ li > :nth-child(2){
 }
 
 .menu li:hover,
-.productList button:hover,
+.products button:hover,
 .selectMenu li:hover,
 .colorList li:hover,
 .dropdown li:hover {
@@ -116,7 +116,7 @@ li > :nth-child(2){
 }
 
 .menu .title::before,
-.productList .title::before,
+.products .title::before,
 .selectMenu .title::before,
 .option > .title
 {
@@ -126,20 +126,19 @@ li > :nth-child(2){
     background-size: cover;
 }
 
-.productList .title::before {
+.products .title::before {
     background-image: url('../img/chevron-right.svg');  
 }
 
-.products {
+.productList {
     max-height: 0;
-    transition: max-height 0.15s ease-out;
     overflow: hidden;
+    transition: max-height .15s ease-out;
 }
 
-
-.products.active {
+.products.down + .productList {
     max-height: 500px;
-    transition: max-height 0.25s ease-in;
+    transition: max-height .2s ease-in;
 }
 
 .menu li:nth-child(1) .title::before {
@@ -152,11 +151,11 @@ li > :nth-child(2){
     background-image: url('../img/calendar.png');
 }
 
-.productList .title.down::before {
+.products.down .title::before {
     background-image: url('../img/chevron-down.svg');
 }
 
-.productList button,
+.products button,
 .total {
     padding: 0 10px;
     border-radius: 10px;
@@ -164,23 +163,24 @@ li > :nth-child(2){
 
 
 
-.productList button:hover,
+
+.products button:hover,
 .top>button:hover,
 .option button:not(.selectMenu button):hover,
-.products .wrap>button:hover {
+.productList .wrap>button:hover {
     opacity: 1;
 }
 
-.productList button,
+.products button,
 .top>button,
 .option button:not(.selectMenu button),
-.products .wrap>button {
+.productList .wrap>button {
     font-size: 1.5rem;
     opacity: .5;
     vertical-align: middle;
 }
 
-.products > li > .title::before,
+.productList .title::before,
 .colorButton::before,
 .dropdown .title::before {
     content: '';
@@ -192,7 +192,7 @@ li > :nth-child(2){
 }
 
 
-.products .wrap > button {
+.productList .wrap > button {
     display: none;
 }
 
@@ -338,11 +338,11 @@ li > :nth-child(2){
     display: none;
 }
 
-.products .item:hover  .wrap > button {
+.productList .item:hover  .wrap > button {
     display: flex;
 }
 
-.products .item.showSelectMenu  .wrap > button {
+.productList .item.showSelectMenu  .wrap > button {
     display: flex;
 }
 
