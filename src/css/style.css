@@ -187,7 +187,8 @@ li.flag .title::before {
 
 .productList .title::before,
 .colorButton::before,
-.dropdown .title::before {
+.dropdown .title::before,
+.productNameSelect li:nth-child(n+3) .title::before {
     content: '';
     border-radius: 100%;
     background-color: var(--color-list);
@@ -213,9 +214,9 @@ li.flag .title::before {
     background-color: var(--main-color);
     border-radius: 10px;
     white-space: nowrap;
-    padding: 5px 0;
     left: 50%;
     top: 100%;
+    overflow: hidden;
     transform: translateX(-50%);
     z-index: 1;
 }
@@ -292,7 +293,7 @@ li.flag .title::before {
 }
 
 .taskForm .title {
-    padding: 10px 20px;
+    padding: 15px 20px;
     width: 100%;
 }
 
