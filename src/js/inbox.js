@@ -28,17 +28,20 @@ function createForm() {
                 <input class="time" name="time" type="time">
             </div>
             <div class="selectButton">
-                <li class="item">
+                <li class="item box" data-img="box">
                     <div class="wrap">
-                        <button type="button" name="type" class="title selectMenuButton">Inbox</button>
-                        <ul class="selectMenu">
-                            <li>
-                                <button type="button" class="title">task 1</button>
+                        <button type="button" name="productName" class="title selectMenuButton">Inbox</button>
+                        <ul class="selectMenu productNameSelect">
+                            <li class="box" data-img="box">
+                                <button type="button" class="title">Inbox</button>
+                            </li>
+                            <li class="order" data-img="order">
+                                <button type="button" class="title">Today</button>
                             </li>
                         </ul>
                     </div>
                 </li>
-                <li class="item">
+                <li class="item flag">
                     <div class="wrap">
                         <button type="button" name="priority" class="title selectMenuButton low" data-priority="low">Low</button>
                         <ul class="selectMenu">
@@ -83,7 +86,31 @@ function createForm() {
     const overlay = document.querySelector('.overlay');
     overlay.append(form)
 
+    createProductList()
+
     overlay.addEventListener('pointerdown', activeCloseButton)
+}
+
+function createProductList() {
+
+    let products =  localStorage.getItem('products');
+
+    if (!products) return
+
+    const productNameSelect = document.querySelector('.productNameSelect')
+
+    for (let product of JSON.parse(products)) {
+
+        const li = document.createElement('li');
+        const button = `<button type="button" class="title"></button>`;
+        li.innerHTML = button;
+
+        const title = li.querySelector('.title')
+        title.textContent = product.name;
+        title.style = product.colorHexCode
+
+        productNameSelect.append(li);
+    }
 }
 
 function autoResize() {
