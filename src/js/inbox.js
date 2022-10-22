@@ -7,7 +7,9 @@ function getLocalTasks() {
 
     if (!item) return
 
-    return JSON.parse(item)
+    let data = JSON.parse(item)
+
+    return data
 }
 
 function createForm() {
@@ -153,20 +155,20 @@ function selectMenu(e) {
     }
 
     function changeValue(e) {
-        const target = e.target.closest('.title')
-        if (!target || target === button) return
+        const target = e.target.closest('.selectMenu')
+        if (!target || e.target === target) return
 
         switch (button.name) {
             case 'type':
                 break;
             case 'priority':
-                const selfPriority = button.dataset.priority;
-                const priority = target.dataset.priority;
+                const buttonPriority = button.dataset.priority;
+                const optionPriority = e.target.dataset.priority;
 
-                button.classList.remove(selfPriority);
-                button.classList.add(priority);
-                button.dataset.priority = priority;
-                button.textContent = priority[0].toUpperCase() + priority.slice(1);
+                button.classList.remove(buttonPriority);
+                button.classList.add(optionPriority);
+                button.dataset.priority = optionPriority;
+                button.textContent = e.target.textContent;
                 break;
         }
     }
@@ -214,13 +216,19 @@ function activeCloseButton(e) {
     if (e.target !== cancelButton && e.target !== this) return
 
     closeForm();
+
+    this.removeEventListener('pointerdown', activeCloseButton)
 }
 
 function closeForm() {
 
+    const currentForm = document.querySelector('.taskForm')
+
+    if (!currentForm) return 
+    
+    currentForm.remove();
+
     const overlay = document.querySelector('.overlay');
-    const currentForm = overlay.querySelector('.taskForm')
-    currentForm.classList.remove('active');
     
     overlay.className = 'overlay';
     document.body.style.overflow = "auto";
@@ -252,7 +260,7 @@ function createNavbar() {
                 <button type="button" class="createTask"  data-form="taskForm">+</button>
                 <button type="button" class="selectMenuButton">◦◦◦</button>
                 <ul class="selectMenu">
-                    <li>
+                    <li class="completed">
                         <button type="button" class="title">Show completed tasks</button>
                     </li>
                 </ul>
@@ -296,8 +304,6 @@ function createTask() {
                 <p class="dueDate"></p>
             </div>
             <div class="option">
-                <button type="button" class="title"></button>
-                <button type="button" class="title"></button>
                 <div class="wrap">
                     <button type="button" class="selectMenuButton">•••</button>
                     <ul class="selectMenu">
@@ -351,71 +357,5 @@ export {
     createTask,
     showForm,
 }
-
-
-
-
-
-
-
-
-// nav 的
-
-function createProductForm() {
-
-    const template = `
-        <h3>Add Product</h3>
-        <label for="productName">
-            Name
-            <input class="disableOutline" name="nameField" type="text" id="productName" maxlength="50" tabIndex="0">
-        </label>
-        <div class="colorSelect">
-            Color
-            <button type="button" name="selectField" class="colorButton title" data-hex-code="#000000"  style="--color-list:#000000">Black</button>
-            <ul class="dropdown">
-            </ul>
-        </div>
-        <div class="submitButton">
-            <button type="button" class="cancelButton">Cancel</button>
-            <button type="submit" name="submit" class="addButton" disable>Add task</button>
-        </div>
-    `;
-
-
-    
-    const form = document.createElement('form');
-    form.name="product"
-    form.classList.add('productForm', 'active')
-    form.innerHTML = template;
-
-    const dropdown = form.querySelector('.dropdown')
-
-    const iconColorList = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
-
-    for (let hax of iconColorList) {
-
-        const color = namedColors.find(color => color.hex === hax);
-        const li = document.createElement('li');
-        const button = `<button type="button" class="title" style="--color-list:${color.hex}">${color.name}</button>`
-        
-        li.innerHTML = button;
-
-        dropdown.append(li);
-    }
-
-    return element
-}
-
-
-export {
-    createNav,
-    createForm,
-    createTaskTemplate,
-    showTaskForm,
-    getTasks,
-
-}
-
-
 
 
