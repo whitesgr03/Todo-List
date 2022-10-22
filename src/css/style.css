@@ -126,8 +126,12 @@ li > :nth-child(2){
     background-size: cover;
 }
 
-.products .title::before {
-    background-image: url('../img/chevron-right.svg');  
+.products.right .title::before {
+    background-image: url('../img/chevron-right.svg');
+}
+
+.products.down .title::before {
+    background-image: url('../img/chevron-down.svg');
 }
 
 .productList {
@@ -141,18 +145,22 @@ li > :nth-child(2){
     transition: max-height .2s ease-in;
 }
 
-.menu li:nth-child(1) .title::before {
+li.box > .title::before,
+li.box .wrap > .title::before {
     background-image: url('../img/box.png');
 }
-.menu li:nth-child(2) .title::before {
+li.order > .title::before,
+li.order .wrap>.title::before {
     background-image: url('../img/order.png');
 }
-.menu li:nth-child(3) .title::before {
+li.calendar > .title::before {
     background-image: url('../img/calendar.png');
 }
-
-.products.down .title::before {
-    background-image: url('../img/chevron-down.svg');
+li.completed > .title::before {
+    background-image: url('../img/completed.png');
+}
+li.flag .title::before {
+    background-image: url('../img/flag.png');
 }
 
 .products button,
@@ -160,9 +168,6 @@ li > :nth-child(2){
     padding: 0 10px;
     border-radius: 10px;
 }
-
-
-
 
 .products button:hover,
 .top>button:hover,
@@ -215,15 +220,6 @@ li > :nth-child(2){
     z-index: 1;
 }
 
-
-.selectMenu li:nth-child(1) .title::before {
-    background-image: url('../img/edit.png');
-}
-
-.selectMenu li:nth-child(2) .title::before {
-    background-image: url('../img/delete.png');
-}
-
 .content {
     grid-area: content;
     padding: 30px 10%;
@@ -231,9 +227,7 @@ li > :nth-child(2){
     position: relative;
 }
 
-.top .selectMenu li:nth-child(1) .title::before {
-    background-image: url('../img/completed.png');
-}
+
 
 .top .wrap {
     display: flex;
@@ -319,16 +313,6 @@ li > :nth-child(2){
     align-items: center;
     column-gap: 20px;
 }
-
-.option > button:nth-child(1) {
-    background-image: url('../img/edit.png');
-
-}
-.option > button:nth-child(2) {
-    background-image: url('../img/calendar.png');
-}
-
-
 
 .item:hover .total {
     display: none;
@@ -422,18 +406,6 @@ li > :nth-child(2){
 .selectButton .wrap>button:hover,
 .submitButton>button:hover {
     filter: brightness(80%);
-}
-
-.selectButton > li:nth-child(1) .selectMenuButton::before {
-    background-image: url('../img/clock.png');
-}
-
-.selectButton > li:nth-child(2) .selectMenuButton::before {
-    background-image: url('../img/flag.png');
-}
-
-.selectButton > li:nth-child(2) .selectMenu .title::before {
-    background-image: url('../img/flag.png')
 }
 
 .selectButton>li:nth-child(2) .title.critical::before {
