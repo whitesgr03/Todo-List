@@ -12,7 +12,7 @@ import * as inbox from './js/inbox'
 
     // bind events
     navbar.addEventListener('click', changePage)
-    navbar.addEventListener('click', createProduct)
+    navbar.addEventListener('click', nav.showForm)
 
     function changePage(e) {
 
@@ -27,12 +27,16 @@ import * as inbox from './js/inbox'
             nav.createProduct();
             return
         }
-        
+
         nav.createPages(name)
     }
 
-    function createProduct(e) {
-        const target = e.target.closest('.createProduct')
+})()
+
+
+
+
+
 
         if (!target) return
 
