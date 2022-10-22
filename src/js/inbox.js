@@ -232,12 +232,9 @@ function createNavbar() {
             </div>
         </li>
     `
-
     const element = document.createElement('ul');
     element.className = 'top'
     element.innerHTML = template;
-
-    createForm()
 
     return element
 }
@@ -307,6 +304,8 @@ function showForm(e) {
     const target = e.target.closest('.createTask');
 
     if (!target) return
+
+    createForm()
 
     const overlay = document.querySelector('.overlay');
     overlay.classList.add('showForm');
