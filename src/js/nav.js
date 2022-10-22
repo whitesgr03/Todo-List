@@ -93,8 +93,6 @@ function showDropdown(e) {
         const hex = e.target.getAttribute('style');
         const name = e.target.textContent;
 
-        console.log(hex)
-
         button.textContent = name;
         button.style = hex;
         button.dataset.hexCode = hex.match(/#.*/g);
@@ -146,11 +144,16 @@ function activeCloseButton(e) {
     if (e.target !== cancelButton && e.target !== this) return
 
     closeForm(this);
+
+    this.removeEventListener('pointerdown', activeCloseButton)
 }
 function closeForm() {    
 
-    const overlay = document.querySelector('.overlay');
     const currentForm = document.querySelector('.productForm')
+
+    if (!currentForm) return 
+    const overlay = document.querySelector('.overlay');
+    
     currentForm.remove();
 
     overlay.className = 'overlay';
@@ -178,6 +181,7 @@ function addProduct(name, data) {
 // public method
 
 function createPages(page) {
+    
 
     const content = document.querySelector('.content')
     const overlay = document.querySelector('.overlay')
@@ -185,25 +189,14 @@ function createPages(page) {
     content.innerHTML = '';
     overlay.innerHTML = '';
 
-    const createPage = {
-        inbox() {
+    switch (page) {
+        case 'inbox':
             content.append(inbox.createNavbar());
             content.append(inbox.createTask());
             content.addEventListener('click', inbox.showForm)
-        },
-        today() {
-            return
-            content.append(createNav());
-            content.append(createTask());
-        },
-        upcoming() {
-            return
-            content.append(createNav());
-            content.append(createTask());
-        }
+            break;
     }
 
-    createPage[page]();
     // 依照 page 執行函式
 
 }
@@ -247,6 +240,10 @@ function createProduct() {
     }
 }
 function showForm(e) {
+
+    const target = e.target.closest('.createProduct')
+
+    if (!target) return
 
     const overlay = document.querySelector('.overlay');
 
