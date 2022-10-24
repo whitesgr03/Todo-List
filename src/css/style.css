@@ -486,6 +486,154 @@ input[type="date"]:focus {
 }
 
 
+
+/* menu block */
+
+
+.menu li:not(.productList) {
+    padding-right: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.menu > li:not(.productList) {
+    margin-top: 20px;
+}
+
+.menu li:not(.productList, .products):hover {
+    background-color: var(--nav-hover-color);
+}
+
+.wrap {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    cursor: pointer;
+    flex: 1;
+    column-gap: 20px;
+}
+
+.icon {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+}
+
+li.box .icon {
+    background-image: url('../img/box.png');
+}
+
+li.order .icon {
+    background-image: url('../img/order.png');
+}
+
+li.calendar .icon {
+    background-image: url('../img/calendar.png');
+}
+
+/* li.order>.title::before,
+li.order .wrap>.title::before {
+    background-image: url('../img/order.png');
+}
+
+li.calendar>.title::before {
+    background-image: url('../img/calendar.png');
+}
+
+li.completed>.title::before {
+    background-image: url('../img/completed.png');
+}
+
+li.flag .title::before {
+    background-image: url('../img/flag.png');
+} */
+
+
+.title {
+    flex: 1;
+    width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.taskCount{
+    flex: 0 1 25px;
+    text-align: center;
+}
+
+
+
+/* products block */
+
+.products.arrowDown + .productList {
+    max-height: 300px;
+    transition: max-height .2s ease-in;
+}
+
+li.products.arrowRight .icon {
+    background-image: url('../img/chevron-right.svg');
+}
+
+li.products.arrowDown .icon {
+    background-image: url('../img/chevron-down.svg');
+}
+
+.addButton {
+    font-size: 1.5rem;
+    cursor: pointer;
+    flex: 0 1 25px;
+    text-align: center;
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+.addButton:hover {
+    background-color: var(--nav-hover-color);
+}
+
+
+/* productList block */
+
+.productList {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .15s ease-out;
+}
+
+.productList ul {
+    height: 300px;
+    overflow: scroll;
+}
+
+li.productList .icon{
+    width: 10px;
+    height: 10px;
+    margin: 0 7.5px;
+    border-radius: 50%;
+    background-color: var(--product-color)
+}
+
+
+li.productList li {
+    align-self: baseline;
+}
+
+.option {
+    font-size: 1.5rem;
+    cursor: pointer;
+    align-self: baseline;
+    flex: 0 1 25px;
+    text-align: center;
+    color: rgb(160, 160, 160);
+}
+
+.option:hover {
+    color: rgb(0, 0, 0);
+}
+
 .productForm {
     display: none;
     width: 400px;
