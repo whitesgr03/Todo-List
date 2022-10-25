@@ -16,14 +16,17 @@ import * as inbox from './js/inbox'
 
     function changePage(e) {
 
-        const target = e.target.closest('.title')
+        const navItem = e.target.closest('.wrap')
 
-        if (!target) return
+        if (!navItem) return
 
-        const name = target.textContent.toLowerCase();
+        const name = navItem.querySelector('.title').textContent.toLowerCase();
 
         if (name === 'products') {
-            e.target.closest('.products').classList.toggle('down');
+            const products = document.querySelector('.products')
+
+            products.classList.toggle('arrowDown');
+
             nav.createProduct();
             return
         }
