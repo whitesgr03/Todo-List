@@ -140,7 +140,7 @@ function validation(e) {
 }
 function activeCloseButton(e) {
     
-    const cancelButton = e.target.closest('.cancelButton');
+    const cancelButton = e.target.closest('.cancel');
 
     if (e.target !== cancelButton && e.target !== this) return
 
