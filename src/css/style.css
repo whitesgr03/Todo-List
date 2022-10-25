@@ -634,6 +634,34 @@ li.productList li {
     color: rgb(0, 0, 0);
 }
 
+
+/* overlay block */
+
+.overlay {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, .2);
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.overlay.show {
+    display: flex;
+}
+
+.overlay.show form.active {
+    display: block;
+}
+
+
+
+/* productForm  block */
+
 .productForm {
     display: none;
     width: 400px;
@@ -647,18 +675,14 @@ li.productList li {
     padding-bottom: 30px;
 }
 
-.productForm label,
-.taskForm label,
-.colorSelect {
-    margin-bottom: 30px;
+.productForm label{
+    margin: 30px 0;
     display: flex;
     flex-direction: column;
     font-size: 1.2rem;
 }
 
-.productForm input,
-.productForm .colorButton,
-.taskForm textarea {
+.productForm [name="name"] {
     margin-top: 10px;
     border: 0;
     border-bottom: 1px solid var(--main-dark-color);
@@ -666,25 +690,47 @@ li.productList li {
     padding: 5px;
 }
 
-.productForm input.disableOutline,
-.taskForm textarea.disableOutline {
+.productForm [name="name"].disableOutline {
     outline: 0;
 }
 
-.productForm .colorButton {
-    border-radius: 5px;
-    border: 1px solid var(--main-dark-color);
-    padding: 5px 15px;
+
+.productForm li:not(.dropdown) {
+    display: flex;
+    align-items: center;
 }
 
-.productForm.showDropdown .dropdown{
-    visibility: visible;
-    overflow: scroll;
+
+/* colorSelect block */
+
+.colorSelect {
+    font-size: 1.2rem;
 }
 
-.productForm.showDropdown .colorButton{
+.colorSelect .icon {
+    width: 10px;
+    height: 10px;
+    margin: 0 7.5px;
+    border-radius: 50%;
+    background-color: var(--product-color);
+    display: inline-block;
+}
+
+.productForm.showDropdown .colorButton {
     border-radius: 5px 5px 0 0;
 }
+
+/* colorButton */
+
+.colorButton {
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--main-dark-color);
+    display: flex;
+    align-items: center;
+}
+
+/* dropdown */
 
 .dropdown {
     visibility: hidden;
@@ -694,12 +740,31 @@ li.productList li {
     border-top: 0;
 }
 
-.dropdown li {
-    border-radius: 0;
-    
+.productForm.showDropdown .dropdown {
+    visibility: visible;
+    overflow: scroll;
 }
 
-.dropdown .title {
-    padding: 5px 15px;
-    width: 100%;
+
+/* submitButton block */
+
+.submitButton {
+    margin-top: 30px;
+    display: flex;
+    column-gap: 10px;
+    justify-content: flex-end;
+}
+
+.submitButton button {
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.submitButton .cancel {
+    background-color: var(--nav-background-color)
+}
+
+.submitButton .submit {
+    color: var(--main-color);
+    background-color: var(--header-background-color)
 }
