@@ -13,25 +13,30 @@ function getLocalProduct() {
 
     return JSON.parse(item)
 }
-function createForm() {
+function createForm(overlay) {
     const template = `
-        <h3>Add Product</h3>
+        <h2>Add Product</h2>
         <label for="productName">
             Name
             <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabIndex="0">
         </label>
-        <div class="colorSelect">
+        <ul class="colorSelect">
             Color
-            <button type="button" name="selectField" class="colorButton title" data-hex-code="#000000"  style="--color-list:#000000">Black</button>
-            <ul class="dropdown">
-            </ul>
-        </div>
+            <li class="colorButton">
+                <div class="wrap">
+                    <span class="icon"  name="selectField" data-hex-code="#000000" style="--product-color:#000000"></span>
+                    <span class="title">Black</span>
+                </div>
+            </li>
+            <li class="dropdown">
+                <ul></ul>
+            </li>
+        </ul>
         <div class="submitButton">
-            <button type="button" class="cancelButton">Cancel</button>
-            <button type="submit" name="submit" class="addButton" disable>Add task</button>
+            <button type="button" class="cancel">Cancel</button>
+            <button type="submit" name="submit" class="submit" disable>Add task</button>
         </div>
         `;
-    
     const form = document.createElement('form');
     form.classList.add('productForm');
     form.innerHTML = template;
@@ -39,7 +44,6 @@ function createForm() {
     form.addEventListener('focusout', focusForm)
     form.addEventListener('submit', validation)
 
-    const overlay = document.querySelector('.overlay');
     overlay.append(form)
 
     createDropdown();
@@ -51,22 +55,22 @@ function createForm() {
 function createDropdown() {
     const dropdown = document.querySelector('.dropdown')
 
-    const iconColorList = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
+    const colorList = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
 
-    for (let hax of iconColorList) {
+    for (let hax of colorList) {
 
         const color = namedColors.find(color => color.hex === hax);
         const li = document.createElement('li');
-        const button = `<button type="button" class="title" style="--color-list:${color.hex}">${color.name}</button>`
+        const button = `<div class="wrap"><span class="icon" style="--product-color:${color.hex}"></span><span class="title">${color.name}</span></wrap>`
         
         li.innerHTML = button;
 
-        dropdown.append(li);
+        dropdown.firstElementChild.append(li);
     }
 }
 function showDropdown(e) {
         
-    const button = e.target.closest('.colorButton');
+    const button = e.target.closest('.wrap');
 
     if (!button) return
 
@@ -76,8 +80,7 @@ function showDropdown(e) {
     this.addEventListener('pointerdown', changeColor)
 
     function closeDropdown(e) {
-
-        if (e.target !== button) {
+        if ( !e.target.closest('.wrap')) {
             this.classList.remove('showDropdown')
         }
         
@@ -86,16 +89,14 @@ function showDropdown(e) {
     }
 
     function changeColor(e) {
+        const target = e.target.closest('.wrap')
+        if (!target) return
 
-        const target = e.target.closest('.title')
-        if (!target || target === button) return
+        const hex = target.firstElementChild.getAttribute('style');
+        const name = target.lastElementChild.textContent;
 
-        const hex = e.target.getAttribute('style');
-        const name = e.target.textContent;
-
-        button.textContent = name;
-        button.style = hex;
-        button.dataset.hexCode = hex.match(/#.*/g);
+        button.firstElementChild.setAttribute('style', hex);
+        button.lastElementChild.textContent = name
     }
 }
 function focusForm(e) {
@@ -129,7 +130,7 @@ function validation(e) {
         }
     }
 
-    const color = this.elements.selectField.getAttribute('style');
+    const color = document.querySelector('[name="selectField"]').getAttribute('style');
 
     formProps.colorHexCode = color;
 
@@ -170,11 +171,11 @@ function addProduct(name, data) {
     } else {
         localStorage.setItem(name, JSON.stringify([data]))
     }
-    
+
     createProduct();
 
     const products = document.querySelector('.products');
-    products.classList.add('down');
+    products.classList.add('arrowDown');
 }
 
 
@@ -202,54 +203,46 @@ function createPages(page) {
 }
 function createProduct() {
 
-    const productList = document.querySelector('.productList');
+    const productList = document.querySelector('.productList ul');
     
     productList.innerHTML = '';
 
     const data = getLocalProduct()
+
     
     if (!data) return 
 
     for (let product of data) {
+
         const template = `
-            <span class="title productName"></span>
-            <div>
-                <span class="total">?</span>
-                <div class="wrap">
-                    <button type="button" class="selectMenuButton">•••</button>
-                    <ul class="selectMenu">
-                        <li>
-                            <button type="button" class="title">Edit project</button>
-                        </li>
-                        <li>
-                            <button type="button" class="title">Delete project</button>
-                        </li>
-                    </ul>
-                </div>
+            <div class="wrap">
+            <span class="icon"></span>
+            <span class="title"></span>
             </div>
+            <span class="option">...</span>
+            
         `;
 
         const li = document.createElement('li');
 
         li.className = 'item'
         li.innerHTML = template;
-        li.querySelector('.productName').textContent = product.name;
-        li.querySelector('.productName').style = product.colorHexCode;
+        li.querySelector('.title').textContent = product.name;
+        li.querySelector('.icon').style = product.colorHexCode;
 
         productList.append(li);
     }
 }
 function showForm(e) {
 
-    const target = e.target.closest('.createProduct')
-
+    const target = e.target.closest('.addButton')
     if (!target) return
 
     const overlay = document.querySelector('.overlay');
 
-    createForm()
+    createForm(overlay)
 
-    overlay.classList.add('showForm');
+    overlay.classList.add('show');
     document.body.style.overflow = "hidden";
 
     const currentForm = overlay.querySelector('.productForm')
