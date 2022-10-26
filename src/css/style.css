@@ -568,6 +568,10 @@ li.flag .title::before {
 
 /* products block */
 
+.products {
+    position: relative;
+}
+
 .products.arrowDown + .productList {
     max-height: 300px;
     transition: max-height .2s ease-in;
@@ -603,12 +607,12 @@ li.products.arrowDown .icon {
     transition: max-height .15s ease-out;
 }
 
-.productList ul {
+.productList > ul {
     height: 300px;
     overflow: scroll;
 }
 
-li.productList .icon{
+.productList .icon{
     width: 10px;
     height: 10px;
     margin: 0 7.5px;
@@ -617,7 +621,7 @@ li.productList .icon{
 }
 
 
-li.productList li {
+.productList > ul > li {
     align-self: baseline;
 }
 
@@ -633,6 +637,37 @@ li.productList li {
 .option:hover {
     color: rgb(0, 0, 0);
 }
+
+
+/* optionList */
+
+.optionList {
+    position: absolute;
+    border: 1px solid black;
+    background-color: #fff;
+    z-index: 1;
+    font-size: 1rem;
+    white-space: nowrap;
+    visibility: hidden;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.option.active .optionList{
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+.optionList button {
+    width: 100%;
+    padding: 10px;
+}
+
+
 
 
 /* overlay block */
