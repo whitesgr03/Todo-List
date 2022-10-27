@@ -234,7 +234,7 @@ const navbar = (() => {
 
         if (e.target !== cancelButton && e.target !== this) return
 
-        closeForm(this);
+        closeForm();
 
         this.removeEventListener('pointerdown', activeCloseButton)
     }
@@ -272,10 +272,10 @@ const navbar = (() => {
 
             const template = `
                 <div class="wrap">
-                <span class="icon"></span>
-                <span class="title"></span>
+                    <span class="icon"></span>
+                    <span class="title"></span>
                 </div>
-                <div class="option">...
+                <div class="option">•••
                     <ul class="optionList">
                         <li>
                             <button class="editButton" type="button">Edit product name</button>
@@ -321,25 +321,33 @@ const navbar = (() => {
         
         if (target.classList.contains('active')) {
             this.addEventListener('pointerup', closeProductOption)
-            // productList.addEventListener('pointerdown', editProductName)
+            productList.addEventListener('pointerdown', editProductName)
             productList.addEventListener('pointerdown', deleteProduct)
         }
 
         function closeProductOption(e) {
-            
             if (!e.target.closest('.option')) {
                 target.classList.remove('active')
             }
 
             this.removeEventListener('pointerup', closeProductOption)
-            // productList.removeEventListener('pointerdown', editProductName);
+            productList.removeEventListener('pointerdown', editProductName);
             productList.removeEventListener('pointerdown', deleteProduct);
         }
 
+        function editProductName(e) {
+            const editButton = e.target.closest('.editButton');
 
-        // function editProductName() {
+            if (!editButton) return
 
-        // }
+                const id = editButton.closest('.item').dataset.id
+                const item = data.find(item => item.id === +id)
+
+            if (!item || !id) return
+
+                createEditForm(item)
+                showProductForm();
+        }
         function deleteProduct(e) {
 
             const deleteButton = e.target.closest('.deleteButton');
@@ -352,25 +360,97 @@ const navbar = (() => {
             if (!item || !id) return
 
             item.remove();
-            createProduct()
+            createProduct();
         }
     }
+    function createEditForm(product) {
 
+        const template = `
+            <h2>Edit Product</h2>
+            <label for="productName">
+                Name
+                <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabIndex="0">
+            </label>
+            <ul class="colorSelect">
+                Color
+                <li class="colorButton">
+                    <div class="wrap">
+                        <span class="icon"  name="colorField" data-hex-code="#000000"></span>
+                        <span class="title">Black</span>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <ul></ul>
+                </li>
+            </ul>
+            <div class="submitButton">
+                <button type="button" class="cancel">Cancel</button>
+                <button type="submit" name="submit" class="submit" disable>Confirm</button>
+            </div>
+            `;
+        
+        const form = document.createElement('form');
+        form.classList.add('productForm');
+        form.innerHTML = template;
 
-    // Tool
-    function handleRemove(product) {
+        form.querySelector('#productName').value = product.name
+
+        form.querySelector('.icon').style = product.colorHexCode
+
+        form.addEventListener('focusout', focusForm)
+        form.addEventListener('submit', product.edit)
+
+        const overlay = document.querySelector('.overlay');
+
+        overlay.append(form)
+
+        createDropdown();
+
+        form.addEventListener('click', showDropdown)
+
+        overlay.addEventListener('pointerdown', activeCloseButton)
+    }
+
+    // handler
+    function handleDelete(id) {
         const remove = () => {
-            const item = localStorage.getItem('products');
-            const products = JSON.parse(item)
+            
+            const index = data.findIndex(item => item.id === id)
+            data.splice(index, 1)
 
-            const index = products.findIndex(item => item.id === product.id)
-            products.splice(index, 1)
-
-            localStorage.setItem('products', JSON.stringify(products))
+            localStorage.setItem('products', JSON.stringify(data))
         }
 
         return { remove }
     }
+
+    function handleUpdate(product) {
+        const edit = function (e) {
+            e.preventDefault()
+
+            const formData = new FormData(this);
+            const formProps = Object.fromEntries(formData);
+
+            if (!validation(formProps, this)) return
+
+            const hexCode = document.querySelector('[name="colorField"]').getAttribute('style');
+
+            product.colorHexCode = hexCode;
+            product.name = formProps.name
+            
+            localStorage.setItem('products', JSON.stringify(data))
+
+            createProduct();
+
+            this.reset();
+            closeForm();
+        }
+
+        return { edit }
+    }
+
+})();
+
 
 
     // return {
