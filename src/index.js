@@ -45,15 +45,19 @@ const navbar = (() => {
         const products = JSON.parse(item)
 
         for (let product of products) {
-            Object.assign(product,
-                handleRemove(product)
-            )
+            compose(product)
         }
 
         return products
     }
 
-    function showProductForm(e) {
+    function compose(product) {
+        return Object.assign(product,
+                handleDelete(product.id),
+                handleUpdate(product)
+            )
+    }
+
 
         const target = e.target.closest('.addButton')
         if (!target) return
