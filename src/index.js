@@ -16,8 +16,7 @@ const navbar = (() => {
 
     // bind events
     nav.addEventListener('click', changePage)
-    nav.addEventListener('click', showProductForm)
-
+    nav.addEventListener('click', showAddForm)
 
     function changePage(e) {
 
