@@ -58,26 +58,18 @@ const navbar = (() => {
             )
     }
 
+    function showAddForm(e) {
 
         const target = e.target.closest('.addButton')
         if (!target) return
 
-        const overlay = document.querySelector('.overlay');
+        createAddForm()
 
-        createProductForm(overlay)
+        showProductForm();
 
-        overlay.classList.add('show');
-        document.body.style.overflow = "hidden";
-
-        const currentForm = overlay.querySelector('.productForm')
-        currentForm.classList.add('active');
-
-        const firstField = currentForm.querySelector('[tabIndex]')
-        
-        firstField.focus();
     }
 
-    function createProductForm(overlay) {
+    function createAddForm() {
         const template = `
             <h2>Add Product</h2>
             <label for="productName">
@@ -88,7 +80,7 @@ const navbar = (() => {
                 Color
                 <li class="colorButton">
                     <div class="wrap">
-                        <span class="icon"  name="colorField" data-hex-code="#000000" style="--product-color:#000000"></span>
+                        <span class="icon"  name="colorField" style="--product-color:#000000"></span>
                         <span class="title">Black</span>
                     </div>
                 </li>
@@ -108,6 +100,8 @@ const navbar = (() => {
         form.addEventListener('focusout', focusForm)
         form.addEventListener('submit', addProduct)
 
+        const overlay = document.querySelector('.overlay');
+
         overlay.append(form)
 
         createDropdown();
@@ -115,6 +109,20 @@ const navbar = (() => {
         form.addEventListener('click', showDropdown)
 
         overlay.addEventListener('pointerdown', activeCloseButton)
+    }
+
+    function showProductForm() {
+        const overlay = document.querySelector('.overlay');
+
+        overlay.classList.add('show');
+        document.body.style.overflow = "hidden";
+
+        const currentForm = overlay.querySelector('.productForm')
+        currentForm.classList.add('active');
+
+        const firstField = currentForm.querySelector('[tabIndex]')
+        
+        firstField.focus();
     }
 
     function focusForm(e) {
