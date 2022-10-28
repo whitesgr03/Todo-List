@@ -9,7 +9,7 @@ import namedColors from 'color-name-list';
 
 
 const navbar = (() => {			
-    let data = getLocalProduct();
+    let products = getLocalProducts();
 
     // cache DOM
     const nav = document.querySelector('nav');
@@ -23,6 +23,7 @@ const navbar = (() => {
         const navItem = e.target.closest('.wrap')
 
         if (!navItem) return
+
 
         const name = navItem.querySelector('.title').textContent.toLowerCase();
 
@@ -275,11 +276,11 @@ const navbar = (() => {
         
         productList.innerHTML = '';
 
-        data = getLocalProduct();
+        products = getLocalProducts();
 
-        if (!data) return 
+        if (!products) return 
 
-        for (let product of data) {
+        for (let product of products) {
 
             const template = `
                 <div class="wrap">
@@ -337,7 +338,9 @@ const navbar = (() => {
         }
 
         function closeProductOption(e) {
-            if (!e.target.closest('.option')) {
+            const secondTarget = e.target.closest('.option')
+            
+            if (!secondTarget || secondTarget !== target) {
                 target.classList.remove('active')
             }
 
@@ -345,14 +348,13 @@ const navbar = (() => {
             productList.removeEventListener('pointerdown', editProductName);
             productList.removeEventListener('pointerdown', deleteProduct);
         }
-
         function editProductName(e) {
             const editButton = e.target.closest('.editButton');
 
             if (!editButton) return
 
                 const id = editButton.closest('.item').dataset.id
-                const item = data.find(item => item.id === +id)
+                const item = products.find(item => item.id === +id)
 
             if (!item || !id) return
 
@@ -366,7 +368,7 @@ const navbar = (() => {
             if (!deleteButton) return
 
             const id = deleteButton.closest('.item').dataset.id
-            const item = data.find(item => item.id === +id)
+            const item = products.find(item => item.id === +id)
 
             if (!item || !id) return
 
@@ -386,7 +388,7 @@ const navbar = (() => {
                 Color
                 <li class="colorButton">
                     <div class="wrap">
-                        <span class="icon"  name="colorField" data-hex-code="#000000"></span>
+                        <span class="icon"  name="colorField"></span>
                         <span class="title">Black</span>
                     </div>
                 </li>
@@ -426,10 +428,10 @@ const navbar = (() => {
     function handleDelete(id) {
         const remove = () => {
             
-            const index = data.findIndex(item => item.id === id)
-            data.splice(index, 1)
+            const index = products.findIndex(item => item.id === id)
+            products.splice(index, 1)
 
-            localStorage.setItem('products', JSON.stringify(data))
+            localStorage.setItem('products', JSON.stringify(products))
         }
 
         return { remove }
