@@ -565,7 +565,6 @@ li.flag .title::before {
 }
 
 
-
 /* products block */
 
 .products {
@@ -573,7 +572,7 @@ li.flag .title::before {
 }
 
 .products.arrowDown + .productList {
-    max-height: 300px;
+    height: 300px;
     transition: max-height .2s ease-in;
 }
 
@@ -585,7 +584,7 @@ li.products.arrowDown .icon {
     background-image: url('../img/chevron-down.svg');
 }
 
-.addButton {
+.products .addButton {
     font-size: 1.5rem;
     cursor: pointer;
     flex: 0 1 25px;
@@ -594,7 +593,7 @@ li.products.arrowDown .icon {
     padding: 0 5px;
 }
 
-.addButton:hover {
+.products .addButton:hover {
     background-color: var(--nav-hover-color);
 }
 
@@ -602,14 +601,14 @@ li.products.arrowDown .icon {
 /* productList block */
 
 .productList {
-    max-height: 0;
+    height: 0;
     overflow: hidden;
     transition: max-height .15s ease-out;
 }
 
 .productList > ul {
-    height: 300px;
-    overflow: scroll;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .productList .icon{
@@ -620,21 +619,22 @@ li.products.arrowDown .icon {
     background-color: var(--product-color)
 }
 
-
-.productList > ul > li {
-    align-self: baseline;
+.productList .title {
+    width: 150px;
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.option {
-    font-size: 1.5rem;
+.productList .option {
     cursor: pointer;
-    align-self: baseline;
     flex: 0 1 25px;
     text-align: center;
     color: rgb(160, 160, 160);
 }
 
-.option:hover {
+.productList .option:hover {
     color: rgb(0, 0, 0);
 }
 
@@ -642,7 +642,7 @@ li.products.arrowDown .icon {
 /* optionList */
 
 .optionList {
-    position: absolute;
+    position: fixed;
     border: 1px solid black;
     background-color: #fff;
     z-index: 1;
