@@ -18,6 +18,7 @@ const navbar = (() => {
     nav.addEventListener('click', changePage)
     nav.addEventListener('click', showAddForm)
 
+    createPages('Inbox')
     function changePage(e) {
 
         const navItem = e.target.closest('.wrap')
@@ -25,9 +26,9 @@ const navbar = (() => {
         if (!navItem) return
 
 
-        const name = navItem.querySelector('.title').textContent.toLowerCase();
+        const name = navItem.querySelector('.title').textContent;
 
-        if (name === 'products') {
+        if (name === 'Products') {
             showProductList();
             return
         }
@@ -37,7 +38,7 @@ const navbar = (() => {
     }
 
     function createPages(page) {
-    
+
         const content = document.querySelector('.content')
 
         content.innerHTML = '';
@@ -388,7 +389,7 @@ const navbar = (() => {
             const li = document.createElement('li');
 
             li.className = 'item'
-            li.dataset.id = product.id;
+            li.dataset.productId = product.id;
             li.innerHTML = template;
             li.querySelector('.title').textContent = product.name;
             li.querySelector('.icon').style = product.colorHexCode;
@@ -396,28 +397,29 @@ const navbar = (() => {
             productList.append(li);
 
             if (li.querySelector('.title').scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
-                li.querySelector('.title').title = product.name
+                li.querySelector('.title').style.overflow = 'hidden';
+                li.querySelector('.title').title = product.name;
             }
         }
 
         productList.addEventListener('pointerdown', editProductName);
         productList.addEventListener('pointerdown', deleteProduct);
-        productList.addEventListener('pointerup', disableOverflow)
+        document.addEventListener('pointerup', disableOverflow)
 
         function disableOverflow() {
-            const optionList = this.querySelector('.option.active')
+            const optionList = productList.querySelector('.option.active')
             if (optionList) {
-                this.style.overflow = 'hidden';
+                productList.style.overflow = 'hidden';
             } else {
-                this.style.overflow = 'auto';
+                productList.style.overflow = 'auto';
             }
         }
         function editProductName(e) {
+            
             const editButton = e.target.closest('.editButton');
-
             if (!editButton) return
 
-            const id = editButton.closest('.item').dataset.id
+            const id = editButton.closest('.item').dataset.productId
             const item = products.find(item => item.id === +id)
 
             if (!item || !id) return
@@ -430,7 +432,7 @@ const navbar = (() => {
 
             if (!deleteButton) return
 
-            const id = deleteButton.closest('.item').dataset.id
+            const id = deleteButton.closest('.item').dataset.productId
             const item = products.find(item => item.id === +id)
 
             if (!item || !id) return
@@ -448,6 +450,8 @@ const navbar = (() => {
             products.splice(index, 1)
 
             localStorage.setItem('products', JSON.stringify(products))
+
+            document.querySelector((`[data-product-id="${id}"]`)).remove()
         }
 
         return { remove }
