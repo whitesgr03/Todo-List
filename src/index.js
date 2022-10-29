@@ -81,6 +81,8 @@ const navbar = (() => {
     }
 
 
+
+    function getLocalProducts() {
         const item = localStorage.getItem('products');
 
         if (!item) return
@@ -93,12 +95,11 @@ const navbar = (() => {
 
         return products
     }
-
     function compose(product) {
         return Object.assign(product,
-                handleDelete(product.id),
-                handleUpdate(product)
-            )
+            handleDelete(product.id),
+            handleUpdate(product)
+        )
     }
 
     function showAddForm(e) {
