@@ -396,60 +396,37 @@ const navbar = (() => {
 
             productList.append(li);
 
-            const optionCoord = li.querySelector('.option').getBoundingClientRect()
-
-            const optionList = li.querySelector('.optionList');
-            optionList.style.top = `${optionCoord.bottom + 10}px`;
-            optionList.style.left = `${optionCoord.left - (optionList.clientWidth - optionCoord.width)  / 2 }px`;
-
             if (li.querySelector('.title').scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
                 li.querySelector('.title').title = product.name
             }
-
-            document.addEventListener('click', showProductOption)
-        }
-    }
-    function showProductOption(e) {
-        const target = e.target.closest('.option')
-
-        if (!target) return
-        
-        target.classList.toggle('active');
-
-        const productList = document.querySelector('.productList');
-        
-        if (target.classList.contains('active')) {
-            this.addEventListener('pointerup', closeProductOption)
-            productList.addEventListener('pointerdown', editProductName)
-            productList.addEventListener('pointerdown', deleteProduct)
         }
 
-        function closeProductOption(e) {
-            const secondTarget = e.target.closest('.option')
-            
-            if (!secondTarget || secondTarget !== target) {
-                target.classList.remove('active')
+        productList.addEventListener('pointerdown', editProductName);
+        productList.addEventListener('pointerdown', deleteProduct);
+        productList.addEventListener('pointerup', disableOverflow)
+
+        function disableOverflow() {
+            const optionList = this.querySelector('.option.active')
+            if (optionList) {
+                this.style.overflow = 'hidden';
+            } else {
+                this.style.overflow = 'auto';
             }
-
-            this.removeEventListener('pointerup', closeProductOption)
-            productList.removeEventListener('pointerdown', editProductName);
-            productList.removeEventListener('pointerdown', deleteProduct);
         }
         function editProductName(e) {
             const editButton = e.target.closest('.editButton');
 
             if (!editButton) return
 
-                const id = editButton.closest('.item').dataset.id
-                const item = products.find(item => item.id === +id)
+            const id = editButton.closest('.item').dataset.id
+            const item = products.find(item => item.id === +id)
 
             if (!item || !id) return
 
-                createEditForm(item)
-                showProductForm();
+            createEditForm(item)
+            showProductForm();
         }
         function deleteProduct(e) {
-
             const deleteButton = e.target.closest('.deleteButton');
 
             if (!deleteButton) return
@@ -463,7 +440,6 @@ const navbar = (() => {
             createProduct();
         }
     }
-    function createEditForm(product) {
 
         const template = `
             <h2>Edit Product</h2>
