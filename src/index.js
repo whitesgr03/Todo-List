@@ -112,7 +112,6 @@ const navbar = (() => {
         showProductForm();
 
     }
-
     function createAddForm() {
         const template = `
             <h2>Add Product</h2>
@@ -154,7 +153,53 @@ const navbar = (() => {
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
+    function createEditForm(product) {
 
+        const template = `
+            <h2>Edit Product</h2>
+            <label for="productName">
+                Name
+                <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabIndex="0">
+            </label>
+            <ul class="colorSelect">
+                Color
+                <li class="colorButton">
+                    <div class="wrap">
+                        <span class="icon"  name="colorField"></span>
+                        <span class="title">Black</span>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <ul></ul>
+                </li>
+            </ul>
+            <div class="submitButton">
+                <button type="button" class="cancel">Cancel</button>
+                <button type="submit" name="submit" class="submit" disable>Confirm</button>
+            </div>
+            `;
+        
+        const form = document.createElement('form');
+        form.classList.add('productForm');
+        form.innerHTML = template;
+
+        form.querySelector('#productName').value = product.name
+
+        form.querySelector('.icon').style = product.colorHexCode
+
+        form.addEventListener('focusout', focusForm)
+        form.addEventListener('submit', product.edit)
+
+        const overlay = document.querySelector('.overlay');
+
+        overlay.append(form)
+
+        createDropdown();
+
+        form.addEventListener('click', showDropdown)
+
+        overlay.addEventListener('pointerdown', activeCloseButton)
+    }
     function showProductForm() {
         const overlay = document.querySelector('.overlay');
 
@@ -218,10 +263,10 @@ const navbar = (() => {
 
                 isValid = false
                 
-                elem.focus(); 
+                elem.focus();
                 elem.classList.remove('disableOutline')
 
-                elem.addEventListener('blur',disableOutLine)
+                elem.addEventListener('blur', disableOutLine)
                 
                 function disableOutLine() {
                     elem.classList.add('disableOutline')
@@ -264,7 +309,7 @@ const navbar = (() => {
         }
 
         function closeDropdown(e) {
-            if ( !e.target.closest('.wrap')) {
+            if (!e.target.closest('.wrap')) {
                 this.classList.remove('showDropdown')
             }
             
@@ -283,7 +328,6 @@ const navbar = (() => {
             button.lastElementChild.textContent = name
         }
     }
-
     function activeCloseButton(e) {
         
         const cancelButton = e.target.closest('.cancel');
@@ -294,11 +338,11 @@ const navbar = (() => {
 
         this.removeEventListener('pointerdown', activeCloseButton)
     }
-    function closeForm() {    
+    function closeForm() {
 
         const currentForm = document.querySelector('.productForm')
 
-        if (!currentForm) return 
+        if (!currentForm) return
         const overlay = document.querySelector('.overlay');
         
         currentForm.remove();
@@ -322,10 +366,9 @@ const navbar = (() => {
 
         products = getLocalProducts();
 
-        if (!products) return 
+        if (!products) return
 
         for (let product of products) {
-
             const template = `
                 <div class="wrap">
                     <span class="icon"></span>
