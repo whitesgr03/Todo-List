@@ -514,7 +514,7 @@ const navbar = (() => {
             product.colorHexCode = hexCode;
             product.name = formProps.name
             
-            localStorage.setItem('products', JSON.stringify(data))
+            localStorage.setItem('products', JSON.stringify(products))
 
             createProduct();
 
@@ -523,6 +523,32 @@ const navbar = (() => {
         }
 
         return { edit }
+    }
+    function showOptionList(e) {
+        const target = e.target.closest('.option')
+
+        if (!target) return
+
+        const optionCoord = target.getBoundingClientRect()
+
+        const optionList = target.querySelector('.optionList');
+        optionList.style.top = `${optionCoord.bottom + 10}px`;
+        optionList.style.left = `${optionCoord.left - (optionList.clientWidth - optionCoord.width) / 2}px`;
+
+        target.classList.toggle('active');
+
+        if (target.classList.contains('active')) {
+            this.addEventListener('pointerdown', closeOptionList)
+        }
+
+        function closeOptionList(e) {
+            const secondTarget = e.target.closest('.option')
+
+            if (!secondTarget || secondTarget !== target) {
+                target.classList.remove('active');
+            }
+            this.removeEventListener('pointerdown', closeOptionList)
+        }
     }
 
 })();
