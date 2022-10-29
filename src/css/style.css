@@ -487,31 +487,34 @@ input[type="date"]:focus {
 
 
 
-/* menu block */
 
-
-.menu li:not(.productList) {
-    padding-right: 10px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.menu > li:not(.productList) {
-    margin-top: 20px;
-}
-
-.menu li:not(.productList, .products):hover {
-    background-color: var(--nav-hover-color);
-}
-
-.wrap {
+/* nav block */
+nav .wrap {
     display: flex;
     padding: 10px;
     align-items: center;
     cursor: pointer;
     flex: 1;
     column-gap: 20px;
+}
+
+
+/* menu block */
+
+
+.menu .item{
+    padding-right: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.menu > .item {
+    margin-top: 20px;
+}
+
+.menu .item:not(.products):hover {
+    background-color: var(--nav-hover-color);
 }
 
 .icon {
@@ -551,9 +554,17 @@ li.flag .title::before {
 } */
 
 
-.title {
+
+
+.taskCount{
+    flex: 0 1 25px;
+    text-align: center;
+}
+
+/* content block */
+
+.content .title {
     flex: 1;
-    width: 150px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
