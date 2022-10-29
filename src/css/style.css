@@ -559,8 +559,30 @@ li.flag .title::before {
     text-overflow: ellipsis;
 }
 
-.taskCount{
+.content .wrap {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    flex: 1;
+    column-gap: 20px;
+}
+
+
+/* top block */
+
+.top {
+    display: flex;
+    align-items: center;
+}
+
+.top .addButton {
+    font-size: 2rem;
+}
+
+.top .option {
+    cursor: pointer;
     flex: 0 1 25px;
+    margin-left: 10px;
     text-align: center;
 }
 
