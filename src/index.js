@@ -8,7 +8,7 @@ import * as inbox from './js/inbox'
 import namedColors from 'color-name-list';
 
 
-const navbar = (() => {			
+const navbar = (() => {
     let products = getLocalProducts();
 
     // cache DOM
@@ -33,11 +33,54 @@ const navbar = (() => {
         }
 
         // 製作切換 product name
-
-        // nav.createPages(name)
+        createPages(name)
     }
+
+    function createPages(page) {
     
-    function getLocalProduct() { 
+        const content = document.querySelector('.content')
+
+        content.innerHTML = '';
+
+        createTaskTopBar(page, content)
+        document.addEventListener('pointerdown', showOptionList);
+    function createTaskTopBar(name, element) {
+        const template = `
+            <div class="wrap">
+                <h2 class="title"></h2>
+                <button type="button" class="addButton">+</button>
+            </div>
+            <div class="option">
+                <button type="button" >◦◦◦</button>
+                <ul class="optionList">
+                    <li>
+                        <button class="showTaskButton" type="button">Show completed tasks</button>
+                    </li>
+                </ul>
+            </div>
+        `
+        const div = document.createElement('div');
+        div.className = 'top'
+        div.innerHTML = template;
+
+        div.querySelector('.title').textContent = name;
+
+        element.append(div);
+
+        const optionList = div.querySelector('.optionList')
+
+        optionList.addEventListener('click', showCompletedTasks)
+        
+        function showCompletedTasks(e) {
+            const showTaskButton = e.target.closest('showTaskButton');
+
+            if (showTaskButton) return;
+
+            console.log(showTaskButton)
+        }
+    }
+
+
         const item = localStorage.getItem('products');
 
         if (!item) return
