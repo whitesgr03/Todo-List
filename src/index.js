@@ -70,7 +70,7 @@ const navbar = (() => {
         const optionList = div.querySelector('.optionList')
 
         optionList.addEventListener('click', showCompletedTasks)
-        
+
         function showCompletedTasks(e) {
             const showTaskButton = e.target.closest('showTaskButton');
 
@@ -178,7 +178,7 @@ const navbar = (() => {
                 <button type="submit" name="submit" class="submit" disable>Confirm</button>
             </div>
             `;
-        
+
         const form = document.createElement('form');
         form.classList.add('productForm');
         form.innerHTML = template;
@@ -210,7 +210,7 @@ const navbar = (() => {
         currentForm.classList.add('active');
 
         const firstField = currentForm.querySelector('[tabIndex]')
-        
+
         firstField.focus();
     }
 
@@ -241,7 +241,7 @@ const navbar = (() => {
         }
 
         products.push(formProps)
-        
+
         localStorage.setItem('products', JSON.stringify(products))
 
         createProduct();
@@ -254,20 +254,20 @@ const navbar = (() => {
     }
     function validation(formProps, form) {
         let isValid = true;
-        
+
         for (let field in formProps) {
             const value = formProps[field].trim();
-            
+
             if (value.length === 0) {
                 const elem = form.elements[field]
 
                 isValid = false
-                
+
                 elem.focus();
                 elem.classList.remove('disableOutline')
 
                 elem.addEventListener('blur', disableOutLine)
-                
+
                 function disableOutLine() {
                     elem.classList.add('disableOutline')
                     this.removeEventListener('blur', disableOutLine)
@@ -278,7 +278,6 @@ const navbar = (() => {
 
         return isValid
     }
-
     function createDropdown() {
         const dropdown = document.querySelector('.dropdown')
 
@@ -289,20 +288,20 @@ const navbar = (() => {
             const color = namedColors.find(color => color.hex === hax);
             const li = document.createElement('li');
             const button = `<div class="wrap"><span class="icon" style="--product-color:${color.hex}"></span><span class="title">${color.name}</span></wrap>`
-            
+
             li.innerHTML = button;
 
             dropdown.firstElementChild.append(li);
         }
     }
     function showDropdown(e) {
-            
+
         const button = e.target.closest('.wrap');
 
         if (!button) return
 
         this.classList.toggle('showDropdown')
-        
+
         if (this.classList.contains('showDropdown')) {
             this.addEventListener('pointerup', closeDropdown)
             this.addEventListener('pointerdown', changeColor)
@@ -312,7 +311,7 @@ const navbar = (() => {
             if (!e.target.closest('.wrap')) {
                 this.classList.remove('showDropdown')
             }
-            
+
             this.removeEventListener('pointerup', closeDropdown)
             this.removeEventListener('pointerdown', changeColor);
         }
@@ -329,7 +328,7 @@ const navbar = (() => {
         }
     }
     function activeCloseButton(e) {
-        
+
         const cancelButton = e.target.closest('.cancel');
 
         if (e.target !== cancelButton && e.target !== this) return
@@ -344,7 +343,7 @@ const navbar = (() => {
 
         if (!currentForm) return
         const overlay = document.querySelector('.overlay');
-        
+
         currentForm.remove();
 
         overlay.className = 'overlay';
@@ -361,7 +360,7 @@ const navbar = (() => {
     }
     function createProduct() {
         const productList = document.querySelector('.productList ul');
-        
+
         productList.innerHTML = '';
 
         products = getLocalProducts();
@@ -441,56 +440,10 @@ const navbar = (() => {
         }
     }
 
-        const template = `
-            <h2>Edit Product</h2>
-            <label for="productName">
-                Name
-                <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabIndex="0">
-            </label>
-            <ul class="colorSelect">
-                Color
-                <li class="colorButton">
-                    <div class="wrap">
-                        <span class="icon"  name="colorField"></span>
-                        <span class="title">Black</span>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <ul></ul>
-                </li>
-            </ul>
-            <div class="submitButton">
-                <button type="button" class="cancel">Cancel</button>
-                <button type="submit" name="submit" class="submit" disable>Confirm</button>
-            </div>
-            `;
-        
-        const form = document.createElement('form');
-        form.classList.add('productForm');
-        form.innerHTML = template;
 
-        form.querySelector('#productName').value = product.name
-
-        form.querySelector('.icon').style = product.colorHexCode
-
-        form.addEventListener('focusout', focusForm)
-        form.addEventListener('submit', product.edit)
-
-        const overlay = document.querySelector('.overlay');
-
-        overlay.append(form)
-
-        createDropdown();
-
-        form.addEventListener('click', showDropdown)
-
-        overlay.addEventListener('pointerdown', activeCloseButton)
-    }
-
-    // handler
     function handleDelete(id) {
         const remove = () => {
-            
+
             const index = products.findIndex(item => item.id === id)
             products.splice(index, 1)
 
@@ -499,7 +452,6 @@ const navbar = (() => {
 
         return { remove }
     }
-
     function handleUpdate(product) {
         const edit = function (e) {
             e.preventDefault()
@@ -513,7 +465,7 @@ const navbar = (() => {
 
             product.colorHexCode = hexCode;
             product.name = formProps.name
-            
+
             localStorage.setItem('products', JSON.stringify(products))
 
             createProduct();
