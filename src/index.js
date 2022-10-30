@@ -19,6 +19,8 @@ const navbar = (() => {
     nav.addEventListener('click', showAddForm)
 
     createPages('Inbox')
+
+    // All Pages
     function changePage(e) {
 
         const navItem = e.target.closest('.wrap')
@@ -37,6 +39,8 @@ const navbar = (() => {
         createPages(name)
     }
 
+
+    // Tasks
     function createPages(page) {
 
         const content = document.querySelector('.content')
@@ -45,6 +49,8 @@ const navbar = (() => {
 
         createTaskTopBar(page, content)
         document.addEventListener('pointerdown', showOptionList);
+
+    }
     function createTaskTopBar(name, element) {
         const template = `
             <div class="wrap">
@@ -80,8 +86,10 @@ const navbar = (() => {
             console.log(showTaskButton)
         }
     }
+  
 
 
+    // Get Product Data
 
     function getLocalProducts() {
         const item = localStorage.getItem('products');
@@ -102,6 +110,9 @@ const navbar = (() => {
             handleUpdate(product)
         )
     }
+
+
+    // Product Form
 
     function showAddForm(e) {
 
@@ -212,10 +223,11 @@ const navbar = (() => {
         currentForm.classList.add('active');
 
         const firstField = currentForm.querySelector('[tabIndex]')
-
         firstField.focus();
     }
 
+
+    // Product Form Handler
     function focusForm(e) {
         const target = e.relatedTarget;
         const firstField = this.querySelector('[tabIndex]')
@@ -353,6 +365,7 @@ const navbar = (() => {
     }
 
 
+    // Product List
     function showProductList() {
         const products = document.querySelector('.products')
 
@@ -445,7 +458,7 @@ const navbar = (() => {
         }
     }
 
-
+    // Product list handle
     function handleDelete(id) {
         const remove = () => {
 
@@ -513,12 +526,3 @@ const navbar = (() => {
     }
 
 })();
-
-
-
-    // return {
-    //     getLocalProduct
-    // }
-})();
-
-
