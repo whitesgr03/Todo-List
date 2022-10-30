@@ -563,16 +563,21 @@ li.flag .title::before {
 
 /* content block */
 
+.content {
+    grid-area: content;
+    padding: 30px 10%;
+    overflow: scroll;
+}
+
 .content .title {
     flex: 1;
-    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .content .wrap {
     display: flex;
-    padding: 10px;
+    padding: 10px 0;
     align-items: center;
     flex: 1;
     column-gap: 20px;
@@ -593,9 +598,14 @@ li.flag .title::before {
 .top .option {
     cursor: pointer;
     flex: 0 1 25px;
-    margin-left: 10px;
+    margin-left: 20px;
     text-align: center;
 }
+
+    text-align: center;
+}
+
+
 
 
 /* products block */
@@ -655,7 +665,6 @@ li.products.arrowDown .icon {
 .productList .title {
     width: 150px;
     flex: 1;
-    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
@@ -726,6 +735,14 @@ li.products.arrowDown .icon {
     display: block;
 }
 
+.overlay .wrap {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    cursor: pointer;
+    flex: 1;
+    column-gap: 20px;
+}
 
 
 /* productForm  block */
