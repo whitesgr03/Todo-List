@@ -118,7 +118,7 @@ const navbar = (() => {
             <h2>Add Product</h2>
             <label for="productName">
                 Name
-                <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabIndex="0">
+                <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabindex="0">
             </label>
             <ul class="colorSelect">
                 Color
@@ -155,12 +155,11 @@ const navbar = (() => {
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
     function createEditForm(product) {
-
         const template = `
             <h2>Edit Product</h2>
             <label for="productName">
                 Name
-                <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabIndex="0">
+                <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabindex="0">
             </label>
             <ul class="colorSelect">
                 Color
@@ -184,9 +183,9 @@ const navbar = (() => {
         form.classList.add('productForm');
         form.innerHTML = template;
 
-        form.querySelector('#productName').value = product.name
+        form.querySelector('#productName').value = product.name;
 
-        form.querySelector('.icon').style = product.colorHexCode
+        form.querySelector('.icon').style = product.colorHexCode;
 
         form.addEventListener('focusout', focusForm)
         form.addEventListener('submit', product.edit)
@@ -200,8 +199,10 @@ const navbar = (() => {
         form.addEventListener('click', showDropdown)
 
         overlay.addEventListener('pointerdown', activeCloseButton)
+
     }
     function showProductForm() {
+        
         const overlay = document.querySelector('.overlay');
 
         overlay.classList.add('show');
@@ -360,11 +361,13 @@ const navbar = (() => {
         createProduct();
     }
     function createProduct() {
+        
         const productList = document.querySelector('.productList ul');
 
         productList.innerHTML = '';
 
         products = getLocalProducts();
+        
 
         if (!products) return
 
@@ -415,6 +418,7 @@ const navbar = (() => {
             }
         }
         function editProductName(e) {
+            e.preventDefault(); 
             
             const editButton = e.target.closest('.editButton');
             if (!editButton) return
@@ -424,7 +428,7 @@ const navbar = (() => {
 
             if (!item || !id) return
 
-            createEditForm(item)
+            createEditForm(item);
             showProductForm();
         }
         function deleteProduct(e) {
@@ -438,7 +442,6 @@ const navbar = (() => {
             if (!item || !id) return
 
             item.remove();
-            createProduct();
         }
     }
 
@@ -472,9 +475,11 @@ const navbar = (() => {
 
             localStorage.setItem('products', JSON.stringify(products))
 
-            createProduct();
+            const elem = document.querySelector((`[data-product-id="${product.id}"] .wrap`))
+            
+            elem.firstElementChild.style = hexCode
+            elem.lastElementChild.textContent =   formProps.name
 
-            this.reset();
             closeForm();
         }
 
