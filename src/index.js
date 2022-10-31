@@ -199,129 +199,101 @@ const navbar = (() => {
         const addButton = e.target.closest('.addButton')
 
         if (!addButton) return
-
-        // createAddTaskFrom()
+        createAddTaskFrom()
+        showForm()
     }
 
     function createAddTaskFrom() {
-        // const template = `
-        //     <h2>Add Product</h2>
-        //     <label for="productName">
-        //         Name
-        //         <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabindex="0">
-        //     </label>
-        //     <ul class="colorSelect">
-        //         Color
-        //         <li class="colorButton">
-        //             <div class="wrap">
-        //                 <span class="icon"  name="colorField" style="--product-color:#000000"></span>
-        //                 <span class="title">Black</span>
-        //             </div>
-        //         </li>
-        //         <li class="dropdown">
-        //             <ul></ul>
-        //         </li>
-        //     </ul>
-        //     <div class="submitButton">
-        //         <button type="button" class="cancel">Cancel</button>
-        //         <button type="submit" name="submit" class="submit" disable>Add task</button>
-        //     </div>
-        //     `;
-        // const form = document.createElement('form');
-        // form.classList.add('productForm');
-        // form.innerHTML = template;
-
-        // form.addEventListener('focusout', focusForm)
-        // form.addEventListener('submit', addProduct)
-
-        // const overlay = document.querySelector('.overlay');
-
-        // overlay.append(form)
-
-        // createDropdown();
-
-        // form.addEventListener('click', showDropdown)
-
-        // overlay.addEventListener('pointerdown', activeCloseButton)
-
         const template = `
-        <label for="taskName">
-            Task name
-            <textarea class="disableOutline" id="taskName" name="name" rows="1" tabIndex="0" maxlength="100"></textarea>
-        </label>
-        <label for="descript">
-            Description
-            <textarea class="disableOutline" id="descript" name="descript" rows="1" maxlength="150"></textarea>
-        </label>
-        <div class="buttons">
-            <div class="datePicker">
-                <input class="date" name="date" type="date">
-            </div>
-            <div class="timePicker active">
-                <input class="time" name="time" type="time">
-            </div>
-            <div class="selectButton">
-                <li class="item box" data-class-name="box">
-                    <div class="wrap">
-                        <button type="button" name="productName" class="title selectMenuButton">Inbox</button>
-                        <ul class="selectMenu productNameSelect">
-                            <li class="box" data-class-name="box">
-                                <button type="button" class="title">Inbox</button>
+            <label for="taskName">
+                Task name
+                <textarea class="disableOutline" id="taskName" name="name" rows="1" tabIndex="0" maxlength="100"></textarea>
+            </label>
+            <label for="descript">
+                Description
+                <textarea class="disableOutline" id="descript" name="descript" rows="1" maxlength="150"></textarea>
+            </label>
+            <div class="buttons">
+                <div class="taskFormButtons">
+                    <input class="date" name="date" type="date">
+                    <input class="time" name="time" type="time">
+                    <div class="option">
+                        <button type="button" name="priority" class="priority" data-priority="low">
+                            <span class="icon flag low"></span>
+                            Low
+                        </button>
+                        <ul class="optionList">
+                            <li>
+                                <button type="button" data-priority="critical">
+                                    <span class="icon flag critical"></span>
+                                    Critical
+                                </button>
                             </li>
-                            <li class="order" data-class-name="order">
-                                <button type="button" class="title">Today</button>
+                            <li>
+                                <button type="button" data-priority="high">
+                                    <span class="icon flag high"></span>
+                                    High
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" data-priority="medium">
+                                    <span class="icon flag medium"></span>
+                                    Medium
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" data-priority="low">
+                                    <span class="icon flag low"></span>
+                                    Low
+                                </button>
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="item flag">
-                    <div class="wrap">
-                        <button type="button" name="priority" class="title selectMenuButton low" data-priority="low">Low</button>
-                        <ul class="selectMenu">
-                            <li>
-                                <button type="button" class="title critical" data-priority="critical">Critical</button>
-                            </li>
-                            <li>
-                                <button type="button" class="title high" data-priority="high">High</button>
-                            </li>
-                            <li>
-                                <button type="button" class="title medium" data-priority="medium">Medium</button>
-                            </li>
-                            <li>
-                                <button type="button" class="title low" data-priority="low">Low</button>
-                            </li>
+                    <div class="option">
+                        <button type="button" name="productName" class="productName">
+                            <span class="icon box"></span>
+                            Inbox
+                        </button>
+                        <ul class="optionList">
+                            <button type="button" name="productName" class="productName">
+                                <span class="icon box"></span>
+                                Inbox
+                            </button>
+                            <button type="button" name="productName" class="productName">
+                                <span class="icon order"></span>
+                                Today
+                            </button>
                         </ul>
                     </div>
-                </li>
+                </div>
+                <div class="submitButton">
+                    <button type="button" class="cancel">Cancel</button>
+                    <button type="submit" class="submit">Add task</button>
+                </div>
             </div>
-            <div class="submitButton">
-                <button type="button" class="cancelButton">Cancel</button>
-                <button type="submit" class="addButton">Add task</button>
-            </div>
-        </div>
         `;
-    
-    const form = document.createElement('form');
-    form.classList.add('taskForm')
-    form.innerHTML = template;
 
-    const textareas = form.querySelectorAll('textarea')
+        const form = document.createElement('form');
+        form.classList.add('taskForm')
+        form.innerHTML = template;
 
-    for (let textarea of textareas) {
-        textarea.addEventListener("input", autoResize);
-    }
+        const textareas = form.querySelectorAll('textarea')
 
-    form.addEventListener('focusout', focusForm)
-    form.addEventListener('click', selectMenu)
-    form.addEventListener('submit', validation)
-    
-    
-    const overlay = document.querySelector('.overlay');
-    overlay.append(form)
+        for (let textarea of textareas) {
+            textarea.addEventListener("input", autoResize);
+        }
 
-    createProductList()
+        form.addEventListener('focusout', focusForm)
+        // form.addEventListener('click', selectMenu)
+        // form.addEventListener('submit', validation)
+        
+        
+        const overlay = document.querySelector('.overlay');
+        overlay.append(form)
 
-    overlay.addEventListener('pointerdown', activeCloseButton)
+        // createProductList()
+
+        overlay.addEventListener('pointerdown', activeCloseButton)
     }
 
 
@@ -347,8 +319,8 @@ const navbar = (() => {
         )
     }
 
-    // Product Form
 
+    // Product Form
     function showAddProductForm(e) {
 
         const target = e.target.closest('.addButton')
@@ -356,7 +328,7 @@ const navbar = (() => {
 
         createAddProductForm()
 
-        showProductForm();
+        showForm();
     }
     function createAddProductForm() {
         const template = `
@@ -446,14 +418,14 @@ const navbar = (() => {
         overlay.addEventListener('pointerdown', activeCloseButton)
 
     }
-    function showProductForm() {
+    function showForm() {
         
         const overlay = document.querySelector('.overlay');
 
         overlay.classList.add('show');
         document.body.style.overflow = "hidden";
 
-        const currentForm = overlay.querySelector('.productForm')
+        const currentForm = overlay.firstElementChild;
         currentForm.classList.add('active');
 
         const firstField = currentForm.querySelector('[tabIndex]')
@@ -668,7 +640,7 @@ const navbar = (() => {
             if (!item || !id) return
 
             createEditProductForm(item);
-            showProductForm();
+            showForm();
         }
         function deleteProduct(e) {
             const deleteButton = e.target.closest('.deleteButton');
