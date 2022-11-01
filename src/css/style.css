@@ -497,12 +497,10 @@ nav .wrap {
 .taskList .item:hover .optionButton {
     display: block;
 }
-
 .taskList .option.active .optionButton{
     display: block;
     color: rgb(0, 0, 0);
 }
-
 .taskList .optionButton:hover {
     color: rgb(0, 0, 0);
 }
@@ -570,10 +568,11 @@ nav .wrap {
 
 li.products.arrowRight .icon {
     background-image: url('../img/chevron-right.svg');
+    transition: transform .2s ease-in-out;
 }
 
-li.products.arrowDown .icon {
-    background-image: url('../img/chevron-down.svg');
+li.products.arrowRight.arrowDown .icon {
+    transform: rotate(90deg);
 }
 
 .products .addButton {
@@ -693,6 +692,11 @@ li.products.arrowDown .icon {
     column-gap: 20px;
 }
 
+.overlay .item {
+    display: flex;
+    align-items: center;
+}
+
 
 /* productForm  block */
 
@@ -706,7 +710,7 @@ li.products.arrowDown .icon {
 }
 
 .productForm h3 {
-    padding-bottom: 30px;
+    padding-bottom: 10px;
 }
 
 .productForm label{
@@ -729,19 +733,12 @@ li.products.arrowDown .icon {
 }
 
 
-.productForm li:not(.dropdown) {
+.productForm {
     display: flex;
     align-items: center;
 }
 
-
-/* colorSelect block */
-
-.colorSelect {
-    font-size: 1.2rem;
-}
-
-.colorSelect .icon {
+.productForm .icon {
     width: 10px;
     height: 10px;
     margin: 0 7.5px;
@@ -750,35 +747,53 @@ li.products.arrowDown .icon {
     display: inline-block;
 }
 
-.productForm.showDropdown .colorButton {
-    border-radius: 5px 5px 0 0;
-}
-
-/* colorButton */
-
-.colorButton {
-    margin-top: 10px;
+.productForm .colorButton {
     border-radius: 5px;
     border: 1px solid var(--main-dark-color);
-    display: flex;
-    align-items: center;
+    width: 100%;
+    transition: border-radius .2s ease-in;
 }
 
-/* dropdown */
+.productForm .colorButton.showList {
+    border-radius: 5px 5px 0 0;
+    transition: border-radius .05s ease-in;
+}
+
+.productForm .colorButton.showList+.dropdownList {
+    max-height: 100px;
+    transition: max-height .1s ease-in;
+}
+
+
+/* dropdown block */
 
 .dropdown {
-    visibility: hidden;
+    position: relative;
+}
+
+/* dropdownList block */
+
+.dropdownList {
+    position: absolute;
+    max-height: 0;
+    height: 100px;
+    width: 100%;
+    overflow: hidden;
+    transition: max-height .15s ease-out;
+}
+.dropdownList > ul {
+    background-color: var(--main-color);
+    height: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
     border-radius: 0 0 5px 5px;
     border: 1px solid var(--main-dark-color);
-    max-height: 100px;
     border-top: 0;
 }
-
-.productForm.showDropdown .dropdown {
-    visibility: visible;
-    overflow: scroll;
+.dropdownList .item:hover {
+    background-color: var(--nav-hover-color);
 }
-
 
 /* submitButton block */
 
