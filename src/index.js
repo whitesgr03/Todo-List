@@ -174,7 +174,7 @@ const navbar = (() => {
             // if (!item || !id) return
 
             // createEditForm(item);
-            // showProductForm();
+            // showForm();
         }
         function deleteProduct(e) {
             const deleteButton = e.target.closest('.deleteButton');
@@ -337,23 +337,23 @@ const navbar = (() => {
                 Name
                 <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabindex="0">
             </label>
-            <ul class="colorSelect">
-                Color
-                <li class="colorButton">
-                    <div class="wrap">
-                        <span class="icon"  name="colorField" style="--product-color:#000000"></span>
-                        <span class="title">Black</span>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <ul></ul>
-                </li>
-            </ul>
+            <div class="dropdown">
+                <h3>Color</h3>
+                <button type="button" class="wrap colorButton">
+                    <span class="icon" style="--product-color:#000000"></span>
+                    Black
+                </button>
+                <div class="dropdownList">
+                    <ul>
+                    </ul>   
+                </div>
+            </div>
             <div class="submitButton">
                 <button type="button" class="cancel">Cancel</button>
                 <button type="submit" name="submit" class="submit" disable>Add task</button>
-            </div>
+            </div>  
             `;
+        
         const form = document.createElement('form');
         form.classList.add('productForm');
         form.innerHTML = template;
@@ -373,27 +373,25 @@ const navbar = (() => {
     }
     function createEditProductForm(product) {
         const template = `
-            <h2>Edit Product</h2>
+            <h2>Add Product</h2>
             <label for="productName">
                 Name
                 <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabindex="0">
             </label>
-            <ul class="colorSelect">
-                Color
-                <li class="colorButton">
-                    <div class="wrap">
-                        <span class="icon"  name="colorField"></span>
-                        <span class="title">Black</span>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <ul></ul>
-                </li>
-            </ul>
+            <div class="dropdown">
+                <h3>Color</h3>
+                <button type="button" class="wrap colorButton">
+                    <span class="icon"></span>
+                </button>
+                <div class="dropdownList">
+                    <ul>
+                    </ul>   
+                </div>
+            </div>
             <div class="submitButton">
                 <button type="button" class="cancel">Cancel</button>
-                <button type="submit" name="submit" class="submit" disable>Confirm</button>
-            </div>
+                <button type="submit" name="submit" class="submit" disable>Add task</button>
+            </div>  
             `;
 
         const form = document.createElement('form');
@@ -402,6 +400,7 @@ const navbar = (() => {
 
         form.querySelector('#productName').value = product.name;
 
+        form.querySelector('.colorButton').append(product.colorName);
         form.querySelector('.icon').style = product.colorHexCode;
 
         form.addEventListener('focusout', focusForm)
@@ -416,7 +415,6 @@ const navbar = (() => {
         form.addEventListener('click', showDropdown)
 
         overlay.addEventListener('pointerdown', activeCloseButton)
-
     }
     function showForm() {
         
@@ -431,6 +429,62 @@ const navbar = (() => {
         const firstField = currentForm.querySelector('[tabIndex]')
         firstField.focus();
     }
+    function createDropdown() {
+        const dropdownList = document.querySelector('.dropdownList')
+
+        const colorList = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
+
+        for (let hax of colorList) {
+            const color = namedColors.find(color => color.hex === hax);
+
+            const li = document.createElement('li');
+            const a = color.name
+            const button = `
+                <button type="button" class="wrap" tabIndex="-1">
+                    <span class="icon" style="--product-color:${color.hex}"></span>
+                    ${color.name}
+                </button>
+            `;
+            
+            li.className = 'item'
+            li.innerHTML = button;
+            
+            dropdownList.firstElementChild.append(li);
+        }
+    }
+    function showDropdown(e) {
+        const button = e.target.closest('.colorButton');
+
+        if (!button) return
+
+        button.classList.toggle('showList')
+
+        if (button.classList.contains('showList')) {
+            this.addEventListener('pointerup', closeDropdown)
+            this.addEventListener('pointerdown', changeColor)
+        }
+
+        function closeDropdown(e) {
+            if (!e.target.closest('.colorButton')) {
+                button.classList.remove('showList')
+            }
+
+            this.removeEventListener('pointerup', closeDropdown)
+            this.removeEventListener('pointerdown', changeColor);
+        }
+
+        function changeColor(e) {
+            const target = e.target.closest('.wrap')
+                
+            if (!target || target === button) return
+
+            const selectElem = target.cloneNode(true)
+
+            selectElem.classList.add('colorButton')
+
+            button.replaceWith(selectElem)
+        }
+    }
 
 
     // Product Form Handler
@@ -442,15 +496,17 @@ const navbar = (() => {
     }
     function addProduct(e) {
         e.preventDefault();
-
+        
         const formData = new FormData(this);
         const formProps = Object.fromEntries(formData);
 
         if (!validation(formProps, this)) return
 
-        const hexCode = document.querySelector('[name="colorField"]').getAttribute('style');
+        const hexCode = this.querySelector('.icon').getAttribute('style');
+        const color = this.querySelector('.colorButton').textContent.trim();
 
         formProps.colorHexCode = hexCode;
+        formProps.colorName = color;
 
         const products = JSON.parse(localStorage.getItem('products')) || [];
 
@@ -459,7 +515,6 @@ const navbar = (() => {
         } else {
             formProps.id = 1;
         }
-
         products.push(formProps)
 
         localStorage.setItem('products', JSON.stringify(products))
@@ -498,55 +553,6 @@ const navbar = (() => {
 
         return isValid
     }
-    function createDropdown() {
-        const dropdown = document.querySelector('.dropdown')
-
-        const colorList = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
-
-        for (let hax of colorList) {
-
-            const color = namedColors.find(color => color.hex === hax);
-            const li = document.createElement('li');
-            const button = `<div class="wrap"><span class="icon" style="--product-color:${color.hex}"></span><span class="title">${color.name}</span></wrap>`
-
-            li.innerHTML = button;
-
-            dropdown.firstElementChild.append(li);
-        }
-    }
-    function showDropdown(e) {
-
-        const button = e.target.closest('.wrap');
-
-        if (!button) return
-
-        this.classList.toggle('showDropdown')
-
-        if (this.classList.contains('showDropdown')) {
-            this.addEventListener('pointerup', closeDropdown)
-            this.addEventListener('pointerdown', changeColor)
-        }
-
-        function closeDropdown(e) {
-            if (!e.target.closest('.wrap')) {
-                this.classList.remove('showDropdown')
-            }
-
-            this.removeEventListener('pointerup', closeDropdown)
-            this.removeEventListener('pointerdown', changeColor);
-        }
-
-        function changeColor(e) {
-            const target = e.target.closest('.wrap')
-            if (!target) return
-
-            const hex = target.firstElementChild.getAttribute('style');
-            const name = target.lastElementChild.textContent;
-
-            button.firstElementChild.setAttribute('style', hex);
-            button.lastElementChild.textContent = name
-        }
-    }
     function activeCloseButton(e) {
 
         const cancelButton = e.target.closest('.cancel');
@@ -558,12 +564,12 @@ const navbar = (() => {
         this.removeEventListener('pointerdown', activeCloseButton)
     }
     function closeForm() {
-
-        const currentForm = document.querySelector('.productForm')
-
-        if (!currentForm) return
         const overlay = document.querySelector('.overlay');
 
+        const currentForm = overlay.querySelector('.productForm')
+
+        if (!currentForm) return
+        
         currentForm.remove();
 
         overlay.className = 'overlay';
@@ -581,12 +587,14 @@ const navbar = (() => {
     }
     function createProduct() {
         
-        const productList = document.querySelector('.productList ul');
+        const productList = document.querySelector('.productList');
 
         productList.innerHTML = '';
 
-        products = getLocalProducts();
+        const ul = document.createElement('ul');
         
+
+        products = getLocalProducts();
 
         if (!products) return
 
@@ -617,7 +625,7 @@ const navbar = (() => {
             li.querySelector('.title').textContent = product.name;
             li.querySelector('.icon').style = product.colorHexCode;
 
-            productList.append(li);
+            ul.append(li);
 
             if (li.querySelector('.title').scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
                 li.querySelector('.title').style.overflow = 'hidden';
@@ -625,8 +633,10 @@ const navbar = (() => {
             }
         }
 
-        productList.addEventListener('pointerdown', editProductName);
-        productList.addEventListener('pointerdown', deleteProduct);
+        productList.append(ul);
+
+        ul.addEventListener('pointerdown', editProductName);
+        ul.addEventListener('pointerdown', deleteProduct);
 
         function editProductName(e) {
             e.preventDefault(); 
@@ -641,6 +651,7 @@ const navbar = (() => {
 
             createEditProductForm(item);
             showForm();
+            
         }
         function deleteProduct(e) {
             const deleteButton = e.target.closest('.deleteButton');
@@ -679,9 +690,11 @@ const navbar = (() => {
 
             if (!validation(formProps, this)) return
 
-            const hexCode = document.querySelector('[name="colorField"]').getAttribute('style');
+            const hexCode = this.querySelector('.icon').getAttribute('style');
+            const color = this.querySelector('.colorButton').textContent.trim();
 
             product.colorHexCode = hexCode;
+            product.colorName = color;
             product.name = formProps.name
 
             localStorage.setItem('products', JSON.stringify(products))
@@ -689,7 +702,7 @@ const navbar = (() => {
             const elem = document.querySelector((`[data-product-id="${product.id}"] .wrap`))
             
             elem.firstElementChild.style = hexCode
-            elem.lastElementChild.textContent =   formProps.name
+            elem.lastElementChild.textContent = formProps.name
 
             closeForm();
         }
