@@ -297,6 +297,18 @@ const navbar = (() => {
     }
 
 
+    // Task From handle
+
+    // function autoResize() {
+
+    //     // 計算字數, 不然會超過螢幕的 x 軸
+
+    //     // this.style.height = 0;
+    //     this.style.height = `${this.scrollHeight}px`;
+    // }
+
+
+
     // Get Product Data
 
     function getLocalProducts() {
@@ -747,7 +759,14 @@ const navbar = (() => {
 })();
 
 
-// 完成 createAddTaskFrom function 建立 task 表單
+// git commit 製作完成 productList 下拉選單
+
+// 依照 createProduct 內的 product list max-hight 下拉選單 來製作 createAddProductForm 內的 color button
+
+// 做完後在用相同的 block 製作 createAddTaskFrom function 的 task 表單 
+
+
+
 
 // 建立 每個 product 都能切換頁面, 並建立 task
 
