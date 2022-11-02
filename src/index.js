@@ -199,8 +199,8 @@ const navbar = (() => {
         const addButton = e.target.closest('.addButton')
 
         if (!addButton) return
+
         createAddTaskFrom()
-        showForm()
     }
 
     function createAddTaskFrom() {
@@ -211,7 +211,7 @@ const navbar = (() => {
             </label>
             <label for="descript">
                 Description
-                <textarea class="disableOutline" id="descript" name="descript" rows="1" maxlength="150"></textarea>
+                <textarea class="disableOutline" id="descript" name="descript" rows="1" maxlength="300"></textarea>
             </label>
             <div class="buttons">
                 <div class="taskFormButtons">
@@ -277,19 +277,33 @@ const navbar = (() => {
         form.classList.add('taskForm')
         form.innerHTML = template;
 
-        const textareas = form.querySelectorAll('textarea')
-
-        for (let textarea of textareas) {
-            textarea.addEventListener("input", autoResize);
-        }
-
         form.addEventListener('focusout', focusForm)
         // form.addEventListener('click', selectMenu)
         // form.addEventListener('submit', validation)
         
-        
         const overlay = document.querySelector('.overlay');
         overlay.append(form)
+
+        showForm()
+
+        const textareas = form.querySelectorAll('textarea')
+        
+        for (let textarea of textareas) {
+
+            const countLines = new Set();
+            const maxLength = textarea.getAttribute('maxlength');
+
+            for (let i = 0; i < maxLength; i++) {
+                textarea.value += 'a'
+                countLines.add(textarea.scrollHeight)
+            }
+            
+            textarea.value = '';
+            
+            textarea.addEventListener("keydown", limitLines.bind(countLines))
+            textarea.addEventListener("input", limitTextLength.bind(maxLength));
+            textarea.addEventListener("input", autoResize);
+        }
 
         // createProductList()
 
@@ -299,15 +313,25 @@ const navbar = (() => {
 
     // Task From handle
 
-    // function autoResize() {
+    function limitLines(e) {
+        if (e.code === 'Backspace') return;
+        
+        if (!this.has(e.target.scrollHeight)) {
+            e.preventDefault();
+        }
+    }
+    function limitTextLength(e) {
+        const valueLength = e.target.value.length
 
-    //     // 計算字數, 不然會超過螢幕的 x 軸
-
-    //     // this.style.height = 0;
-    //     this.style.height = `${this.scrollHeight}px`;
-    // }
-
-
+        if (valueLength > this) {
+            e.target.value = e.target.value.slice(0, this)
+            return
+        }
+    }
+    function autoResize(e) {
+        e.target.style.height = 0;
+        e.target.style.height = `${e.target.scrollHeight}px`;
+    }
 
     // Get Product Data
 
