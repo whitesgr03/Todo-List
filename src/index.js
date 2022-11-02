@@ -504,7 +504,7 @@ const navbar = (() => {
         const target = e.relatedTarget;
         const firstField = this.querySelector('[tabIndex]')
 
-        if (target && !target.closest('.productForm')) firstField.focus()
+        if (target && !target.closest('form')) firstField.focus()
     }
     function addProduct(e) {
         e.preventDefault();
@@ -578,7 +578,7 @@ const navbar = (() => {
     function closeForm() {
         const overlay = document.querySelector('.overlay');
 
-        const currentForm = overlay.querySelector('.productForm')
+        const currentForm = overlay.querySelector('form')
 
         if (!currentForm) return
         
