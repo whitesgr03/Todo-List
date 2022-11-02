@@ -400,10 +400,11 @@ nav .wrap {
 
 .taskForm label {
     font-size: 1.2rem;
+    margin-bottom: 30px;
+    display: block;
 }
 
 .taskForm textarea {
-    margin-top: 10px;
     border: 0;
     border-bottom: 1px solid var(--main-dark-color);
     min-height: 1.8rem;
@@ -412,7 +413,6 @@ nav .wrap {
     resize: none;
     overflow-y: hidden;
     width: 100%;
-    margin-bottom: 30px;
 }
 
 .taskForm textarea.disableOutline {
