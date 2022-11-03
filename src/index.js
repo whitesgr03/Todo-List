@@ -525,7 +525,6 @@ const navbar = (() => {
             const color = namedColors.find(color => color.hex === hax);
 
             const li = document.createElement('li');
-            const a = color.name
             const button = `
                 <button type="button" class="wrap" tabIndex="-1">
                     <span class="icon" style="--product-color:${color.hex}"></span>
@@ -552,7 +551,7 @@ const navbar = (() => {
         }
 
         function closeDropdown(e) {
-            if (!e.target.closest('.colorButton')) {
+            if (e.target !== button) {
                 button.classList.remove('showList')
             }
 
@@ -568,6 +567,7 @@ const navbar = (() => {
             const selectElem = target.cloneNode(true)
 
             selectElem.classList.add('colorButton')
+            selectElem.tabIndex = 0;
 
             button.replaceWith(selectElem)
         }
