@@ -711,7 +711,7 @@ li.products.arrowRight.arrowDown .icon {
     align-items: center;
     cursor: pointer;
     flex: 1;
-    column-gap: 20px;
+    column-gap: 10px;
 }
 
 .overlay .item {
