@@ -284,6 +284,8 @@ const navbar = (() => {
         const overlay = document.querySelector('.overlay');
         overlay.append(form)
 
+        form.addEventListener('click', showTaskDropdown)
+
         showForm()
 
         const textareas = form.querySelectorAll('textarea')
@@ -332,6 +334,55 @@ const navbar = (() => {
         e.target.style.height = 0;
         e.target.style.height = `${e.target.scrollHeight}px`;
     }
+    function showTaskDropdown(e) {
+        
+        const button = e.target.closest('.dropDownButton');
+
+        if (!button) return
+
+        button.classList.toggle('showList')
+
+        const dropdownList = button.nextElementSibling;
+
+        dropdownList.style.right = 'auto';
+
+        const dropdownListCoord = dropdownList.getBoundingClientRect()
+        const windowRight = document.documentElement.clientWidth;
+
+        if (dropdownListCoord.right > windowRight) {
+            dropdownList.style.left = 'auto';
+            dropdownList.style.right = '0px';
+        }
+
+        if (button.classList.contains('showList')) {
+            this.addEventListener('pointerup', closeDropdown)
+            dropdownList.addEventListener('pointerdown', changeItem)
+        }
+
+        function closeDropdown(e) {
+            if (e.target !== button) {
+                button.classList.remove('showList')
+            }
+
+            this.removeEventListener('pointerup', closeDropdown)
+            this.removeEventListener('pointerdown', changeColor);
+        }
+
+        function changeItem(e) {
+
+            const target = e.target.closest('.wrap')
+                
+            if (!target || target === button) return
+
+            const selectElem = target.cloneNode(true)
+
+            selectElem.classList.add('dropDownButton')
+            selectElem.tabIndex = 0;
+
+            button.replaceWith(selectElem)
+        }
+    }
+
 
     // Get Product Data
 
