@@ -881,13 +881,6 @@ const navbar = (() => {
 })();
 
 
-// 依照 createProduct 內的 product list max-hight 下拉選單 來製作 createAddProductForm 內的 color button
-
-// 做完後在用相同的 block 製作 createAddTaskFrom function 的 task 表單 
-
-
-
-
 // 建立 每個 product 都能切換頁面, 並建立 task
 
 // 限制 product 建立相同的名稱
