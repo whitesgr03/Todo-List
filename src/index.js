@@ -642,6 +642,9 @@ const navbar = (() => {
         const productButton = document.querySelector('.products');
         productButton.classList.add('arrowDown');
 
+        const productList = document.querySelector('.productList ul');
+        productList.scrollTo({top: productList.scrollHeight, behavior: 'smooth'});
+
         this.reset();
         closeForm();
     }
