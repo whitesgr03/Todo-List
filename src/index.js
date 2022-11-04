@@ -483,9 +483,9 @@ const navbar = (() => {
 
         overlay.append(form)
 
-        createDropdown();
+        createProductDropdown();
 
-        form.addEventListener('click', showDropdown)
+        form.addEventListener('click', showProductDropdown)
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
@@ -528,9 +528,9 @@ const navbar = (() => {
 
         overlay.append(form)
 
-        createDropdown();
+        createProductDropdown();
 
-        form.addEventListener('click', showDropdown)
+        form.addEventListener('click', showProductDropdown)
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
@@ -547,8 +547,8 @@ const navbar = (() => {
         const firstField = currentForm.querySelector('[tabIndex]')
         firstField.focus();
     }
-    function createDropdown() {
-        const dropdownList = document.querySelector('.dropdownList')
+    function createProductDropdown() {
+        const dropdownList = document.querySelector('.dropdownList ul')
 
         const colorList = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
 
@@ -566,10 +566,10 @@ const navbar = (() => {
             li.className = 'item'
             li.innerHTML = button;
             
-            dropdownList.firstElementChild.append(li);
+            dropdownList.append(li);
         }
     }
-    function showDropdown(e) {
+    function showProductDropdown(e) {
         const button = e.target.closest('.colorButton');
 
         if (!button) return
@@ -637,7 +637,7 @@ const navbar = (() => {
 
         localStorage.setItem('products', JSON.stringify(products))
 
-        createProduct();
+        createProductList();
 
         const productButton = document.querySelector('.products');
         productButton.classList.add('arrowDown');
@@ -701,9 +701,9 @@ const navbar = (() => {
 
         products.classList.toggle('arrowDown');
 
-        createProduct();
+        createProductList();
     }
-    function createProduct() {
+    function createProductList() {
         
         const productList = document.querySelector('.productList');
 
@@ -711,6 +711,7 @@ const navbar = (() => {
 
         const ul = document.createElement('ul');
         
+        productList.append(ul);
 
         products = getLocalProducts();
 
