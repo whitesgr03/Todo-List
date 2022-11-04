@@ -455,10 +455,32 @@ nav .wrap {
     position: relative;
 }
 
+.taskFormButtons .dropdown button:hover {
+    background-color: var(--nav-background-color)
+}
+
 .taskFormButtons .dropdown .dropDownButton {
     padding: 5px 10px;
     border: 1px solid var(--main-dark-color);
     border-radius: 10px;
+}
+
+.taskFormButtons .dropdown:last-of-type .item:nth-child(n+3) .icon {
+    width: 10px;
+    height: 10px;
+    margin: 0 7.5px;
+    border-radius: 50%;
+    background-color: var(--product-color); 
+    display: inline-block;
+}
+
+.taskFormButtons .dropdown:last-of-type .dropDownButton .icon[style] {
+    width: 10px;
+    height: 10px;
+    margin: 7.5px;
+    border-radius: 50%;
+    background-color: var(--product-color);
+    display: inline-block;
 }
 
 
@@ -471,6 +493,11 @@ nav .wrap {
     left: 0px;
     overflow: hidden;
     z-index: 1;
+}
+
+.taskFormButtons .productName .dropdownList {
+    height: 200px;
+    overflow-y: auto;
 }
 
 .taskFormButtons .dropDownButton.showList+.dropdownList {
@@ -488,11 +515,6 @@ nav .wrap {
     flex-direction: column;
     border: .5px solid var(--main-dark-color);
 }
-
-.taskFormButtons .dropdownList .item:hover {
-    background-color: var(--nav-hover-color);
-}
-
 
 /* taskList block */
 
