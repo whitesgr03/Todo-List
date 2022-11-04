@@ -213,64 +213,70 @@ const navbar = (() => {
                 Description
                 <textarea class="disableOutline" id="descript" name="descript" rows="1" maxlength="300"></textarea>
             </label>
-            <div class="buttons">
                 <div class="taskFormButtons">
                     <input class="date" name="date" type="date">
                     <input class="time" name="time" type="time">
-                    <div class="option">
-                        <button type="button" name="priority" class="priority" data-priority="low">
+                    <div class="dropdown priority">
+                        <button type="button" class="wrap dropDownButton">
                             <span class="icon flag low"></span>
                             Low
                         </button>
-                        <ul class="optionList">
-                            <li>
-                                <button type="button" data-priority="critical">
-                                    <span class="icon flag critical"></span>
-                                    Critical
-                                </button>
-                            </li>
-                            <li>
-                                <button type="button" data-priority="high">
-                                    <span class="icon flag high"></span>
-                                    High
-                                </button>
-                            </li>
-                            <li>
-                                <button type="button" data-priority="medium">
-                                    <span class="icon flag medium"></span>
-                                    Medium
-                                </button>
-                            </li>
-                            <li>
-                                <button type="button" data-priority="low">
-                                    <span class="icon flag low"></span>
-                                    Low
-                                </button>
-                            </li>
-                        </ul>
+                        <div class="dropdownList">
+                            <ul>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1">
+                                        <span class="icon flag critical"></span>
+                                        Critical
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1">
+                                        <span class="icon flag high"></span>
+                                        High
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1">
+                                        <span class="icon flag medium"></span>
+                                        Medium
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1">
+                                        <span class="icon flag low"></span>
+                                        Low
+                                    </button>
+                                </li>
+                            </ul>   
+                        </div>
                     </div>
-                    <div class="option">
-                        <button type="button" name="productName" class="productName">
+                    <div class="dropdown productName">
+                        <button type="button" class="wrap dropDownButton">
                             <span class="icon box"></span>
                             Inbox
                         </button>
-                        <ul class="optionList">
-                            <button type="button" name="productName" class="productName">
-                                <span class="icon box"></span>
-                                Inbox
-                            </button>
-                            <button type="button" name="productName" class="productName">
-                                <span class="icon order"></span>
-                                Today
-                            </button>
-                        </ul>
+                        <div class="dropdownList">
+                            <ul>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1">
+                                        <span class="icon box"></span>
+                                        Inbox
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1">
+                                        <span class="icon order"></span>
+                                        Today
+                                    </button>
+                                </li>
+                            </ul>   
+                        </div>
                     </div>
                 </div>
                 <div class="submitButton">
                     <button type="button" class="cancel">Cancel</button>
                     <button type="submit" class="submit">Add task</button>
                 </div>
-            </div>
         `;
 
         const form = document.createElement('form');
@@ -278,11 +284,12 @@ const navbar = (() => {
         form.innerHTML = template;
 
         form.addEventListener('focusout', focusForm)
-        // form.addEventListener('click', selectMenu)
         // form.addEventListener('submit', validation)
         
         const overlay = document.querySelector('.overlay');
         overlay.append(form)
+
+        createTaskDropdown();
 
         form.addEventListener('click', showTaskDropdown)
 
@@ -306,8 +313,6 @@ const navbar = (() => {
             textarea.addEventListener("input", limitTextLength.bind(maxLength));
             textarea.addEventListener("input", autoResize);
         }
-
-        // createProductList()
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
@@ -365,7 +370,7 @@ const navbar = (() => {
             }
 
             this.removeEventListener('pointerup', closeDropdown)
-            this.removeEventListener('pointerdown', changeColor);
+            this.removeEventListener('pointerdown', changeItem);
         }
 
         function changeItem(e) {
@@ -380,6 +385,32 @@ const navbar = (() => {
             selectElem.tabIndex = 0;
 
             button.replaceWith(selectElem)
+        }
+    }
+    function createTaskDropdown() {
+        console.log('create')
+        const dropdownList = document.querySelector('.productName .dropdownList ul')
+        for (let product of products) {
+            const template = `
+            <li class="item">
+                <button type="button" class="wrap" tabIndex="-1">
+                    <span class="icon" style="--product-color:#000000"></span>
+                    black
+                </button>
+            </li>`
+
+            const li = document.createElement('li');
+            const button = `
+                <button type="button" class="wrap" tabIndex="-1">
+                    <span class="icon" style="${product.colorHexCode}"></span>
+                    ${product.name}
+                </button>
+            `;
+            
+            li.className = 'item'
+            li.innerHTML = button;
+            
+            dropdownList.append(li);
         }
     }
 
