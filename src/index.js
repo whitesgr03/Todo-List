@@ -701,7 +701,9 @@ const navbar = (() => {
 
         products.classList.toggle('arrowDown');
 
-        createProductList();
+        if (products.classList.contains('arrowDown')) {
+            createProductList();
+        }
     }
     function createProductList() {
         
@@ -753,7 +755,7 @@ const navbar = (() => {
         }
 
         productList.append(ul);
-
+        
         ul.addEventListener('pointerdown', editProductName);
         ul.addEventListener('pointerdown', deleteProduct);
 
@@ -818,10 +820,13 @@ const navbar = (() => {
 
             localStorage.setItem('products', JSON.stringify(products))
 
-            const elem = document.querySelector((`[data-product-id="${product.id}"] .wrap`))
-            
-            elem.firstElementChild.style = hexCode
-            elem.lastElementChild.textContent = formProps.name
+            let productList = document.querySelector('.productList ul');
+            const currentScrollBarPosition = productList.scrollTop;
+
+            createProductList();
+
+            productList = document.querySelector('.productList ul');
+            productList.scrollTo({ top: currentScrollBarPosition });
 
             closeForm();
         }
