@@ -92,9 +92,16 @@ const navbar = (() => {
         div.className = 'top'
         div.innerHTML = template;
 
-        div.querySelector('.title').textContent = name;
+        const title = div.querySelector('.title');
+        title.textContent = name;
 
         element.append(div);
+
+        if (title.scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
+            title.style.overflow = 'hidden';
+            title.title = name;
+        }
+        title.style.flex = 1;
 
         div.addEventListener('pointerdown', showCompletedTasks)
         div.addEventListener('click', showAddTaskForm)

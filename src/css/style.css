@@ -352,12 +352,7 @@ nav .wrap {
     overflow: scroll;
 }
 
-.content .title {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
+
 
 .content .wrap {
     display: flex;
@@ -384,6 +379,12 @@ nav .wrap {
     flex: 0 1 25px;
     margin-left: 20px;
     text-align: center;
+}
+
+.top .title {
+    width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 /* taskForm block */
@@ -506,6 +507,13 @@ nav .wrap {
     margin: 20px 0;
     position: relative;
     cursor: pointer;
+}
+
+.taskList .title {
+    width: 150px;
+    flex: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 
