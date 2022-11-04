@@ -20,7 +20,8 @@ const navbar = (() => {
 
     createPages('Inbox')
 
-    // All Pages
+
+    // General
     function changePage(e) {
 
         const navItem = e.target.closest('.wrap')
@@ -37,6 +38,73 @@ const navbar = (() => {
 
         // 製作切換 product name
         createPages(name)
+    }
+    function focusForm(e) {
+        const target = e.relatedTarget;
+        const firstField = this.querySelector('[tabIndex]')
+
+        if (target && !target.closest('form')) firstField.focus()
+    }
+    function showForm() {
+        
+        const overlay = document.querySelector('.overlay');
+
+        overlay.classList.add('show');
+        document.body.style.overflow = "hidden";
+
+        const currentForm = overlay.firstElementChild;
+        currentForm.classList.add('active');
+
+        const firstField = currentForm.querySelector('[tabIndex]')
+        firstField.focus();
+    }
+    function activeCloseButton(e) {
+
+        const cancelButton = e.target.closest('.cancel');
+
+        if (e.target !== cancelButton && e.target !== this) return
+
+        closeForm();
+
+        this.removeEventListener('pointerdown', activeCloseButton)
+    }
+    function closeForm() {
+        const overlay = document.querySelector('.overlay');
+
+        const currentForm = overlay.querySelector('form')
+
+        if (!currentForm) return
+        
+        currentForm.remove();
+
+        overlay.className = 'overlay';
+        document.body.style.overflow = "auto";
+    }
+    function validation(formProps, form) {
+        let isValid = true;
+
+        for (let field in formProps) {
+            const value = formProps[field].trim();
+
+            if (value.length === 0) {
+                const elem = form.elements[field]
+
+                isValid = false
+
+                elem.focus();
+                elem.classList.remove('disableOutline')
+
+                elem.addEventListener('blur', disableOutLine)
+
+                function disableOutLine() {
+                    elem.classList.add('disableOutline')
+                    this.removeEventListener('blur', disableOutLine)
+                }
+                return isValid
+            }
+        }
+
+        return isValid
     }
 
 
@@ -395,7 +463,6 @@ const navbar = (() => {
         }
     }
     function createTaskDropdown() {
-        console.log('create')
         const dropdownList = document.querySelector('.productName .dropdownList ul')
         for (let product of products) {
             const template = `
@@ -423,7 +490,6 @@ const navbar = (() => {
 
 
     // Get Product Data
-
     function getLocalProducts() {
         const item = localStorage.getItem('products');
 
@@ -541,19 +607,6 @@ const navbar = (() => {
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
-    function showForm() {
-        
-        const overlay = document.querySelector('.overlay');
-
-        overlay.classList.add('show');
-        document.body.style.overflow = "hidden";
-
-        const currentForm = overlay.firstElementChild;
-        currentForm.classList.add('active');
-
-        const firstField = currentForm.querySelector('[tabIndex]')
-        firstField.focus();
-    }
     function createProductDropdown() {
         const dropdownList = document.querySelector('.dropdownList ul')
 
@@ -613,12 +666,6 @@ const navbar = (() => {
 
 
     // Product Form Handler
-    function focusForm(e) {
-        const target = e.relatedTarget;
-        const firstField = this.querySelector('[tabIndex]')
-
-        if (target && !target.closest('form')) firstField.focus()
-    }
     function addProduct(e) {
         e.preventDefault();
         
@@ -654,54 +701,6 @@ const navbar = (() => {
 
         this.reset();
         closeForm();
-    }
-    function validation(formProps, form) {
-        let isValid = true;
-
-        for (let field in formProps) {
-            const value = formProps[field].trim();
-
-            if (value.length === 0) {
-                const elem = form.elements[field]
-
-                isValid = false
-
-                elem.focus();
-                elem.classList.remove('disableOutline')
-
-                elem.addEventListener('blur', disableOutLine)
-
-                function disableOutLine() {
-                    elem.classList.add('disableOutline')
-                    this.removeEventListener('blur', disableOutLine)
-                }
-                return isValid
-            }
-        }
-
-        return isValid
-    }
-    function activeCloseButton(e) {
-
-        const cancelButton = e.target.closest('.cancel');
-
-        if (e.target !== cancelButton && e.target !== this) return
-
-        closeForm();
-
-        this.removeEventListener('pointerdown', activeCloseButton)
-    }
-    function closeForm() {
-        const overlay = document.querySelector('.overlay');
-
-        const currentForm = overlay.querySelector('form')
-
-        if (!currentForm) return
-        
-        currentForm.remove();
-
-        overlay.className = 'overlay';
-        document.body.style.overflow = "auto";
     }
 
 
