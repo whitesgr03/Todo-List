@@ -368,6 +368,7 @@ const navbar = (() => {
         const overlay = document.querySelector('.overlay');
         overlay.append(form)
 
+        form.elements.date.addEventListener('change', validDate)
         createTaskDropdown();
 
         form.addEventListener('click', showTaskDropdown)
@@ -489,6 +490,40 @@ const navbar = (() => {
             li.innerHTML = button;
             
             dropdownList.append(li);
+        }
+    }
+
+    function validDate(e) {
+
+        const form = e.target.closest('form');
+        form.elements.time.value = '';
+
+        const message = form.querySelector('.message')
+        const inputState = e.target.validity; // Constraint validation
+    
+        if (e.target.value.length === 0 || inputState.valueMissing) {
+            e.target.value = '';
+            message.textContent = 'Time is optional';
+            message.className = 'message';
+            message.hidden = false;
+
+            e.target.classList.add('disableOutline')
+            return
+        }
+
+        let date = new Date(e.target.value);
+        let currentTime = new Date().setHours(0,0,0,0)
+
+        if (date < currentTime) { 
+            message.textContent = 'Date and Time cannot be set to the past'
+            message.classList.add('error');
+            message.hidden = false;
+
+            e.target.classList.remove('disableOutline')
+            e.target.focus();
+        } else  {
+            message.hidden = true;
+            e.target.classList.add('disableOutline')
         }
     }
 
