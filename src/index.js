@@ -84,27 +84,31 @@ const navbar = (() => {
         let isValid = true;
 
         for (let field in formProps) {
+            const elem = form.elements[field]
+
+            if (elem.dataset.skipValid) {
+                continue
+            }
+
             const value = formProps[field].trim();
 
             if (value.length === 0) {
                 const elem = form.elements[field]
-
-                isValid = false
-
+            
+                isValid = false;
                 elem.focus();
                 elem.classList.remove('disableOutline')
 
                 elem.addEventListener('blur', disableOutLine)
 
-                function disableOutLine() {
-                    elem.classList.add('disableOutline')
-                    this.removeEventListener('blur', disableOutLine)
-                }
                 return isValid
             }
         }
-
         return isValid
+    }
+    function disableOutLine() {
+        this.classList.add('disableOutline')
+        this.removeEventListener('blur', disableOutLine)
     }
 
 
