@@ -427,6 +427,7 @@ nav .wrap {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    position: relative;
 }
 
 .taskFormButtons input {
@@ -447,9 +448,11 @@ nav .wrap {
 }
 
 
-.taskFormButtons input:focus{
+.taskFormButtons input[type="time"].disableOutline:focus,
+.taskFormButtons input[type="date"].disableOutline:focus{
     outline: none;
 }
+
 
 .taskFormButtons .dropdown {
     position: relative;
@@ -482,6 +485,40 @@ nav .wrap {
     background-color: var(--product-color);
     display: inline-block;
 }
+
+.taskFormButtons .message {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin: 10px 25px;
+    color: var(--main-dark-color);
+}
+
+.taskFormButtons .message::before {
+    content: '!';
+    width: 20px;
+    height: 20px;
+    background-color: var(--main-dark-color);
+    border: 1px solid var(--main-dark-color);
+    color: var(--main-color);
+    text-align: center;
+    border-radius: 100%;
+    position: absolute;
+    right: 100%;
+    bottom: 0%;
+    margin-right: 5px;
+}
+
+.taskFormButtons .message.error {
+    color: var(--header-background-color);
+}
+
+.taskFormButtons .message.error::before {
+    background-color: var(--header-background-color);
+    border: 1px solid var(--header-background-color);
+}
+
+
 
 
 /* dropdownList block */

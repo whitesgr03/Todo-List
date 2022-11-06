@@ -273,7 +273,6 @@ const navbar = (() => {
 
 
     // Task form
-
     function showAddTaskForm(e) {
         const addButton = e.target.closest('.addButton')
 
@@ -281,7 +280,6 @@ const navbar = (() => {
 
         createAddTaskFrom()
     }
-
     function createAddTaskFrom() {
         const template = `
             <label for="taskName">
@@ -293,8 +291,8 @@ const navbar = (() => {
                 <textarea class="disableOutline" id="descript" name="descript" rows="1" maxlength="300"></textarea>
             </label>
                 <div class="taskFormButtons">
-                    <input class="date" name="date" type="date">
-                    <input class="time" name="time" type="time">
+                    <input class="date disableOutline" name="date" type="date" data-skip-valid="1" required>
+                    <input class="time disableOutline" name="time" type="time" data-skip-valid="1">
                     <div class="dropdown priority">
                         <button type="button" class="wrap dropDownButton">
                             <span class="icon flag low"></span>
@@ -351,6 +349,7 @@ const navbar = (() => {
                             </ul>   
                         </div>
                     </div>
+                    <span class="message" aria-live="polite">Time is optional</span>
                 </div>
                 <div class="submitButton">
                     <button type="button" class="cancel">Cancel</button>
@@ -395,29 +394,6 @@ const navbar = (() => {
         }
 
         overlay.addEventListener('pointerdown', activeCloseButton)
-    }
-
-
-    // Task From handle
-
-    function limitLines(e) {
-        if (e.code === 'Backspace') return;
-        
-        if (!this.has(e.target.scrollHeight)) {
-            e.preventDefault();
-        }
-    }
-    function limitTextLength(e) {
-        const valueLength = e.target.value.length
-
-        if (valueLength > this) {
-            e.target.value = e.target.value.slice(0, this)
-            return
-        }
-    }
-    function autoResize(e) {
-        e.target.style.height = 0;
-        e.target.style.height = `${e.target.scrollHeight}px`;
     }
     function showTaskDropdown(e) {
         
