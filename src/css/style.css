@@ -532,7 +532,7 @@ nav .wrap {
     z-index: 1;
 }
 
-.taskFormButtons .productName .dropdownList {
+.taskFormButtons .productDropdown .dropdownList {
     height: 200px;
     overflow-y: auto;
 }
