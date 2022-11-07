@@ -10,17 +10,15 @@ import {format, isToday, isTomorrow} from 'date-fns';
 
 const navbar = (() => {
     let products = getLocalProducts();
-    // let tasks = getLocalTasks();
+    let tasks = getLocalTasks();
 
     // cache DOM
     const nav = document.querySelector('nav');
-
     // bind events
     nav.addEventListener('click', changePage)
     nav.addEventListener('click', showAddProductForm)
 
     createPages('Inbox')
-
 
     // General
     function changePage(e) {
@@ -28,7 +26,6 @@ const navbar = (() => {
         const navItem = e.target.closest('.wrap')
 
         if (!navItem) return
-
 
         const name = navItem.querySelector('.title').textContent;
 
@@ -119,6 +116,20 @@ const navbar = (() => {
     }
 
 
+    // Get Task Data
+    function getLocalTasks() {
+        const item = localStorage.getItem('tasks');
+
+        if (!item) return
+
+        const tasks = JSON.parse(item)
+
+        // for (let product of products) {
+        //     compose(product)
+        // }
+
+        return tasks
+    }
     // Tasks
     function createPages(page) {
 
