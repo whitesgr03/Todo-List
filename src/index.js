@@ -5,6 +5,7 @@ import './css/style.css';
 
 // library
 import namedColors from 'color-name-list';
+import {format, isToday} from 'date-fns';
 
 
 const navbar = (() => {
@@ -284,14 +285,14 @@ const navbar = (() => {
         const template = `
             <label for="taskName">
                 Task name
-                <textarea class="disableOutline" id="taskName" name="name" rows="1" tabIndex="0" maxlength="100"></textarea>
+                <textarea class="disableOutline" id="taskName" name="name" rows="1" tabIndex="0" maxlength="100" required></textarea>
             </label>
             <label for="descript">
                 Description
-                <textarea class="disableOutline" id="descript" name="descript" rows="1" maxlength="300"></textarea>
+                <textarea class="disableOutline" id="descript" name="descript" rows="1" maxlength="300" data-skip-valid="1"></textarea>
             </label>
                 <div class="taskFormButtons">
-                    <input class="date disableOutline" name="date" type="date" data-skip-valid="1" required>
+                    <input class="date disableOutline" name="date" type="date" required>
                     <input class="time disableOutline" name="time" type="time" data-skip-valid="1">
                     <div class="dropdown priority">
                         <button type="button" class="wrap dropDownButton">
@@ -362,7 +363,7 @@ const navbar = (() => {
         form.innerHTML = template;
 
         form.addEventListener('focusout', focusForm)
-        // form.addEventListener('submit', validation)
+        form.addEventListener('submit', addTask)
         
         const overlay = document.querySelector('.overlay');
         overlay.append(form)
@@ -471,6 +472,15 @@ const navbar = (() => {
         }
     }
 
+    // Task From handle
+    function addTask(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        let formProps = Object.fromEntries(formData);
+
+        if (!validation(formProps, this)) return
+    }
     function validDate(e) {
 
         const form = e.target.closest('form');
@@ -561,6 +571,25 @@ const navbar = (() => {
             message.hidden = true;
             e.target.classList.add('disableOutline')
         }
+    }
+    function limitLines(e) {
+        if (e.code === 'Backspace') return;
+        
+        if (!this.has(e.target.scrollHeight)) {
+            e.preventDefault();
+        }
+    }
+    function limitTextLength(e) {
+        const valueLength = e.target.value.length
+
+        if (valueLength > this) {
+            e.target.value = e.target.value.slice(0, this)
+            return
+        }
+    }
+    function autoResize(e) {
+        e.target.style.height = 0;
+        e.target.style.height = `${e.target.scrollHeight}px`;
     }
 
 
@@ -952,6 +981,7 @@ const navbar = (() => {
         }
     }
 
+    
 })();
 
 
