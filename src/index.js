@@ -138,8 +138,9 @@ const navbar = (() => {
         content.innerHTML = '';
 
         createTasksTopBar(page, content)
-        document.addEventListener('pointerdown', showOptionList);
+
         createTasksList(content)
+        document.addEventListener('pointerdown', showOptionList);
 
         // switch (page) {
         //     case 'inbox':
