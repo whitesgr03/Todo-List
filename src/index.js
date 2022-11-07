@@ -164,7 +164,9 @@ const navbar = (() => {
         //         // content.addEventListener('click', product.showForm)
         // }
     }
-    function createTasksTopBar(name, element) {
+    function createTasksTopBar(name) {
+        const content = document.querySelector('.content')
+
         const template = `
             <div class="wrap">
                 <h2 class="title"></h2>
@@ -186,7 +188,7 @@ const navbar = (() => {
         const title = div.querySelector('.title');
         title.textContent = name;
 
-        element.append(div);
+        content.append(div);
 
         if (title.scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
             title.style.overflow = 'hidden';
@@ -892,7 +894,7 @@ const navbar = (() => {
             const li = document.createElement('li');
 
             li.className = 'item'
-            li.dataset.productId = product.id;
+            li.dataset.id = product.id;
             li.innerHTML = template;
             li.querySelector('.title').textContent = product.name;
             li.querySelector('.icon').style = product.colorHexCode;
@@ -916,7 +918,7 @@ const navbar = (() => {
             const editButton = e.target.closest('.editButton');
             if (!editButton) return
 
-            const id = editButton.closest('.item').dataset.productId
+            const id = editButton.closest('.item').dataset.id
             const item = products.find(item => item.id === +id)
 
             if (!item || !id) return
@@ -930,7 +932,7 @@ const navbar = (() => {
 
             if (!deleteButton) return
 
-            const id = deleteButton.closest('.item').dataset.productId
+            const id = deleteButton.closest('.item').dataset.id
             const item = products.find(item => item.id === +id)
 
             if (!item || !id) return
@@ -948,7 +950,7 @@ const navbar = (() => {
 
             localStorage.setItem('products', JSON.stringify(products))
 
-            document.querySelector((`[data-product-id="${id}"]`)).remove()
+            document.querySelector((`[data-id="${id}"]`)).remove()
         }
 
         return { remove }
