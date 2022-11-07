@@ -87,8 +87,14 @@ const navbar = (() => {
         for (let field in formProps) {
             const elem = form.elements[field]
 
-            if (elem.dataset.skipValid) {
+            if (elem.dataset.skipValid && elem.classList.contains('disableOutline')) {
                 continue
+            }
+
+            if (!elem.classList.contains('disableOutline')) {
+                isValid = false;
+                elem.focus();
+                return
             }
 
             const value = formProps[field].trim();
@@ -292,10 +298,10 @@ const navbar = (() => {
                 <textarea class="disableOutline" id="descript" name="descript" rows="1" maxlength="300" data-skip-valid="1"></textarea>
             </label>
                 <div class="taskFormButtons">
-                    <input class="date disableOutline" name="date" type="date" required>
+                    <input class="day disableOutline" name="day" type="date" required>
                     <input class="time disableOutline" name="time" type="time" data-skip-valid="1">
-                    <div class="dropdown priority">
-                        <button type="button" class="wrap dropDownButton">
+                    <div class="dropdown">
+                        <button type="button" class="wrap dropDownButton priority">
                             <span class="icon flag low"></span>
                             Low
                         </button>
@@ -328,8 +334,8 @@ const navbar = (() => {
                             </ul>   
                         </div>
                     </div>
-                    <div class="dropdown productName">
-                        <button type="button" class="wrap dropDownButton">
+                    <div class="dropdown productDropdown">
+                        <button type="button" class="wrap dropDownButton productName">
                             <span class="icon box"></span>
                             Inbox
                         </button>
@@ -368,7 +374,7 @@ const navbar = (() => {
         const overlay = document.querySelector('.overlay');
         overlay.append(form)
 
-        form.elements.date.addEventListener('change', validDate)
+        form.elements.day.addEventListener('change', validDate)
         form.elements.time.addEventListener('change', validTime)
 
         createTaskDropdown();
@@ -435,19 +441,23 @@ const navbar = (() => {
         function changeItem(e) {
 
             const target = e.target.closest('.wrap')
+            
                 
             if (!target || target === button) return
 
             const selectElem = target.cloneNode(true)
 
-            selectElem.classList.add('dropDownButton')
+            const buttonClassList = Array.from(button.classList)
+            buttonClassList.pop()
+
+            selectElem.classList.add(...buttonClassList)
             selectElem.tabIndex = 0;
 
             button.replaceWith(selectElem)
         }
     }
     function createTaskDropdown() {
-        const dropdownList = document.querySelector('.productName .dropdownList ul')
+        const dropdownList = document.querySelector('.productDropdown .dropdownList ul')
         for (let product of products) {
             const template = `
             <li class="item">
@@ -515,10 +525,10 @@ const navbar = (() => {
         }
 
         // 這邊開始是一定有選擇值
-        let date = new Date(e.target.value);              
+        let day = new Date(e.target.value);              
         let currentTime = new Date().setHours(0,0,0,0)
 
-        if (date < currentTime) {  // 如果日期是今天之前
+        if (day < currentTime) {  // 如果日期是今天之前
             message.textContent = 'Date and Time cannot be set to the past'
             message.classList.add('error');
             message.hidden = false;
@@ -536,7 +546,7 @@ const navbar = (() => {
         const message = form.querySelector('.message')
         const inputState = e.target.validity; // Constraint validation
 
-        let date = form.elements.date;
+        let day = form.elements.day;
     
         if (inputState.valueMissing || e.target.value.length === 0) { // 有選過之後又刪除值時
             e.target.value = '';
@@ -545,8 +555,8 @@ const navbar = (() => {
         }
 
 
-        if (!date.value) {  // 未設定日期時會不給設定
-            date.focus()
+        if (!day.value) {  // 未設定日期時會不給設定
+            day.focus()
             e.target.value = '';
             message.textContent = 'Date must be set'
             message.classList.add('error');
@@ -555,8 +565,8 @@ const navbar = (() => {
         }
         
 
-        if (!date.classList.contains('disableOutline')) {  // 未設定日期時會不給設定
-            date.focus()
+        if (!day.classList.contains('disableOutline')) {  // 未設定日期時會不給設定
+            day.focus()
             e.target.value = '';
             message.textContent = 'Date and Time cannot be set to the past'
             message.classList.add('error');
@@ -567,11 +577,11 @@ const navbar = (() => {
 
         // 這邊開始是一定有選日期並且大於今日
 
-        if (!isToday(new Date(date.value))) return // 如果選擇的日期不是今天, 那就是未來時不需驗證
+        if (!isToday(new Date(day.value))) return // 如果選擇的日期不是今天, 那就是未來時不需驗證
 
 
         // 如果選擇的日期是今天時, 必須驗證日期 + 時間是否有大於現在的時間
-        const inputDate = new Date(`${date.value}T${e.target.value}`);
+        const inputDate = new Date(`${day.value}T${e.target.value}`);
         const currentTime = new Date().setSeconds(0, 0)
         
         if (inputDate < currentTime) { // 小於目前時間顯示
@@ -586,6 +596,7 @@ const navbar = (() => {
             message.hidden = true;
             e.target.classList.add('disableOutline')
         }
+    }
     }
     function limitLines(e) {
         if (e.code === 'Backspace') return;
@@ -643,9 +654,9 @@ const navbar = (() => {
     function createAddProductForm() {
         const template = `
             <h2>Add Product</h2>
-            <label for="productName">
+            <label for="name">
                 Name
-                <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabindex="0">
+                <input class="disableOutline" name="name" type="text" id="name" maxlength="50" tabindex="0">
             </label>
             <div class="dropdown">
                 <h3>Color</h3>
@@ -684,9 +695,9 @@ const navbar = (() => {
     function createEditProductForm(product) {
         const template = `
             <h2>Add Product</h2>
-            <label for="productName">
+            <label for="name">
                 Name
-                <input class="disableOutline" name="name" type="text" id="productName" maxlength="50" tabindex="0">
+                <input class="disableOutline" name="name" type="text" id="name" maxlength="50" tabindex="0">
             </label>
             <div class="dropdown">
                 <h3>Color</h3>
@@ -708,7 +719,7 @@ const navbar = (() => {
         form.classList.add('productForm');
         form.innerHTML = template;
 
-        form.querySelector('#productName').value = product.name;
+        form.elements.name.value = product.name;
 
         form.querySelector('.colorButton').append(product.colorName);
         form.querySelector('.icon').style = product.colorHexCode;
