@@ -207,25 +207,32 @@ const navbar = (() => {
             console.log(showTaskButton)
         }
     }
-    function createTasksList(element) {
+    function createTasksList() {
+        const content = document.querySelector('.content')
 
         const taskList = document.createElement('ul');
         taskList.className = 'taskList'
-        element.append(taskList);
 
-        const tasks = [
-            { name: '123', descript: '9999', date: '2020/12/20' },
-            { name: '123', descript: '9999', date: '2020/12/20' },
-            { name: '123', descript: '9999', date: '2020/12/20' },
-            { name: '123', descript: '9999', date: '2020/12/20' },
-            {name: '123', descript: '9999', date: '2020/12/20'},
-        ]
+        content.append(taskList);
+        
+        tasks = getLocalTasks();
+
+        if (!tasks) {
+            console.log("Haven't item");
+            return
+        }
+        
+
+        // task.priority
+        // task.productName
 
         for (let task of tasks) {
+            const date = getDate(task.day, task.time)
+
             const template = `
                 <input type="checkbox">
                 <div class="wrap">
-                    <h3 class="title">test</h3>
+                    <h3 class="title"></h3>
                     <div class="option">
                         <button type="button" class="optionButton">•••</button>
                         <ul class="optionList">
@@ -238,21 +245,17 @@ const navbar = (() => {
                         </ul>
                     </div>
                 </div>
-                <p class="description title">rmkwekr</p>
-                <p class="dueDate">10/03/2022</p>
+                <p class="description title"></p>
+                <p class="dueDate">${date}</p>
             `;
-
-            // tasks = getLocalProducts();
-        
-            // if (!tasks) return
 
             const li = document.createElement('li');
 
             li.className = 'item'
             li.innerHTML = template;
+            li.dataset.id = task.id;
             li.querySelector('.title').textContent = task.name;
             li.querySelector('.description').textContent = task.descript;
-            li.querySelector('.dueDate').textContent = task.date;
 
             taskList.append(li);
         }
@@ -290,6 +293,7 @@ const navbar = (() => {
 
             // item.remove();
         }
+
     }
 
 
@@ -519,6 +523,11 @@ const navbar = (() => {
 
         localStorage.setItem('tasks', JSON.stringify(tasks))
 
+        createTasksList();
+
+
+        this.reset();
+        closeForm();
     }
     function validDate(e) {
 
@@ -611,6 +620,31 @@ const navbar = (() => {
             e.target.classList.add('disableOutline')
         }
     }
+    function getDate(day, time) {
+        let tokens = null;
+        let timeTokens = ''
+        let date = new Date(day)
+        
+        if (time) {
+            date = new Date(`${day}T${time}`);
+            timeTokens = ' hh:mm'
+        }
+
+        const distanceDays =  date.getDate() - new Date().getDate()
+
+        if (isToday(date)) {
+            tokens = "'Today'";
+        } else if (isTomorrow(date)) {
+            tokens = "'Tomorrow'";
+        } else if (distanceDays >= 2 && distanceDays <= 7) {
+            tokens = 'EEEE';
+        } else {
+            tokens = 'd MMM';
+        }
+
+        tokens += timeTokens
+
+        return format(date, tokens)
     }
     function limitLines(e) {
         if (e.code === 'Backspace') return;
