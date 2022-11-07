@@ -480,6 +480,21 @@ const navbar = (() => {
         let formProps = Object.fromEntries(formData);
 
         if (!validation(formProps, this)) return
+
+        formProps.priority = this.querySelector('.priority').textContent.trim()
+        formProps.productName = this.querySelector('.productName').textContent.trim()
+
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        if (tasks.length > 0) {
+            formProps.id = tasks.at(-1).id + 1;
+        } else {
+            formProps.id = 1;
+        }
+        tasks.push(formProps)
+
+        localStorage.setItem('tasks', JSON.stringify(tasks))
+
     }
     function validDate(e) {
 
