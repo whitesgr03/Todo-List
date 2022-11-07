@@ -5,7 +5,7 @@ import './css/style.css';
 
 // library
 import namedColors from 'color-name-list';
-import {format, isToday} from 'date-fns';
+import {format, isToday, isTomorrow} from 'date-fns';
 
 
 const navbar = (() => {
