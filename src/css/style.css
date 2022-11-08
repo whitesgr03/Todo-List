@@ -468,7 +468,7 @@ nav .wrap {
     border-radius: 10px;
 }
 
-.taskFormButtons .dropdown:last-of-type .item:nth-child(n+3) .icon {
+.taskFormButtons .dropdown:last-of-type .item:nth-child(n+2) .icon {
     width: 10px;
     height: 10px;
     margin: 0 7.5px;
@@ -533,7 +533,6 @@ nav .wrap {
 }
 
 .taskFormButtons .productDropdown .dropdownList {
-    height: 200px;
     overflow-y: auto;
 }
 
@@ -569,22 +568,19 @@ nav .wrap {
 }
 
 .taskList .title {
-    width: 150px;
     flex: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
 }
 
-
 .taskList .optionButton {
-    display: none;
+    visibility: hidden;
     cursor: pointer;
     flex: 0 1 25px;
     text-align: center;
     color: rgb(160, 160, 160);
 }
 .taskList .item:hover .optionButton {
-    display: block;
+    visibility: visible;
 }
 .taskList .option.active .optionButton{
     display: block;
@@ -623,16 +619,13 @@ nav .wrap {
     margin-right: 15px;
     width: 25px;
     height: 25px;
-    border: 2px solid var(--main-dark-color);
+    border: 2px solid var(--priority-color);
     border-radius: 50px;
     display: grid;
     place-content: center;
     cursor: pointer;
 }
 
-.taskList .item input[type="checkbox"] {
-    border-color: blueviolet;
-}
 
 .taskList .item input[type="checkbox"]::before {
     content: "";
