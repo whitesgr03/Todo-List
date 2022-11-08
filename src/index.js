@@ -533,7 +533,6 @@ const navbar = (() => {
 
         createTasksList();
 
-
         this.reset();
         closeForm();
     }
