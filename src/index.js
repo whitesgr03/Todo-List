@@ -132,14 +132,13 @@ const navbar = (() => {
     }
     // Tasks
     function createPages(page) {
-
         const content = document.querySelector('.content')
 
         content.innerHTML = '';
 
-        createTasksTopBar(page, content)
+        createTasksTopBar(page)
 
-        createTasksList(content)
+        createTasksList(page)
         document.addEventListener('pointerdown', showOptionList);
 
         // switch (page) {
