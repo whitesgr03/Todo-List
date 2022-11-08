@@ -188,7 +188,7 @@ const navbar = (() => {
         const title = div.querySelector('.title');
         title.textContent = name;
 
-        content.append(div);
+        content.prepend(div);
 
         if (title.scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
             title.style.overflow = 'hidden';
@@ -221,16 +221,25 @@ const navbar = (() => {
             console.log("Haven't item");
             return
         }
-        
 
-        // task.priority
-        // task.productName
+        const content = document.querySelector('.content')
 
-        for (let task of tasks) {
+        let taskList = document.querySelector('.taskList');
+
+        const ul = document.createElement('ul');
+        ul.className = 'taskList';        
+
+        if (taskList) {
+            taskList.replaceWith(ul)
+        } else {
+            content.append(ul);
+        }
+        let pageItem = tasks;
+        for (let task of pageItem) {
             const date = getDate(task.day, task.time)
 
             const template = `
-                <input type="checkbox">
+                <input type="checkbox" style="--priority-color:${task.priority}">
                 <div class="wrap">
                     <h3 class="title"></h3>
                     <div class="option">
@@ -246,7 +255,11 @@ const navbar = (() => {
                     </div>
                 </div>
                 <p class="description title"></p>
-                <p class="dueDate">${date}</p>
+                <div class="dueDate">
+                    <span class="icon calendar"></span>
+                    ${date}
+                </div>
+                
             `;
 
             const li = document.createElement('li');
@@ -257,11 +270,11 @@ const navbar = (() => {
             li.querySelector('.title').textContent = task.name;
             li.querySelector('.description').textContent = task.descript;
 
-            taskList.append(li);
+            ul.append(li);
         }
 
-        taskList.addEventListener('pointerdown', editProductName);
-        taskList.addEventListener('pointerdown', deleteProduct);
+        ul.addEventListener('pointerdown', editProductName);
+        ul.addEventListener('pointerdown', deleteProduct);
 
         function editProductName(e) {
             e.preventDefault(); 
