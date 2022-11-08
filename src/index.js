@@ -635,7 +635,7 @@ const navbar = (() => {
         
         if (time) {
             date = new Date(`${day}T${time}`);
-            timeTokens = ' hh:mm'
+            timeTokens = ' HH:mm'
         }
 
         const distanceDays =  date.getDate() - new Date().getDate()
