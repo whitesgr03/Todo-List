@@ -517,7 +517,7 @@ const navbar = (() => {
 
         if (!validation(formProps, this)) return
 
-        formProps.priority = this.querySelector('.priority').textContent.trim()
+        formProps.priority = this.querySelector('.priority').dataset.color
         formProps.productName = this.querySelector('.productName').textContent.trim()
 
         const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
