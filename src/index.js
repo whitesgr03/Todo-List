@@ -488,15 +488,10 @@ const navbar = (() => {
     }
     function createTaskDropdown() {
         const dropdownList = document.querySelector('.productDropdown .dropdownList ul')
-        for (let product of products) {
-            const template = `
-            <li class="item">
-                <button type="button" class="wrap" tabIndex="-1">
-                    <span class="icon" style="--product-color:#000000"></span>
-                    black
-                </button>
-            </li>`
 
+        if (!products) return
+
+        for (let product of products) {
             const li = document.createElement('li');
             const button = `
                 <button type="button" class="wrap" tabIndex="-1">
@@ -511,6 +506,7 @@ const navbar = (() => {
             dropdownList.append(li);
         }
     }
+
 
     // Task From handle
     function addTask(e) {
