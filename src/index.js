@@ -437,7 +437,12 @@ const navbar = (() => {
 
         button.classList.toggle('showList')
 
+
         const dropdownList = button.nextElementSibling;
+
+        if (dropdownList.firstElementChild.clientHeight > 200) {
+            dropdownList.firstElementChild.style.height = '200px'
+        }
 
         dropdownList.style.right = 'auto';
 
