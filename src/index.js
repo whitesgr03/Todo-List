@@ -207,14 +207,8 @@ const navbar = (() => {
             console.log(showTaskButton)
         }
     }
-    function createTasksList() {
-        const content = document.querySelector('.content')
+    function createTasksList(name) {
 
-        const taskList = document.createElement('ul');
-        taskList.className = 'taskList'
-
-        content.append(taskList);
-        
         tasks = getLocalTasks();
 
         if (!tasks) {
