@@ -332,32 +332,32 @@ const navbar = (() => {
                     <input class="day disableOutline" name="day" type="date" required>
                     <input class="time disableOutline" name="time" type="time" data-skip-valid="1">
                     <div class="dropdown">
-                        <button type="button" class="wrap dropDownButton priority">
+                        <button type="button" class="wrap dropDownButton priority" data-color="rgb(0,210,102)">
                             <span class="icon flag low"></span>
                             Low
                         </button>
                         <div class="dropdownList">
                             <ul>
                                 <li class="item">
-                                    <button type="button" class="wrap" tabIndex="-1">
+                                    <button type="button" class="wrap" tabIndex="-1" data-color="rgb(226,54,48)">
                                         <span class="icon flag critical"></span>
                                         Critical
                                     </button>
                                 </li>
                                 <li class="item">
-                                    <button type="button" class="wrap" tabIndex="-1">
+                                    <button type="button" class="wrap" tabIndex="-1" data-color="rgb(251,131,0)">
                                         <span class="icon flag high"></span>
                                         High
                                     </button>
                                 </li>
                                 <li class="item">
-                                    <button type="button" class="wrap" tabIndex="-1">
+                                    <button type="button" class="wrap" tabIndex="-1" data-color="rgb(0,114,231)">
                                         <span class="icon flag medium"></span>
                                         Medium
                                     </button>
                                 </li>
                                 <li class="item">
-                                    <button type="button" class="wrap" tabIndex="-1">
+                                    <button type="button" class="wrap" tabIndex="-1" data-color="rgb(0,210,102)">
                                         <span class="icon flag low"></span>
                                         Low
                                     </button>
@@ -376,12 +376,6 @@ const navbar = (() => {
                                     <button type="button" class="wrap" tabIndex="-1">
                                         <span class="icon box"></span>
                                         Inbox
-                                    </button>
-                                </li>
-                                <li class="item">
-                                    <button type="button" class="wrap" tabIndex="-1">
-                                        <span class="icon order"></span>
-                                        Today
                                     </button>
                                 </li>
                             </ul>   
