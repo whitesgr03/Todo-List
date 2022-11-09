@@ -520,16 +520,14 @@ const navbar = (() => {
         formProps.priority = this.querySelector('.priority').dataset.color
         formProps.productName = this.querySelector('.productName').textContent.trim()
 
-        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-
-        if (tasks.length > 0) {
+        if (data.tasks.length > 0) {
             formProps.id = tasks.at(-1).id + 1;
         } else {
             formProps.id = 1;
         }
-        tasks.push(formProps)
+        data.tasks.push(formProps)
 
-        localStorage.setItem('tasks', JSON.stringify(tasks))
+        localStorage.setItem('tasks', JSON.stringify(data.tasks))
 
         createTasksList();
 
