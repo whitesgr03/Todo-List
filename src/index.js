@@ -125,16 +125,21 @@ const navbar = (() => {
     function getLocalTasks() {
         const item = localStorage.getItem('tasks');
 
-        if (!item) return
+        if (!item) return []
 
         const tasks = JSON.parse(item)
 
-        // for (let product of products) {
-        //     compose(product)
-        // }
-
+        for (let item of tasks) {
+            
+            Object.assign(item,
+                handleDelete(item.id),
+                // handleTaskUpdate(item)
+            )
+        }
         return tasks
     }
+
+
     // Tasks
     function createPages(page) {
         const content = document.querySelector('.content')
