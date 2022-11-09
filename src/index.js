@@ -280,12 +280,11 @@ const navbar = (() => {
             ul.append(li);
         }
 
-        ul.addEventListener('pointerdown', editProductName);
-        ul.addEventListener('pointerdown', deleteProduct);
+        ul.addEventListener('pointerdown', editTaskItem);
+        ul.addEventListener('pointerdown', deleteTaskItem);
 
-        function editProductName(e) {
+        function editTaskItem(e) {
             e.preventDefault(); 
-            
             const editButton = e.target.closest('.editButton');
             if (!editButton) return
 
@@ -947,10 +946,10 @@ const navbar = (() => {
 
         productsList.append(ul);
         
-        ul.addEventListener('pointerdown', editProductName);
-        ul.addEventListener('pointerdown', deleteProduct);
+        ul.addEventListener('pointerdown', editProductItem);
+        ul.addEventListener('pointerdown', deleteProductItem);
 
-        function editProductName(e) {
+        function editProductItem(e) {
             e.preventDefault(); 
             
             const editButton = e.target.closest('.editButton');
@@ -965,7 +964,7 @@ const navbar = (() => {
             showForm();
             
         }
-        function deleteProduct(e) {
+        function deleteProductItem(e) {
             const deleteButton = e.target.closest('.deleteButton');
 
             if (!deleteButton) return
