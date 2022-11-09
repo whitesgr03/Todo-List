@@ -859,24 +859,23 @@ const navbar = (() => {
         formProps.colorHexCode = hexCode;
         formProps.colorName = color;
 
-        const products = JSON.parse(localStorage.getItem('products')) || [];
-
-        if (products.length > 0) {
-            formProps.id = products.at(-1).id + 1;
+        if ( data.products.length > 0) {
+            formProps.id = data.products.at(-1).id + 1;
         } else {
             formProps.id = 1;
         }
-        products.push(formProps)
 
-        localStorage.setItem('products', JSON.stringify(products))
+        data.products.push(formProps)
+
+        localStorage.setItem('products', JSON.stringify(data.products))
 
         createProductList();
 
         const productButton = document.querySelector('.products');
         productButton.classList.add('arrowDown');
 
-        const productList = document.querySelector('.productList ul');
-        productList.scrollTo({top: productList.scrollHeight, behavior: 'smooth'});
+        const productsList = document.querySelector('.productsList ul');
+        productsList.scrollTo({top: productsList.scrollHeight, behavior: 'smooth'});
 
         this.reset();
         closeForm();
