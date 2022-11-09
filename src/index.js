@@ -489,9 +489,9 @@ const navbar = (() => {
     function createTaskDropdown() {
         const dropdownList = document.querySelector('.productDropdown .dropdownList ul')
 
-        if (!products) return
+        if (data.products.length === 0) return // 顯示尚未建立 product
 
-        for (let product of products) {
+        for (let product of data.products) {
             const li = document.createElement('li');
             const button = `
                 <button type="button" class="wrap" tabIndex="-1">
