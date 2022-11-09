@@ -212,8 +212,6 @@ const navbar = (() => {
             const showTaskButton = e.target.closest('.showTaskButton');
             
             if (!showTaskButton) return;
-
-            console.log(showTaskButton)
         }
     }
     function createTasksList(page) {
