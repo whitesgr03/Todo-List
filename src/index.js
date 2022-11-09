@@ -676,23 +676,19 @@ const navbar = (() => {
     function getLocalProducts() {
         const item = localStorage.getItem('products');
 
-        if (!item) return
+        if (!item) return []
 
         const products = JSON.parse(item)
 
-        for (let product of products) {
-            compose(product)
+        for (let item of products) {
+            Object.assign(item,
+                handleDelete(item.id),
+                handleProductUpdate(item)
+            )
         }
-
+        
         return products
     }
-    function compose(product) {
-        return Object.assign(product,
-            handleDelete(product.id),
-            handleUpdate(product)
-        )
-    }
-
 
     // Product Form
     function showAddProductForm(e) {
