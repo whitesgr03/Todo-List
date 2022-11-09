@@ -894,19 +894,19 @@ const navbar = (() => {
     }
     function createProductList() {
         
-        const productList = document.querySelector('.productList');
+        const productsList = document.querySelector('.productsList');
 
-        productList.innerHTML = '';
+        productsList.innerHTML = '';
 
         const ul = document.createElement('ul');
         
-        productList.append(ul);
+        productsList.append(ul);
 
-        products = getLocalProducts();
+        data.products = getLocalProducts();
 
-        if (!products) return
+        if (data.products.length === 0) return // 顯示尚未加入專案
 
-        for (let product of products) {
+        for (let product of data.products) {
             const template = `
                 <div class="wrap">
                     <span class="icon"></span>
@@ -941,7 +941,7 @@ const navbar = (() => {
             }
         }
 
-        productList.append(ul);
+        productsList.append(ul);
         
         ul.addEventListener('pointerdown', editProductName);
         ul.addEventListener('pointerdown', deleteProduct);
@@ -953,11 +953,11 @@ const navbar = (() => {
             if (!editButton) return
 
             const id = editButton.closest('.item').dataset.id
-            const item = products.find(item => item.id === +id)
+            const index = data.products.findIndex(item => item.id === +id)
 
-            if (!item || !id) return
+            if (index === -1 || !id) return // 提示未找到項目
 
-            createEditProductForm(item);
+            createEditProductForm(data.products[index]);
             showForm();
             
         }
