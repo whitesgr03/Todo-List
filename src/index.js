@@ -9,8 +9,13 @@ import {format, isToday, isTomorrow} from 'date-fns';
 
 
 const navbar = (() => {
-    let products = getLocalProducts();
-    let tasks = getLocalTasks();
+    const data = {
+        tasks: null,
+        products: null,
+    }
+
+    data.products = getLocalProducts();
+    // data.tasks = getLocalTasks();
 
     // cache DOM
     const nav = document.querySelector('nav');
