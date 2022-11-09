@@ -552,13 +552,13 @@ nav .wrap {
     border: .5px solid var(--main-dark-color);
 }
 
-/* taskList block */
+/* tasksList block */
 
-.taskList {
+.tasksList {
     margin: 30px 0;
 }
 
-.taskList .item {
+.tasksList .item {
     border-bottom: 1px solid var(--main-dark-color);
     border-radius: 0;
     padding: 0 10px;
@@ -567,30 +567,30 @@ nav .wrap {
     cursor: pointer;
 }
 
-.taskList .title {
+.tasksList .title {
     flex: 1;
     overflow-wrap: anywhere;
 }
 
-.taskList .optionButton {
+.tasksList .optionButton {
     visibility: hidden;
     cursor: pointer;
     flex: 0 1 25px;
     text-align: center;
     color: rgb(160, 160, 160);
 }
-.taskList .item:hover .optionButton {
+.tasksList .item:hover .optionButton {
     visibility: visible;
 }
-.taskList .option.active .optionButton{
+.tasksList .option.active .optionButton{
     display: block;
     color: rgb(0, 0, 0);
 }
-.taskList .optionButton:hover {
+.tasksList .optionButton:hover {
     color: rgb(0, 0, 0);
 }
 
-.taskList .dueDate {
+.tasksList .dueDate {
     display: inline-flex;
     border: 1px solid black;
     background-color: transparent;
@@ -603,14 +603,14 @@ nav .wrap {
     background-color: var(--nav-background-color)
 }
 
-.taskList .dueDate .icon {
+.tasksList .dueDate .icon {
     width: .8rem;
     height: .8rem;
 }
 
 
 /* task checkbox block */
-.taskList .item input[type="checkbox"] {
+.tasksList .item input[type="checkbox"] {
     appearance: none;
     position: absolute;
     right: 100%;
@@ -627,7 +627,7 @@ nav .wrap {
 }
 
 
-.taskList .item input[type="checkbox"]::before {
+.tasksList .item input[type="checkbox"]::before {
     content: "";
     width: 20px;
     height: 20px;
@@ -637,16 +637,16 @@ nav .wrap {
     background-size: cover;
 }
 
-.taskList .item input[type="checkbox"]:checked::before {
+.tasksList .item input[type="checkbox"]:checked::before {
     transform: scale(.9);
     filter: invert(21%) sepia(98%) saturate(4405%) hue-rotate(109deg) brightness(95%) contrast(102%);
 }
 
-.taskList .item input[type="checkbox"]:checked {
+.tasksList .item input[type="checkbox"]:checked {
     border-color: var(--checkbox-color);
 }
 
-.taskList .item input[type="checkbox"]:hover {
+.tasksList .item input[type="checkbox"]:hover {
     outline: 2px solid currentColor;
     outline-offset: 2px;
 }
@@ -660,7 +660,7 @@ nav .wrap {
     position: relative;
 }
 
-.products.arrowDown + .productList {
+.products.arrowDown + .productsList {
     max-height: 300px;
     height: 300px;
     transition: max-height .2s ease-in;
@@ -689,21 +689,21 @@ li.products.arrowRight.arrowDown .icon {
 }
 
 
-/* productList block */
+/* productsList block */
 
-.productList {
+.productsList {
     max-height: 0;
     height: 0;
     overflow: hidden;
     transition: max-height .15s ease-out, height .15s ease-out;
 }
 
-.productList > ul {
+.productsList > ul {
     height: 100%;
     overflow-y: scroll;
 }
 
-.productList .icon{
+.productsList .icon{
     width: 10px;
     height: 10px;
     margin: 0 7.5px;
@@ -711,21 +711,21 @@ li.products.arrowRight.arrowDown .icon {
     background-color: var(--product-color)
 }
 
-.productList .title {
+.productsList .title {
     width: 150px;
     flex: 1;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.productList .optionButton {
+.productsList .optionButton {
     cursor: pointer;
     flex: 0 1 25px;
     text-align: center;
     color: rgb(160, 160, 160);
 }
 
-.productList .optionButton:hover {
+.productsList .optionButton:hover {
     color: rgb(0, 0, 0);
 }
 
