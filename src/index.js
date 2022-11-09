@@ -216,28 +216,34 @@ const navbar = (() => {
             console.log(showTaskButton)
         }
     }
-    function createTasksList(name) {
+    function createTasksList(page) {
 
-        tasks = getLocalTasks();
+        data.tasks = getLocalTasks();
 
-        if (!tasks) {
+        if (data.tasks.length === 0) {
             console.log("Haven't item");
             return
         }
 
         const content = document.querySelector('.content')
 
-        let taskList = document.querySelector('.taskList');
+        let tasksList = document.querySelector('.tasksList');
 
         const ul = document.createElement('ul');
-        ul.className = 'taskList';        
+        ul.className = 'tasksList';        
 
-        if (taskList) {
-            taskList.replaceWith(ul)
+        if (tasksList) {
+            tasksList.replaceWith(ul)
         } else {
             content.append(ul);
         }
-        let pageItem = tasks;
+
+        let pageItem = data.tasks;
+
+        if (page !== 'Inbox') {
+            pageItem = data.tasks.filter(item => item.productName === page)
+        }
+
         for (let task of pageItem) {
             const date = getDate(task.day, task.time)
 
@@ -1019,6 +1025,7 @@ const navbar = (() => {
 
         return { edit }
     }
+    
     function showOptionList(e) {
         const target = e.target.closest('.option')
 
