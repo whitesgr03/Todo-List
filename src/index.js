@@ -9,6 +9,8 @@ import {format, isToday, isTomorrow} from 'date-fns';
 
 
 const navbar = (() => {
+    let page = null;
+
     const data = {
         tasks: null,
         products: null,
@@ -32,15 +34,15 @@ const navbar = (() => {
 
         if (!navItem) return
 
-        const name = navItem.querySelector('.title').textContent;
+        page = navItem.querySelector('.title').textContent;
 
-        if (name === 'Products') {
+        if (page === 'Products') {
             showProductList();
             return
         }
 
         // 製作切換 product name
-        createPages(name)
+        createPages(page)
     }
     function focusForm(e) {
         const target = e.relatedTarget;
@@ -524,7 +526,7 @@ const navbar = (() => {
         formProps.productName = this.querySelector('.productName').textContent.trim()
 
         if (data.tasks.length > 0) {
-            formProps.id = tasks.at(-1).id + 1;
+            formProps.id = data.tasks.at(-1).id + 1;
         } else {
             formProps.id = 1;
         }
@@ -532,7 +534,7 @@ const navbar = (() => {
 
         localStorage.setItem('tasks', JSON.stringify(data.tasks))
 
-        createTasksList();
+        createTasksList(page);
 
         this.reset();
         closeForm();
