@@ -295,21 +295,18 @@ const navbar = (() => {
             // createEditForm(item);
             // showForm();
         }
-        function deleteProduct(e) {
+        function deleteTaskItem(e) {
             const deleteButton = e.target.closest('.deleteButton');
 
             if (!deleteButton) return
 
-            console.log(deleteButton)
+            const id = deleteButton.closest('.item').dataset.id
+            const index = data.tasks.findIndex(item => item.id === +id)
 
-            // const id = deleteButton.closest('.item').dataset.productId
-            // const item = products.find(item => item.id === +id)
+            if (index === -1 || !id) return // 提示未找到項目
 
-            // if (!item || !id) return
-
-            // item.remove();
+            data.tasks[index].remove(index, 'tasks');
         }
-
     }
 
 
