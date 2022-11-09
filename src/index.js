@@ -891,7 +891,7 @@ const navbar = (() => {
     }
     function createEditProductForm(product) {
         const template = `
-            <h2>Add Product</h2>
+            <h2>Edit Product</h2>
             <label for="name">
                 Name
                 <input class="disableOutline" name="name" type="text" id="name" maxlength="50" tabindex="0">
@@ -1136,7 +1136,7 @@ const navbar = (() => {
 
         return { remove }
     }
-    function handleUpdate(product) {
+    function handleProductUpdate(product) {
         const edit = function (e) {
             e.preventDefault()
 
@@ -1152,15 +1152,15 @@ const navbar = (() => {
             product.colorName = color;
             product.name = formProps.name
 
-            localStorage.setItem('products', JSON.stringify(products))
+            localStorage.setItem('products', JSON.stringify(data.products))
 
-            let productList = document.querySelector('.productList ul');
-            const currentScrollBarPosition = productList.scrollTop;
+            let productsList = document.querySelector('.productsList ul');
+            const currentScrollBarPosition = productsList.scrollTop;
 
             createProductList();
 
-            productList = document.querySelector('.productList ul');
-            productList.scrollTo({ top: currentScrollBarPosition });
+            productsList = document.querySelector('.productsList ul');
+            productsList.scrollTo({ top: currentScrollBarPosition });
 
             closeForm();
         }
@@ -1202,6 +1202,7 @@ const navbar = (() => {
             target.classList.remove('active');
         }
     }
+})();
 
     
 })();
