@@ -967,24 +967,23 @@ const navbar = (() => {
             if (!deleteButton) return
 
             const id = deleteButton.closest('.item').dataset.id
-            const item = products.find(item => item.id === +id)
+            const index = data.products.findIndex(item => item.id === +id)
 
-            if (!item || !id) return
+            if (index === -1 || !id) return // 提示未找到項目
 
-            item.remove();
+            data.products[index].remove(index, 'products');
         }
     }
-
+    
     // Product list handle
     function handleDelete(id) {
-        const remove = () => {
+        const remove = (index, type) => {
 
-            const index = products.findIndex(item => item.id === id)
-            products.splice(index, 1)
+            data[type].splice(index, 1)
 
-            localStorage.setItem('products', JSON.stringify(products))
+            localStorage.setItem(type, JSON.stringify(data[type]))
 
-            document.querySelector((`[data-id="${id}"]`)).remove()
+            document.querySelector((`.${type}List [data-id="${id}"]`)).remove()
         }
 
         return { remove }
