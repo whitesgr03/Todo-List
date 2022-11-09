@@ -320,10 +320,11 @@ const navbar = (() => {
 
         if (!addButton) return
 
-        createAddTaskFrom()
+        createAddTaskForm()
     }
-    function createAddTaskFrom() {
+    function createAddTaskForm() {
         const template = `
+            <h2>Add Task</h2>
             <label for="taskName">
                 Task name
                 <textarea class="disableOutline" id="taskName" name="name" rows="1" tabIndex="0" maxlength="100" required></textarea>
@@ -430,6 +431,149 @@ const navbar = (() => {
             textarea.addEventListener("input", limitTextLength.bind(maxLength));
             textarea.addEventListener("input", autoResize);
         }
+
+        overlay.addEventListener('pointerdown', activeCloseButton)
+    }
+    function createEditTaskForm(task) {
+        const template = `
+            <h2>Edit Task</h2>
+            <label for="taskName">
+                Task name
+                <textarea class="disableOutline" id="taskName" name="name" rows="1" tabIndex="0" maxlength="100" required></textarea>
+            </label>
+            <label for="descript">
+                Description
+                <textarea class="disableOutline" id="descript" name="descript" rows="1" maxlength="300" data-skip-valid="1"></textarea>
+            </label>
+                <div class="taskFormButtons">
+                    <input class="day disableOutline" name="day" type="date" required>
+                    <input class="time disableOutline" name="time" type="time" data-skip-valid="1">
+                    <div class="dropdown">
+                        <button type="button" class="wrap dropDownButton priority" data-color="rgb(0,210,102)">
+                            <span class="icon flag low"></span>
+                            Low
+                        </button>
+                        <div class="dropdownList">
+                            <ul>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1" data-color="rgb(226,54,48)">
+                                        <span class="icon flag critical"></span>
+                                        Critical
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1" data-color="rgb(251,131,0)">
+                                        <span class="icon flag high"></span>
+                                        High
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1" data-color="rgb(0,114,231)">
+                                        <span class="icon flag medium"></span>
+                                        Medium
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1" data-color="rgb(0,210,102)">
+                                        <span class="icon flag low"></span>
+                                        Low
+                                    </button>
+                                </li>
+                            </ul>   
+                        </div>
+                    </div>
+                    <div class="dropdown productDropdown">
+                        <button type="button" class="wrap dropDownButton productName">
+                            <span class="icon box"></span>
+                            Inbox
+                        </button>
+                        <div class="dropdownList">
+                            <ul>
+                                <li class="item">
+                                    <button type="button" class="wrap" tabIndex="-1">
+                                        <span class="icon box"></span>
+                                        Inbox
+                                    </button>
+                                </li>
+                            </ul>   
+                        </div>
+                    </div>
+                    <span class="message" aria-live="polite">Time is optional</span>
+                </div>
+                <div class="submitButton">
+                    <button type="button" class="cancel">Cancel</button>
+                    <button type="submit" class="submit">Add task</button>
+                </div>
+        `;
+
+        const form = document.createElement('form');
+        form.classList.add('taskForm')
+        form.innerHTML = template;
+
+        form.elements.day.value = task.day;
+        form.elements.time.value = task.time;
+
+        const priorityButton = form.querySelector('.priority')
+        const priorityDropDownButtons =  Array.from(priorityButton.nextElementSibling.querySelectorAll('button'))
+        const priorityElem = priorityDropDownButtons.find(item => item.dataset.color === task.priority)
+
+        const priorityButtonClassList = Array.from(priorityButton.classList)
+        priorityButtonClassList.pop()
+
+        const priorityClone = priorityElem.cloneNode(true)
+        priorityClone.classList.add(...priorityButtonClassList)
+
+        priorityButton.replaceWith(priorityClone)
+
+        form.addEventListener('focusout', focusForm)
+        form.addEventListener('submit', addTask)
+        
+        const overlay = document.querySelector('.overlay');
+        overlay.append(form)
+
+        form.elements.day.addEventListener('change', validDate)
+        form.elements.time.addEventListener('change', validTime)
+
+        createTaskDropdown();
+
+        form.addEventListener('click', showTaskDropdown)
+
+        showForm()
+
+        const textareas = form.querySelectorAll('textarea')
+        
+        for (let textarea of textareas) {
+
+            const countLines = new Set();
+            const maxLength = textarea.getAttribute('maxlength');
+
+            for (let i = 0; i < maxLength; i++) {
+                textarea.value += 'a'
+                countLines.add(textarea.scrollHeight)
+            }
+            
+            textarea.value = '';
+            
+            textarea.addEventListener("keydown", limitLines.bind(countLines))
+            textarea.addEventListener("input", limitTextLength.bind(maxLength));
+            textarea.addEventListener("input", autoResize);
+        }
+
+        const productNameButton = form.querySelector('.productName')
+        const productDropDownButtons =  Array.from(productNameButton.nextElementSibling.querySelectorAll('button'))
+        const productNameElem = productDropDownButtons.find(item => item.textContent.trim() === task.productName)
+        
+        const productNameClassList = Array.from(productNameButton.classList)
+
+        productNameClassList.pop()
+
+        const productNameClone = productNameElem.cloneNode(true)
+        productNameClone.classList.add(...productNameClassList)
+
+        productNameButton.replaceWith(productNameClone)
+
+        form.elements.taskName.value = task.name;
+        form.elements.descript.value = task.descript;
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
