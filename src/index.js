@@ -455,7 +455,6 @@ const navbar = (() => {
 
         createTasksList(page);
 
-        this.reset();
         closeForm();
     }
     function validDate(e) {
