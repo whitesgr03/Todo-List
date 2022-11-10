@@ -1116,7 +1116,7 @@ const navbar = (() => {
             li.dataset.id = product.id;
             li.innerHTML = template;
             li.querySelector('.title').textContent = product.name;
-            li.querySelector('.icon').style = product.colorHexCode;
+            li.querySelector('.icon').style = `--product-color:${product.hexCode}`;
 
             ul.append(li);
 
