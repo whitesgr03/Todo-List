@@ -312,6 +312,83 @@ const navbar = (() => {
             data.tasks[index].remove(index, 'tasks');
         }
     }
+    function showTaskDropdown(e) {
+        
+        const button = e.target.closest('.dropDownButton');
+
+        if (!button) return
+
+        button.classList.toggle('showList')
+
+
+        const dropdownList = button.nextElementSibling;
+
+        if (dropdownList.firstElementChild.clientHeight > 200) {
+            dropdownList.firstElementChild.style.height = '200px'
+        }
+
+        dropdownList.style.right = 'auto';
+
+        const dropdownListCoord = dropdownList.getBoundingClientRect()
+        const windowRight = document.documentElement.clientWidth;
+
+        if (dropdownListCoord.right > windowRight) {
+            dropdownList.style.left = 'auto';
+            dropdownList.style.right = '0px';
+        }
+
+        if (button.classList.contains('showList')) {
+            this.addEventListener('pointerup', closeDropdown)
+            dropdownList.addEventListener('pointerdown', changeItem)
+        }
+
+        function closeDropdown(e) {
+            if (e.target !== button) {
+                button.classList.remove('showList')
+            }
+
+            this.removeEventListener('pointerup', closeDropdown)
+            this.removeEventListener('pointerdown', changeItem);
+        }
+
+        function changeItem(e) {
+
+            const target = e.target.closest('.wrap')
+            
+                
+            if (!target || target === button) return
+
+            const selectElem = target.cloneNode(true)
+
+            const buttonClassList = Array.from(button.classList)
+            buttonClassList.pop()
+
+            selectElem.classList.add(...buttonClassList)
+            selectElem.tabIndex = 0;
+
+            button.replaceWith(selectElem)
+        }
+    }
+    function createTaskDropdown() {
+        const dropdownList = document.querySelector('.productDropdown .dropdownList ul')
+
+        if (data.products.length === 0) return // 顯示尚未建立 product
+
+        for (let product of data.products) {
+            const li = document.createElement('li');
+            const button = `
+                <button type="button" class="wrap" tabIndex="-1">
+                    <span class="icon" style="${product.colorHexCode}"></span>
+                    ${product.name}
+                </button>
+            `;
+            
+            li.className = 'item'
+            li.innerHTML = button;
+            
+            dropdownList.append(li);
+        }
+    }
 
 
     // Task form
@@ -576,83 +653,6 @@ const navbar = (() => {
         form.elements.descript.value = task.descript;
 
         overlay.addEventListener('pointerdown', activeCloseButton)
-    }
-    function showTaskDropdown(e) {
-        
-        const button = e.target.closest('.dropDownButton');
-
-        if (!button) return
-
-        button.classList.toggle('showList')
-
-
-        const dropdownList = button.nextElementSibling;
-
-        if (dropdownList.firstElementChild.clientHeight > 200) {
-            dropdownList.firstElementChild.style.height = '200px'
-        }
-
-        dropdownList.style.right = 'auto';
-
-        const dropdownListCoord = dropdownList.getBoundingClientRect()
-        const windowRight = document.documentElement.clientWidth;
-
-        if (dropdownListCoord.right > windowRight) {
-            dropdownList.style.left = 'auto';
-            dropdownList.style.right = '0px';
-        }
-
-        if (button.classList.contains('showList')) {
-            this.addEventListener('pointerup', closeDropdown)
-            dropdownList.addEventListener('pointerdown', changeItem)
-        }
-
-        function closeDropdown(e) {
-            if (e.target !== button) {
-                button.classList.remove('showList')
-            }
-
-            this.removeEventListener('pointerup', closeDropdown)
-            this.removeEventListener('pointerdown', changeItem);
-        }
-
-        function changeItem(e) {
-
-            const target = e.target.closest('.wrap')
-            
-                
-            if (!target || target === button) return
-
-            const selectElem = target.cloneNode(true)
-
-            const buttonClassList = Array.from(button.classList)
-            buttonClassList.pop()
-
-            selectElem.classList.add(...buttonClassList)
-            selectElem.tabIndex = 0;
-
-            button.replaceWith(selectElem)
-        }
-    }
-    function createTaskDropdown() {
-        const dropdownList = document.querySelector('.productDropdown .dropdownList ul')
-
-        if (data.products.length === 0) return // 顯示尚未建立 product
-
-        for (let product of data.products) {
-            const li = document.createElement('li');
-            const button = `
-                <button type="button" class="wrap" tabIndex="-1">
-                    <span class="icon" style="${product.colorHexCode}"></span>
-                    ${product.name}
-                </button>
-            `;
-            
-            li.className = 'item'
-            li.innerHTML = button;
-            
-            dropdownList.append(li);
-        }
     }
 
 
