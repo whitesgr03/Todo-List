@@ -1215,11 +1215,13 @@ const navbar = (() => {
 
             if (!validation(formProps, this)) return
 
-            const hexCode = this.querySelector('.icon').getAttribute('style');
-            const color = this.querySelector('.colorButton').textContent.trim();
+            const hexCode = getComputedStyle(this.querySelector('.icon')).getPropertyValue('--product-color')
 
-            product.colorHexCode = hexCode;
-            product.colorName = color;
+            if (COLOR_LIST.findIndex(item => item === hexCode) === -1) return
+
+            formProps.hexCode = hexCode;
+
+            product.hexCode = hexCode;
             product.name = formProps.name
 
             localStorage.setItem('products', JSON.stringify(data.products))
