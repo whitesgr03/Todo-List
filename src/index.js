@@ -438,10 +438,15 @@ const navbar = (() => {
         formProps.priority = this.querySelector('.priority').dataset.color
 
         const productName = this.querySelector('.productName').textContent.trim();
+        const productItem = data.products.find(item => item.name === productName)
 
-        if (productName !== 'Inbox' && data.products.findIndex(item => item.name === productName) === -1) return
+        if (productName !== 'Inbox' && productItem === -1) return
 
-        formProps.productName = this.querySelector('.productName').textContent.trim()
+        if (productName === 'Inbox') {
+            formProps.productId = '';
+        } else {
+            formProps.productId = productItem.id
+        }
 
         if (data.tasks.length > 0) {
             formProps.id = data.tasks.at(-1).id + 1;
