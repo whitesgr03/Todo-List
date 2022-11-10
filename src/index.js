@@ -219,7 +219,7 @@ const navbar = (() => {
             
             Object.assign(item,
                 handleDelete(item.id),
-                // handleTaskUpdate(item)
+                handleTaskUpdate(item)
             )
         }
         return tasks
@@ -819,7 +819,7 @@ const navbar = (() => {
         priorityButton.replaceWith(priorityClone)
 
         form.addEventListener('focusout', focusForm)
-        form.addEventListener('submit', addTask)
+        form.addEventListener('submit', task.edit)
         
         const overlay = document.querySelector('.overlay');
         overlay.append(form)
@@ -871,6 +871,40 @@ const navbar = (() => {
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
 
+    // Task item handle
+    function handleTaskUpdate(task) {
+        const edit = function (e) {
+            e.preventDefault()
+
+            const formData = new FormData(this);
+            const formProps = Object.fromEntries(formData);
+
+            if (!validation(formProps, this)) return
+
+            console.log(task)
+            console.log(formProps)
+
+            task.priority = this.querySelector('.priority').dataset.color;
+            task.productName = this.querySelector('.productName').textContent.trim();
+            task.day = formProps.day
+            task.descript = formProps.descript
+            task.name = formProps.name
+            task.title = formProps.title
+
+            localStorage.setItem('tasks', JSON.stringify(data.tasks))
+
+            let content = document.querySelector('.content');
+            const currentScrollBarPosition = content.scrollTop;
+
+            createTasksList(page);
+
+            content.scrollTo({ top: currentScrollBarPosition });
+
+            closeForm();
+        }
+
+        return { edit }
+    }
 
 
 
