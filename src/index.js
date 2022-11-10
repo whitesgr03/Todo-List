@@ -1083,13 +1083,13 @@ const navbar = (() => {
 
         productsList.innerHTML = '';
 
-        const ul = document.createElement('ul');
-        
-        productsList.append(ul);
-
         data.products = getLocalProducts();
 
         if (data.products.length === 0) return // 顯示尚未加入專案
+
+        const ul = document.createElement('ul');
+        
+        productsList.append(ul);
 
         for (let product of data.products) {
             const template = `
