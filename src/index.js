@@ -978,7 +978,7 @@ const navbar = (() => {
     function createProductDropdown() {
         const dropdownList = document.querySelector('.dropdownList ul')
 
-        for (let hax of colorList) {
+        for (let hax of COLOR_LIST) {
             const color = namedColors.find(color => color.hex === hax);
 
             const li = document.createElement('li');
