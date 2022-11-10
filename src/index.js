@@ -667,7 +667,8 @@ const navbar = (() => {
         let pageItem = data.tasks;
 
         if (page !== 'Inbox') {
-            pageItem = data.tasks.filter(item => item.productName === page)
+            const product = data.products.find(item => item.name === page)
+            pageItem = data.tasks.filter(item => item.productId === product.id)
         }
 
         for (let task of pageItem) {
