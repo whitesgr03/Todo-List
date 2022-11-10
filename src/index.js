@@ -9,8 +9,9 @@ import {format, isToday, isTomorrow} from 'date-fns';
 
 
 const navbar = (() => {
-    let page = 'Inbox';
+    const COLOR_LIST = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
 
+    let page = 'Inbox';
     const data = {
         tasks: null,
         products: null,
@@ -976,8 +977,6 @@ const navbar = (() => {
     }
     function createProductDropdown() {
         const dropdownList = document.querySelector('.dropdownList ul')
-
-        const colorList = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
 
         for (let hax of colorList) {
             const color = namedColors.find(color => color.hex === hax);
