@@ -356,7 +356,7 @@ const navbar = (() => {
             const li = document.createElement('li');
             const button = `
                 <button type="button" class="wrap" tabIndex="-1">
-                    <span class="icon" style="${product.colorHexCode}"></span>
+                    <span class="icon" style="--product-color:${product.hexCode}"></span>
                     ${product.name}
                 </button>
             `;
