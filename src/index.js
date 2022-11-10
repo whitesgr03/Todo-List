@@ -25,7 +25,7 @@ const navbar = (() => {
     nav.addEventListener('click', changePage)
     nav.addEventListener('click', showAddProductForm)
 
-    createPages('Inbox')
+    createPages(page)
 
 
     // Change page init
