@@ -1039,11 +1039,11 @@ const navbar = (() => {
 
         if (!validation(formProps, this)) return
 
-        const hexCode = this.querySelector('.icon').getAttribute('style');
-        const color = this.querySelector('.colorButton').textContent.trim();
+        const hexCode = getComputedStyle(this.querySelector('.icon')).getPropertyValue('--product-color')
 
-        formProps.colorHexCode = hexCode;
-        formProps.colorName = color;
+        if (COLOR_LIST.findIndex(item => item === hexCode) === -1) return
+
+        formProps.hexCode = hexCode;
 
         if ( data.products.length > 0) {
             formProps.id = data.products.at(-1).id + 1;
