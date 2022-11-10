@@ -121,6 +121,54 @@ const navbar = (() => {
         this.classList.add('disableOutline')
         this.removeEventListener('blur', disableOutLine)
     }
+    function showOptionList(e) {
+        const target = e.target.closest('.option')
+
+        if (!target) return
+
+        const optionCoord = target.getBoundingClientRect()
+
+        const optionList = target.querySelector('.optionList');
+        optionList.style.top = `${optionCoord.bottom + 10}px`;
+        optionList.style.left = `${optionCoord.left - (optionList.clientWidth - optionCoord.width) / 2}px`;
+
+        target.classList.toggle('active');
+
+
+        if (!target.classList.contains('active')) return 
+        
+        this.addEventListener('pointerdown', closeOptionListWithClick)
+        this.addEventListener('scroll', closeOptionListWithScroll, {
+            capture: true,
+            once: true
+        })
+
+        function closeOptionListWithClick(e) {
+            const secondTarget = e.target.closest('.option')
+
+            if (!secondTarget || secondTarget !== target) {
+                target.classList.remove('active');
+            }
+            this.removeEventListener('pointerdown', closeOptionListWithClick)
+        }
+        function closeOptionListWithScroll() {
+            target.classList.remove('active');
+        }
+    }
+
+    // General handel
+    function handleDelete(id) {
+        const remove = (index, type) => {
+
+            data[type].splice(index, 1)
+
+            localStorage.setItem(type, JSON.stringify(data[type]))
+
+            document.querySelector((`.${type}List [data-id="${id}"]`)).remove()
+        }
+
+        return { remove }
+    }
 
 
     // Get Task Data
@@ -1124,18 +1172,6 @@ const navbar = (() => {
     }
     
     // Product list handle
-    function handleDelete(id) {
-        const remove = (index, type) => {
-
-            data[type].splice(index, 1)
-
-            localStorage.setItem(type, JSON.stringify(data[type]))
-
-            document.querySelector((`.${type}List [data-id="${id}"]`)).remove()
-        }
-
-        return { remove }
-    }
     function handleProductUpdate(product) {
         const edit = function (e) {
             e.preventDefault()
@@ -1167,39 +1203,6 @@ const navbar = (() => {
 
         return { edit }
     }
-    
-    function showOptionList(e) {
-        const target = e.target.closest('.option')
 
-        if (!target) return
-
-        const optionCoord = target.getBoundingClientRect()
-
-        const optionList = target.querySelector('.optionList');
-        optionList.style.top = `${optionCoord.bottom + 10}px`;
-        optionList.style.left = `${optionCoord.left - (optionList.clientWidth - optionCoord.width) / 2}px`;
-
-        target.classList.toggle('active');
-
-
-        if (!target.classList.contains('active')) return 
-        
-        this.addEventListener('pointerdown', closeOptionListWithClick)
-        this.addEventListener('scroll', closeOptionListWithScroll, {
-            capture: true,
-            once: true
-        })
-
-        function closeOptionListWithClick(e) {
-            const secondTarget = e.target.closest('.option')
-
-            if (!secondTarget || secondTarget !== target) {
-                target.classList.remove('active');
-            }
-            this.removeEventListener('pointerdown', closeOptionListWithClick)
-        }
-        function closeOptionListWithScroll() {
-            target.classList.remove('active');
-        }
-    }
 })();
+
