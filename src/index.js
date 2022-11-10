@@ -1063,7 +1063,6 @@ const navbar = (() => {
         const productsList = document.querySelector('.productsList ul');
         productsList.scrollTo({top: productsList.scrollHeight, behavior: 'smooth'});
 
-        this.reset();
         closeForm();
     }
 
@@ -1182,14 +1181,15 @@ const navbar = (() => {
             </div>  
             `;
 
+        const color = namedColors.find(color => color.hex === product.hexCode);
         const form = document.createElement('form');
         form.classList.add('productForm');
         form.innerHTML = template;
 
         form.elements.name.value = product.name;
 
-        form.querySelector('.colorButton').append(product.colorName);
-        form.querySelector('.icon').style = product.colorHexCode;
+        form.querySelector('.colorButton').append(color.name);
+        form.querySelector('.icon').style = `--product-color:${product.hexCode}`;
 
         form.addEventListener('focusout', focusForm)
         form.addEventListener('submit', product.edit)
