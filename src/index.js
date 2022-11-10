@@ -436,6 +436,11 @@ const navbar = (() => {
         if (!validation(formProps, this)) return
 
         formProps.priority = this.querySelector('.priority').dataset.color
+
+        const productName = this.querySelector('.productName').textContent.trim();
+
+        if (productName !== 'Inbox' && data.products.findIndex(item => item.name === productName) === -1) return
+
         formProps.productName = this.querySelector('.productName').textContent.trim()
 
         if (data.tasks.length > 0) {
@@ -443,6 +448,7 @@ const navbar = (() => {
         } else {
             formProps.id = 1;
         }
+
         data.tasks.push(formProps)
 
         localStorage.setItem('tasks', JSON.stringify(data.tasks))
