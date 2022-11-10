@@ -811,7 +811,6 @@ const navbar = (() => {
         const priorityElem = priorityDropDownButtons.find(item => item.dataset.color === task.priority)
 
         const priorityButtonClassList = Array.from(priorityButton.classList)
-        priorityButtonClassList.pop()
 
         const priorityClone = priorityElem.cloneNode(true)
         priorityClone.classList.add(...priorityButtonClassList)
@@ -857,8 +856,6 @@ const navbar = (() => {
         const productNameElem = productDropDownButtons.find(item => item.textContent.trim() === task.productName)
         
         const productNameClassList = Array.from(productNameButton.classList)
-
-        productNameClassList.pop()
 
         const productNameClone = productNameElem.cloneNode(true)
         productNameClone.classList.add(...productNameClassList)
@@ -988,7 +985,7 @@ const navbar = (() => {
             const li = document.createElement('li');
             const button = `
                 <button type="button" class="wrap" tabIndex="-1">
-                    <span class="icon" style="--product-color:${color.hex}"></span>
+                    <span class="icon" style="--product-color:${color.hex};"></span>
                     ${color.name}
                 </button>
             `;
