@@ -27,7 +27,8 @@ const navbar = (() => {
 
     createPages('Inbox')
 
-    // General
+
+    // Change page init
     function changePage(e) {
 
         const navItem = e.target.closest('.wrap')
@@ -44,6 +45,41 @@ const navbar = (() => {
         // 製作切換 product name
         createPages(page)
     }
+    function createPages(page) {
+        const content = document.querySelector('.content')
+
+        content.innerHTML = '';
+
+        createTasksTopBar(page)
+
+        createTasksList(page)
+        document.addEventListener('pointerdown', showOptionList);
+
+        // switch (page) {
+        //     case 'inbox':
+        //         // content.append(inbox.createNavbar());
+        //         // content.append(inbox.createTask());
+        //         // content.addEventListener('click', inbox.showForm)
+        //         break;
+        //     // case 'today':
+        //     //     content.append(today.createNavbar());
+        //     //     content.append(today.createTask());
+        //     //     content.addEventListener('click', today.showForm)
+        //     //     break;
+        //     // case 'upcoming':
+        //     //     content.append(upcoming.createNavbar());
+        //     //     content.append(upcoming.createTask());
+        //     //     content.addEventListener('click', upcoming.showForm)
+        //     //     break;
+        //     default:
+        //         // content.append(product.createNavbar(page));
+        //         // content.append(product.createTask(page));
+        //         // content.addEventListener('click', product.showForm)
+        // }
+    }
+
+
+    // General
     function focusForm(e) {
         const target = e.relatedTarget;
         const firstField = this.querySelector('[tabIndex]')
@@ -62,6 +98,40 @@ const navbar = (() => {
 
         const firstField = currentForm.querySelector('[tabIndex]')
         firstField.focus();
+    }
+    function showOptionList(e) {
+        const target = e.target.closest('.option')
+
+        if (!target) return
+
+        const optionCoord = target.getBoundingClientRect()
+
+        const optionList = target.querySelector('.optionList');
+        optionList.style.top = `${optionCoord.bottom + 10}px`;
+        optionList.style.left = `${optionCoord.left - (optionList.clientWidth - optionCoord.width) / 2}px`;
+
+        target.classList.toggle('active');
+
+
+        if (!target.classList.contains('active')) return 
+        
+        this.addEventListener('pointerdown', closeOptionListWithClick)
+        this.addEventListener('scroll', closeOptionListWithScroll, {
+            capture: true,
+            once: true
+        })
+
+        function closeOptionListWithClick(e) {
+            const secondTarget = e.target.closest('.option')
+
+            if (!secondTarget || secondTarget !== target) {
+                target.classList.remove('active');
+            }
+            this.removeEventListener('pointerdown', closeOptionListWithClick)
+        }
+        function closeOptionListWithScroll() {
+            target.classList.remove('active');
+        }
     }
     function activeCloseButton(e) {
 
@@ -121,40 +191,7 @@ const navbar = (() => {
         this.classList.add('disableOutline')
         this.removeEventListener('blur', disableOutLine)
     }
-    function showOptionList(e) {
-        const target = e.target.closest('.option')
 
-        if (!target) return
-
-        const optionCoord = target.getBoundingClientRect()
-
-        const optionList = target.querySelector('.optionList');
-        optionList.style.top = `${optionCoord.bottom + 10}px`;
-        optionList.style.left = `${optionCoord.left - (optionList.clientWidth - optionCoord.width) / 2}px`;
-
-        target.classList.toggle('active');
-
-
-        if (!target.classList.contains('active')) return 
-        
-        this.addEventListener('pointerdown', closeOptionListWithClick)
-        this.addEventListener('scroll', closeOptionListWithScroll, {
-            capture: true,
-            once: true
-        })
-
-        function closeOptionListWithClick(e) {
-            const secondTarget = e.target.closest('.option')
-
-            if (!secondTarget || secondTarget !== target) {
-                target.classList.remove('active');
-            }
-            this.removeEventListener('pointerdown', closeOptionListWithClick)
-        }
-        function closeOptionListWithScroll() {
-            target.classList.remove('active');
-        }
-    }
 
     // General handel
     function handleDelete(id) {
@@ -170,8 +207,7 @@ const navbar = (() => {
         return { remove }
     }
 
-
-    // Get Task Data
+    // Get all Tasks Data
     function getLocalTasks() {
         const item = localStorage.getItem('tasks');
 
@@ -187,255 +223,6 @@ const navbar = (() => {
             )
         }
         return tasks
-    }
-
-
-    // Tasks
-    function createPages(page) {
-        const content = document.querySelector('.content')
-
-        content.innerHTML = '';
-
-        createTasksTopBar(page)
-
-        createTasksList(page)
-        document.addEventListener('pointerdown', showOptionList);
-
-        // switch (page) {
-        //     case 'inbox':
-        //         // content.append(inbox.createNavbar());
-        //         // content.append(inbox.createTask());
-        //         // content.addEventListener('click', inbox.showForm)
-        //         break;
-        //     // case 'today':
-        //     //     content.append(today.createNavbar());
-        //     //     content.append(today.createTask());
-        //     //     content.addEventListener('click', today.showForm)
-        //     //     break;
-        //     // case 'upcoming':
-        //     //     content.append(upcoming.createNavbar());
-        //     //     content.append(upcoming.createTask());
-        //     //     content.addEventListener('click', upcoming.showForm)
-        //     //     break;
-        //     default:
-        //         // content.append(product.createNavbar(page));
-        //         // content.append(product.createTask(page));
-        //         // content.addEventListener('click', product.showForm)
-        // }
-    }
-    function createTasksTopBar(name) {
-        const content = document.querySelector('.content')
-
-        const template = `
-            <div class="wrap">
-                <h2 class="title"></h2>
-                <button type="button" class="addButton">+</button>
-            </div>
-            <div class="option">
-                <button type="button" class="optionButton">◦◦◦</button>
-                <ul class="optionList">
-                    <li>
-                        <button class="showTaskButton" type="button">Show completed tasks</button>
-                    </li>
-                </ul>
-            </div>
-        `
-        const div = document.createElement('div');
-        div.className = 'top'
-        div.innerHTML = template;
-
-        const title = div.querySelector('.title');
-        title.textContent = name;
-
-        content.prepend(div);
-
-        if (title.scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
-            title.style.overflow = 'hidden';
-            title.title = name;
-        }
-        title.style.flex = 1;
-
-        div.addEventListener('pointerdown', showCompletedTasks)
-        div.addEventListener('click', showAddTaskForm)
-
-        function showCompletedTasks(e) {
-            const showTaskButton = e.target.closest('.showTaskButton');
-            
-            if (!showTaskButton) return;
-        }
-    }
-    function createTasksList(page) {
-
-        data.tasks = getLocalTasks();
-
-        if (data.tasks.length === 0) {
-            console.log("Haven't item");
-            return
-        }
-
-        const content = document.querySelector('.content')
-
-        let tasksList = document.querySelector('.tasksList');
-
-        const ul = document.createElement('ul');
-        ul.className = 'tasksList';        
-
-        if (tasksList) {
-            tasksList.replaceWith(ul)
-        } else {
-            content.append(ul);
-        }
-
-        let pageItem = data.tasks;
-
-        if (page !== 'Inbox') {
-            pageItem = data.tasks.filter(item => item.productName === page)
-        }
-
-        for (let task of pageItem) {
-            const date = getDate(task.day, task.time)
-
-            const template = `
-                <input type="checkbox" style="--priority-color:${task.priority}">
-                <div class="wrap">
-                    <h3 class="title"></h3>
-                    <div class="option">
-                        <button type="button" class="optionButton">•••</button>
-                        <ul class="optionList">
-                            <li>
-                                <button class="editButton" type="button">Edit product name</button>
-                            </li>
-                            <li>
-                                <button class="deleteButton"  type="button">Delete product</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <p class="description title"></p>
-                <div class="dueDate">
-                    <span class="icon calendar"></span>
-                    ${date}
-                </div>
-                
-            `;
-
-            const li = document.createElement('li');
-
-            li.className = 'item'
-            li.innerHTML = template;
-            li.dataset.id = task.id;
-            li.querySelector('.title').textContent = task.name;
-            li.querySelector('.description').textContent = task.descript;
-
-            ul.append(li);
-        }
-
-        ul.addEventListener('pointerdown', editTaskItem);
-        ul.addEventListener('pointerdown', deleteTaskItem);
-
-        function editTaskItem(e) {
-            e.preventDefault(); 
-            const editButton = e.target.closest('.editButton');
-            if (!editButton) return
-
-            const id = editButton.closest('.item').dataset.id
-            const index = data.tasks.findIndex(item => item.id === +id)
-
-            if (index === -1 || !id) return // 提示未找到項目
-
-            createEditTaskForm(data.tasks[index]);
-            showForm();
-        }
-
-        function deleteTaskItem(e) {
-            const deleteButton = e.target.closest('.deleteButton');
-
-            if (!deleteButton) return
-
-            const id = deleteButton.closest('.item').dataset.id
-            const index = data.tasks.findIndex(item => item.id === +id)
-
-            if (index === -1 || !id) return // 提示未找到項目
-
-            data.tasks[index].remove(index, 'tasks');
-        }
-    }
-    function showTaskDropdown(e) {
-        
-        const button = e.target.closest('.dropDownButton');
-
-        if (!button) return
-
-        button.classList.toggle('showList')
-
-
-        const dropdownList = button.nextElementSibling;
-
-        if (dropdownList.firstElementChild.clientHeight > 200) {
-            dropdownList.firstElementChild.style.height = '200px'
-        }
-
-        dropdownList.style.right = 'auto';
-
-        const dropdownListCoord = dropdownList.getBoundingClientRect()
-        const windowRight = document.documentElement.clientWidth;
-
-        if (dropdownListCoord.right > windowRight) {
-            dropdownList.style.left = 'auto';
-            dropdownList.style.right = '0px';
-        }
-
-        if (button.classList.contains('showList')) {
-            this.addEventListener('pointerup', closeDropdown)
-            dropdownList.addEventListener('pointerdown', changeItem)
-        }
-
-        function closeDropdown(e) {
-            if (e.target !== button) {
-                button.classList.remove('showList')
-            }
-
-            this.removeEventListener('pointerup', closeDropdown)
-            this.removeEventListener('pointerdown', changeItem);
-        }
-
-        function changeItem(e) {
-
-            const target = e.target.closest('.wrap')
-            
-                
-            if (!target || target === button) return
-
-            const selectElem = target.cloneNode(true)
-
-            const buttonClassList = Array.from(button.classList)
-            buttonClassList.pop()
-
-            selectElem.classList.add(...buttonClassList)
-            selectElem.tabIndex = 0;
-
-            button.replaceWith(selectElem)
-        }
-    }
-    function createTaskDropdown() {
-        const dropdownList = document.querySelector('.productDropdown .dropdownList ul')
-
-        if (data.products.length === 0) return // 顯示尚未建立 product
-
-        for (let product of data.products) {
-            const li = document.createElement('li');
-            const button = `
-                <button type="button" class="wrap" tabIndex="-1">
-                    <span class="icon" style="${product.colorHexCode}"></span>
-                    ${product.name}
-                </button>
-            `;
-            
-            li.className = 'item'
-            li.innerHTML = button;
-            
-            dropdownList.append(li);
-        }
     }
 
 
@@ -702,6 +489,83 @@ const navbar = (() => {
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
+    function createTaskDropdown() {
+        const dropdownList = document.querySelector('.productDropdown .dropdownList ul')
+
+        if (data.products.length === 0) return // 顯示尚未建立 product
+
+        for (let product of data.products) {
+            const li = document.createElement('li');
+            const button = `
+                <button type="button" class="wrap" tabIndex="-1">
+                    <span class="icon" style="${product.colorHexCode}"></span>
+                    ${product.name}
+                </button>
+            `;
+            
+            li.className = 'item'
+            li.innerHTML = button;
+            
+            dropdownList.append(li);
+        }
+    }
+    function showTaskDropdown(e) {
+        
+        const button = e.target.closest('.dropDownButton');
+
+        if (!button) return
+
+        button.classList.toggle('showList')
+
+
+        const dropdownList = button.nextElementSibling;
+
+        if (dropdownList.firstElementChild.clientHeight > 200) {
+            dropdownList.firstElementChild.style.height = '200px'
+        }
+
+        dropdownList.style.right = 'auto';
+
+        const dropdownListCoord = dropdownList.getBoundingClientRect()
+        const windowRight = document.documentElement.clientWidth;
+
+        if (dropdownListCoord.right > windowRight) {
+            dropdownList.style.left = 'auto';
+            dropdownList.style.right = '0px';
+        }
+
+        if (button.classList.contains('showList')) {
+            this.addEventListener('pointerup', closeDropdown)
+            dropdownList.addEventListener('pointerdown', changeItem)
+        }
+
+        function closeDropdown(e) {
+            if (e.target !== button) {
+                button.classList.remove('showList')
+            }
+
+            this.removeEventListener('pointerup', closeDropdown)
+            this.removeEventListener('pointerdown', changeItem);
+        }
+
+        function changeItem(e) {
+
+            const target = e.target.closest('.wrap')
+            
+                
+            if (!target || target === button) return
+
+            const selectElem = target.cloneNode(true)
+
+            const buttonClassList = Array.from(button.classList)
+            buttonClassList.pop()
+
+            selectElem.classList.add(...buttonClassList)
+            selectElem.tabIndex = 0;
+
+            button.replaceWith(selectElem)
+        }
+    }
 
 
     // Task From handle
@@ -868,7 +732,149 @@ const navbar = (() => {
     }
 
 
-    // Get Product Data
+    // Tasks List
+    function createTasksTopBar(name) {
+        const content = document.querySelector('.content')
+
+        const template = `
+            <div class="wrap">
+                <h2 class="title"></h2>
+                <button type="button" class="addButton">+</button>
+            </div>
+            <div class="option">
+                <button type="button" class="optionButton">◦◦◦</button>
+                <ul class="optionList">
+                    <li>
+                        <button class="showTaskButton" type="button">Show completed tasks</button>
+                    </li>
+                </ul>
+            </div>
+        `
+        const div = document.createElement('div');
+        div.className = 'top'
+        div.innerHTML = template;
+
+        const title = div.querySelector('.title');
+        title.textContent = name;
+
+        content.prepend(div);
+
+        if (title.scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
+            title.style.overflow = 'hidden';
+            title.title = name;
+        }
+        title.style.flex = 1;
+
+        div.addEventListener('pointerdown', showCompletedTasks)
+        div.addEventListener('click', showAddTaskForm)
+
+        function showCompletedTasks(e) {
+            const showTaskButton = e.target.closest('.showTaskButton');
+            
+            if (!showTaskButton) return;
+        }
+    }
+    function createTasksList(page) {
+
+        data.tasks = getLocalTasks();
+
+        if (data.tasks.length === 0) {
+            console.log("Haven't item");
+            return
+        }
+
+        const content = document.querySelector('.content')
+
+        let tasksList = document.querySelector('.tasksList');
+
+        const ul = document.createElement('ul');
+        ul.className = 'tasksList';        
+
+        if (tasksList) {
+            tasksList.replaceWith(ul)
+        } else {
+            content.append(ul);
+        }
+
+        let pageItem = data.tasks;
+
+        if (page !== 'Inbox') {
+            pageItem = data.tasks.filter(item => item.productName === page)
+        }
+
+        for (let task of pageItem) {
+            const date = getDate(task.day, task.time)
+
+            const template = `
+                <input type="checkbox" style="--priority-color:${task.priority}">
+                <div class="wrap">
+                    <h3 class="title"></h3>
+                    <div class="option">
+                        <button type="button" class="optionButton">•••</button>
+                        <ul class="optionList">
+                            <li>
+                                <button class="editButton" type="button">Edit product name</button>
+                            </li>
+                            <li>
+                                <button class="deleteButton"  type="button">Delete product</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="description title"></p>
+                <div class="dueDate">
+                    <span class="icon calendar"></span>
+                    ${date}
+                </div>
+                
+            `;
+
+            const li = document.createElement('li');
+
+            li.className = 'item'
+            li.innerHTML = template;
+            li.dataset.id = task.id;
+            li.querySelector('.title').textContent = task.name;
+            li.querySelector('.description').textContent = task.descript;
+
+            ul.append(li);
+        }
+
+        ul.addEventListener('pointerdown', editTaskItem);
+        ul.addEventListener('pointerdown', deleteTaskItem);
+
+        function editTaskItem(e) {
+            e.preventDefault(); 
+            const editButton = e.target.closest('.editButton');
+            if (!editButton) return
+
+            const id = editButton.closest('.item').dataset.id
+            const index = data.tasks.findIndex(item => item.id === +id)
+
+            if (index === -1 || !id) return // 提示未找到項目
+
+            createEditTaskForm(data.tasks[index]);
+            showForm();
+        }
+
+        function deleteTaskItem(e) {
+            const deleteButton = e.target.closest('.deleteButton');
+
+            if (!deleteButton) return
+
+            const id = deleteButton.closest('.item').dataset.id
+            const index = data.tasks.findIndex(item => item.id === +id)
+
+            if (index === -1 || !id) return // 提示未找到項目
+
+            data.tasks[index].remove(index, 'tasks');
+        }
+    }
+
+
+
+
+    // Get all Products Data
     function getLocalProducts() {
         const item = localStorage.getItem('products');
 
@@ -1039,7 +1045,6 @@ const navbar = (() => {
         }
     }
 
-
     // Product Form Handler
     function addProduct(e) {
         e.preventDefault();
@@ -1077,8 +1082,7 @@ const navbar = (() => {
         closeForm();
     }
 
-
-    // Product List
+    // Products List
     function showProductList() {
         const products = document.querySelector('.products')
 
@@ -1171,7 +1175,7 @@ const navbar = (() => {
         }
     }
     
-    // Product list handle
+    // Product item handle
     function handleProductUpdate(product) {
         const edit = function (e) {
             e.preventDefault()
