@@ -9,7 +9,7 @@ import {format, isToday, isTomorrow} from 'date-fns';
 
 
 const navbar = (() => {
-    let page = null;
+    let page = 'Inbox';
 
     const data = {
         tasks: null,
