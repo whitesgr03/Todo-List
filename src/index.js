@@ -1285,6 +1285,9 @@ const navbar = (() => {
 
             localStorage.setItem('tasks', JSON.stringify(data.tasks))
 
+            let productsList = document.querySelector('.productsList ul');
+            const productsListScrollBarPosition = productsList.scrollTop;
+
             let content = document.querySelector('.content');
             let currentScrollBarPosition = 0;
 
@@ -1295,10 +1298,14 @@ const navbar = (() => {
             if (name === page) {
                 page = 'Inbox'
             }
+
+            createProductList();
             createPages(page)
 
+            productsList = document.querySelector('.productsList ul');
+            productsList.scrollTo({ top: productsListScrollBarPosition });
+
             content.scrollTo({ top: currentScrollBarPosition});
-            
         }
 
         return { remove }
