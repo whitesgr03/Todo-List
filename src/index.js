@@ -1101,8 +1101,17 @@ const navbar = (() => {
 
         data.products = getLocalProducts();
 
-        if (data.products.length === 0) return // 顯示尚未加入專案
+        if (data.products.length === 0) {
+            console.log(productsList)
+            productsList.innerHTML = '<p>There is no product</p>'
+            productsList.classList.add('noProduct')
+            return
+        }
 
+        if (productsList.classList.contains('noProduct')) {
+            productsList.classList.remove('noProduct')
+        }   
+        
         const ul = document.createElement('ul');
         
         productsList.append(ul);
