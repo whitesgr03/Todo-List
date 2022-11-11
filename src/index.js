@@ -1292,14 +1292,18 @@ const navbar = (() => {
             localStorage.setItem('tasks', JSON.stringify(data.tasks))
 
             let content = document.querySelector('.content');
-            const currentScrollBarPosition = content.scrollTop;
+            let currentScrollBarPosition = 0;
+
+            if (page === 'Inbox') {
+                currentScrollBarPosition = content.scrollTop;
+            }
 
             if (name === page) {
                 page = 'Inbox'
             }
             createPages(page)
 
-            content.scrollTo({ top: currentScrollBarPosition });
+            content.scrollTo({ top: currentScrollBarPosition});
             
         }
 
