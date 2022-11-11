@@ -868,6 +868,18 @@ const navbar = (() => {
     }
 
     // Task item handle
+    function handleTaskDelete(id) {
+        const remove = (index, type) => {
+
+            data[type].splice(index, 1)
+
+            localStorage.setItem(type, JSON.stringify(data[type]))
+
+            document.querySelector((`.${type}List [data-id="${id}"]`)).remove()
+        }
+
+        return { remove }
+    }
     function handleTaskUpdate(task) {
         const edit = function (e) {
             e.preventDefault()
