@@ -928,7 +928,7 @@ const navbar = (() => {
 
         for (let item of products) {
             Object.assign(item,
-                handleProductUDelete(item.id),
+                handleProductDelete(item.id),
                 handleProductUpdate(item)
             )
         }
@@ -1167,7 +1167,7 @@ const navbar = (() => {
 
             if (index === -1 || !id) return // 提示未找到項目
 
-            data.products[index].remove(index, 'products');
+            data.products[index].remove(index);
         }
     }
     function createEditProductForm(product) {
@@ -1251,14 +1251,20 @@ const navbar = (() => {
 
         return { edit }
     }
-    function handleProductUDelete(id) {
-        const remove = (index, type) => {
+    function handleProductDelete(id) {
+        const remove = (index) => {
 
-            data[type].splice(index, 1)
+            data.products.splice(index, 1)
 
-            localStorage.setItem(type, JSON.stringify(data[type]))
+            localStorage.setItem('products', JSON.stringify(data.products))
 
-            document.querySelector((`.${type}List [data-id="${id}"]`)).remove()
+            document.querySelector((`.productsList [data-id="${id}"]`)).remove()
+
+            data.tasks = data.tasks.filter(item => item.productId !== id)
+
+            localStorage.setItem('tasks', JSON.stringify(data.tasks))
+
+            createPages('Inbox')
         }
 
         return { remove }
