@@ -192,8 +192,14 @@ const navbar = (() => {
         this.classList.add('disableOutline')
         this.removeEventListener('blur', disableOutLine)
     }
+    function showTasksCount() {
 
+        const inboxCount = document.querySelector('.inbox')
+        const todayCount = document.querySelector('.today')
 
+        inboxCount.textContent = data.tasks.length || '';
+        todayCount.textContent = data.tasks.filter(item => isToday(new Date(item.day))).length || '';
+    }
 
     // Get all Tasks Data
     function getLocalTasks() {
