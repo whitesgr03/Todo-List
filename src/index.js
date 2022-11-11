@@ -1270,7 +1270,6 @@ const navbar = (() => {
     }
     function handleProductDelete(id) {
         const remove = function (index) {
-            console.log(this, page)
 
             data.products.splice(index, 1)
 
