@@ -1255,7 +1255,8 @@ const navbar = (() => {
         return { edit }
     }
     function handleProductDelete(id) {
-        const remove = (index) => {
+        const remove = function (index) {
+            console.log(this, page)
 
             data.products.splice(index, 1)
 
@@ -1267,7 +1268,14 @@ const navbar = (() => {
 
             localStorage.setItem('tasks', JSON.stringify(data.tasks))
 
-            createPages('Inbox')
+
+            let content = document.querySelector('.content');
+            const currentScrollBarPosition = content.scrollTop;
+
+            page = 'Inbox'
+            createPages(page)
+
+            content.scrollTo({ top: currentScrollBarPosition });
         }
 
         return { remove }
