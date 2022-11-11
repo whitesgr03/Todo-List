@@ -55,28 +55,6 @@ const navbar = (() => {
 
         createTasksList(page)
         document.addEventListener('pointerdown', showOptionList);
-
-        // switch (page) {
-        //     case 'inbox':
-        //         // content.append(inbox.createNavbar());
-        //         // content.append(inbox.createTask());
-        //         // content.addEventListener('click', inbox.showForm)
-        //         break;
-        //     // case 'today':
-        //     //     content.append(today.createNavbar());
-        //     //     content.append(today.createTask());
-        //     //     content.addEventListener('click', today.showForm)
-        //     //     break;
-        //     // case 'upcoming':
-        //     //     content.append(upcoming.createNavbar());
-        //     //     content.append(upcoming.createTask());
-        //     //     content.addEventListener('click', upcoming.showForm)
-        //     //     break;
-        //     default:
-        //         // content.append(product.createNavbar(page));
-        //         // content.append(product.createTask(page));
-        //         // content.addEventListener('click', product.showForm)
-        // }
     }
 
 
@@ -657,14 +635,21 @@ const navbar = (() => {
             content.append(ul);
         }
 
-        let pageItem = data.tasks;
+        let tasks = null
 
-        if (page !== 'Inbox') {
-            const product = data.products.find(item => item.name === page)
-            pageItem = data.tasks.filter(item => item.productId === product.id)
+        switch (page) {
+            case 'Inbox':
+                tasks = data.tasks;
+                break;
+            case 'Today':
+                tasks = data.tasks.filter(item => isToday(new Date(item.day)))
+                break;
+            default: 
+                const product = data.products.find(item => item.name === page)
+                tasks = data.tasks.filter(item => item.productId === product.id)
         }
 
-        for (let task of pageItem) {
+        for (let task of tasks) {
             const date = getDate(task.day, task.time)
 
             const template = `
