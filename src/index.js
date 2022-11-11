@@ -581,9 +581,9 @@ const navbar = (() => {
             return
         }
     }
-    function autoResize(e) {
-        e.target.style.height = 0;
-        e.target.style.height = `${e.target.scrollHeight}px`;
+    function autoResize() {
+        this.style.height = 0;
+        this.style.height = `${this.scrollHeight}px`;
     }
 
 
