@@ -475,6 +475,17 @@ nav .wrap {
     transition: max-height .2s ease-in;
 }
 
+.productsList.noProduct {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: none;
+}
+
+.products.arrowDown + .productsList.noProduct {
+    transition: none;
+}
+
 li.products.arrowRight .icon {
     background-image: url('../img/chevron-right.svg');
     transition: transform .2s ease-in-out;
