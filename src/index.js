@@ -805,17 +805,6 @@ const navbar = (() => {
         form.elements.day.value = task.day;
         form.elements.time.value = task.time;
 
-        const priorityButton = form.querySelector('.priority')
-        const priorityDropDownButtons =  Array.from(priorityButton.nextElementSibling.querySelectorAll('button'))
-        const priorityElem = priorityDropDownButtons.find(item => item.dataset.color === task.priority)
-
-        const priorityButtonClassList = Array.from(priorityButton.classList)
-
-        const priorityClone = priorityElem.cloneNode(true)
-        priorityClone.classList.add(...priorityButtonClassList)
-
-        priorityButton.replaceWith(priorityClone)
-
         form.addEventListener('focusout', focusForm)
         form.addEventListener('submit', task.edit)
         
@@ -834,7 +823,6 @@ const navbar = (() => {
         const textareas = form.querySelectorAll('textarea')
         
         for (let textarea of textareas) {
-
             const countLines = new Set();
             const maxLength = textarea.getAttribute('maxlength');
 
@@ -844,25 +832,39 @@ const navbar = (() => {
             }
             
             textarea.value = '';
-            
+
             textarea.addEventListener("keydown", limitLines.bind(countLines))
             textarea.addEventListener("input", limitTextLength.bind(maxLength));
             textarea.addEventListener("input", autoResize);
         }
 
-        const productNameButton = form.querySelector('.productName')
-        const productDropDownButtons =  Array.from(productNameButton.nextElementSibling.querySelectorAll('button'))
-        const productNameElem = productDropDownButtons.find(item => item.textContent.trim() === task.productName)
-        
-        const productNameClassList = Array.from(productNameButton.classList)
+        const priorityButton = form.querySelector('.priority')
 
-        const productNameClone = productNameElem.cloneNode(true)
-        productNameClone.classList.add(...productNameClassList)
+        const allPriorityDropDownButtons =  Array.from(priorityButton.nextElementSibling.querySelectorAll('button'))
+        const priorityElem = allPriorityDropDownButtons.find(item => item.dataset.color === task.priority)
 
-        productNameButton.replaceWith(productNameClone)
+        const priorityElemClone = priorityElem.cloneNode(true)
+        priorityElemClone.classList.add(...priorityButton.classList)
+
+        priorityButton.replaceWith(priorityElemClone)
+
+        if (task.productId) {
+            const productName = data.products.find(item => item.id === task.productId).name
+
+            const productNameButton = form.querySelector('.productName')
+            const allProductsNameDropDownButtons = Array.from(productNameButton.nextElementSibling.querySelectorAll('button'))
+            const productNameElem = allProductsNameDropDownButtons.find(item => item.textContent.trim() === productName)
+
+            const productNameElemClone = productNameElem.cloneNode(true)
+            productNameElemClone.classList.add(...productNameButton.classList)
+            productNameButton.replaceWith(productNameElemClone)
+        }
 
         form.elements.taskName.value = task.name;
         form.elements.descript.value = task.descript;
+
+        autoResize.call(form.elements.taskName);
+        autoResize.call(form.elements.descript);
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
