@@ -39,6 +39,7 @@ const navbar = (() => {
         page = navItem.querySelector('.title').textContent;
 
         if (page === 'Products') {
+            page = 'Inbox'
             showProductList();
             return
         }
@@ -1086,6 +1087,8 @@ const navbar = (() => {
 
         if (products.classList.contains('arrowDown')) {
             createProductList();
+        } else {
+            createPages('Inbox')
         }
     }
     function createProductList() {
