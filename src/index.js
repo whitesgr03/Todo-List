@@ -194,19 +194,6 @@ const navbar = (() => {
     }
 
 
-    // General handel
-    function handleDelete(id) {
-        const remove = (index, type) => {
-
-            data[type].splice(index, 1)
-
-            localStorage.setItem(type, JSON.stringify(data[type]))
-
-            document.querySelector((`.${type}List [data-id="${id}"]`)).remove()
-        }
-
-        return { remove }
-    }
 
     // Get all Tasks Data
     function getLocalTasks() {
@@ -219,7 +206,7 @@ const navbar = (() => {
         for (let item of tasks) {
             
             Object.assign(item,
-                handleDelete(item.id),
+                handleTaskDelete(item.id),
                 handleTaskUpdate(item)
             )
         }
@@ -927,7 +914,7 @@ const navbar = (() => {
 
         for (let item of products) {
             Object.assign(item,
-                handleDelete(item.id),
+                handleProductUDelete(item.id),
                 handleProductUpdate(item)
             )
         }
@@ -1249,6 +1236,18 @@ const navbar = (() => {
         }
 
         return { edit }
+    }
+    function handleProductUDelete(id) {
+        const remove = (index, type) => {
+
+            data[type].splice(index, 1)
+
+            localStorage.setItem(type, JSON.stringify(data[type]))
+
+            document.querySelector((`.${type}List [data-id="${id}"]`)).remove()
+        }
+
+        return { remove }
     }
 
 })();
