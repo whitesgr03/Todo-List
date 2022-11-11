@@ -887,12 +887,7 @@ const navbar = (() => {
 
             document.querySelector((`.${type}List [data-id="${id}"]`)).remove()
 
-            let content = document.querySelector('.content');
-            const currentScrollBarPosition = content.scrollTop;
-
-            createTasksList(page);
-
-            content.scrollTo({ top: currentScrollBarPosition });
+            showTasksCount();
         }
 
         return { remove }
@@ -951,7 +946,7 @@ const navbar = (() => {
 
         for (let item of products) {
             Object.assign(item,
-                handleProductDelete(item.id),
+                handleProductDelete(item.id, item.name),
                 handleProductUpdate(item)
             )
         }
@@ -1283,7 +1278,7 @@ const navbar = (() => {
 
         return { edit }
     }
-    function handleProductDelete(id) {
+    function handleProductDelete(id, name) {
         const remove = function (index) {
 
             data.products.splice(index, 1)
@@ -1296,14 +1291,16 @@ const navbar = (() => {
 
             localStorage.setItem('tasks', JSON.stringify(data.tasks))
 
-
             let content = document.querySelector('.content');
             const currentScrollBarPosition = content.scrollTop;
 
-            page = 'Inbox'
+            if (name === page) {
+                page = 'Inbox'
+            }
             createPages(page)
 
             content.scrollTo({ top: currentScrollBarPosition });
+            
         }
 
         return { remove }
