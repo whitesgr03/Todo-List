@@ -702,6 +702,8 @@ const navbar = (() => {
             ul.append(li);
         }
 
+        showTasksCount()
+
         ul.addEventListener('pointerdown', editTaskItem);
         ul.addEventListener('pointerdown', deleteTaskItem);
 
@@ -884,6 +886,13 @@ const navbar = (() => {
             localStorage.setItem(type, JSON.stringify(data[type]))
 
             document.querySelector((`.${type}List [data-id="${id}"]`)).remove()
+
+            let content = document.querySelector('.content');
+            const currentScrollBarPosition = content.scrollTop;
+
+            createTasksList(page);
+
+            content.scrollTo({ top: currentScrollBarPosition });
         }
 
         return { remove }
