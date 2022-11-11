@@ -892,9 +892,6 @@ const navbar = (() => {
 
             if (!validation(formProps, this)) return
 
-            console.log(task)
-            console.log(formProps)
-
             task.priority = this.querySelector('.priority').dataset.color;
             task.productName = this.querySelector('.productName').textContent.trim();
             task.day = formProps.day
