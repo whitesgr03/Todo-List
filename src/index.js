@@ -1242,12 +1242,19 @@ const navbar = (() => {
             localStorage.setItem('products', JSON.stringify(data.products))
 
             let productsList = document.querySelector('.productsList ul');
-            const currentScrollBarPosition = productsList.scrollTop;
+            const productsListScrollBarPosition = productsList.scrollTop;
+
+            let content = document.querySelector('.content');
+            const contentScrollBarPosition = content.scrollTop;
 
             createProductList();
+            if (page !== 'Inbox') {
+                createPages(formProps.name)
+            }
 
             productsList = document.querySelector('.productsList ul');
-            productsList.scrollTo({ top: currentScrollBarPosition });
+            productsList.scrollTo({ top: productsListScrollBarPosition });
+            content.scrollTo({ top: contentScrollBarPosition });
 
             closeForm();
         }
