@@ -41,6 +41,8 @@ button {
     cursor: pointer;
 }
 
+/* container block */
+
 .container {
     display: grid;
     grid-template: auto 85vh / 1fr;
@@ -50,6 +52,8 @@ button {
     height: 100vh;
 }
 
+/* header block */
+
 header {
     grid-area: header;
     display: flex;
@@ -58,6 +62,8 @@ header {
     background-color: var(--header-background-color)
 }
 
+/* main block */
+
 main {
     grid-area: main;
     display: grid;
@@ -65,212 +71,14 @@ main {
     grid-template-areas:'nav content';
 }
 
+/* nav block */
+
 nav {
     grid-area: nav;
     padding: 10px 30px;
     background-color: var(--nav-background-color)
 }
 
-/* li:not(.selectMenu li, .taskForm li, .dropdown li) {
-    display: grid;
-    grid-template: auto / 6fr 1fr;
-    grid-template-areas: 'firstChild lastChild';
-    column-gap: 10px;
-    align-items: center;
-    border-radius: 5px;
-    padding: 5px 15px;
-} */
-
-/* li > :nth-child(1){
-    position: relative;
-    grid-area: firstChild;
-}
-
-li > :nth-child(2){
-    justify-self: center;
-    grid-area: lastChild;
-} */
-
-
-/* .title {
-    display: flex;
-    align-items: center;
-    column-gap: 10px;
-    align-content: center;
-} */
-
-/* .menu li:hover, */
-/* .products button:hover,
-.selectMenu li:hover,
-.colorList li:hover,
-.dropdown li:hover {
-    background-color: var(--nav-hover-color);
-} */
-
-/* .menu .title::before, */
-/* .products .title::before, */
-/* .selectMenu .title::before */
-/* .option > .title */
-/* {
-    content: '';
-    width: 25px;
-    height: 25px;
-    background-size: cover;
-} */
-
-/* .products.right .title::before {
-    background-image: url('../img/chevron-right.svg');
-}
-
-.products.down .title::before {
-    background-image: url('../img/chevron-down.svg');
-} */
-
-
-
-/* li.box > .title::before,
-li.box .wrap > .title::before {
-    background-image: url('../img/box.png');
-}
-li.order > .title::before,
-li.order .wrap>.title::before {
-    background-image: url('../img/order.png');
-}
-li.calendar > .title::before {
-    background-image: url('../img/calendar.png');
-}
-li.completed > .title::before {
-    background-image: url('../img/completed.png');
-}
-li.flag .title::before {
-    background-image: url('../img/flag.png');
-} */
-
-/* .products button,
-.total {
-    padding: 0 10px;
-    border-radius: 10px;
-} */
-
-
-/* .productList .title::before, */
-/* .colorHexCode .wrap > .title::before,
-.productNameSelect li:nth-child(n+3) .title::before
-{
-    content: '';
-    border-radius: 100%;
-    background-color: var(--color-list);
-    width: 10px;
-    height: 10px;
-    margin: 0 7.5px;
-} */
-
-
-/* .productList .wrap > button {
-    display: none;
-} */
-
-/* .wrap {
-    position: relative;
-} */
-
-
-/* .selectMenu { 
-    display: none;
-    position: absolute;
-    border: 1px solid var(--main-dark-color);
-    background-color: var(--main-color);
-    border-radius: 10px;
-    white-space: nowrap;
-    left: 50%;
-    top: 100%;
-    overflow: hidden;
-    transform: translateX(-50%);
-    z-index: 1;
-} */
-
-
-
-
-/* 
-.task p:nth-of-type(1) {
-    margin: 20px 0;
-}
-
-.noTask {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.item:hover .total {
-    display: none;
-}
-
-.item.showSelectMenu .total {
-    display: none;
-}
-
-/* .productList .item:hover  .wrap > button {
-    display: flex;
-}
-
-.productList .item.showSelectMenu  .wrap > button {
-    display: flex;
-} */
-
-/* .item.showSelectMenu .selectMenu {
-    display: block;
-} */
-
-/* .item:hover .option {
-    display: flex;
-}
-
-.item.showSelectMenu .option {
-    display: flex;
-} */
-
-/* .item.showSelectMenu .selectMenuButton {
-    opacity: 1;
-} */
-
-
-
-
-/* 
-.selectButton .wrap > button{
-    border: 1px solid var(--main-dark-color);
-}
-
-.selectButton .wrap > button {
-    border-radius: 10px;
-    padding: 5px 10px;
-    background-color: var(--main-color)
-}
-
-.selectButton .title::before {
-    content: '';
-    width: 20px;
-    height: 20px;
-    background-size: cover;
-}
-
-.selectButton .wrap>button:hover,
-.submitButton>button:hover {
-    filter: brightness(80%);
-} */
-
-
-
-
-
-
-
-/* ---------------------------------------------------- */
-
-/* nav block */
 nav .wrap {
     display: flex;
     padding: 10px;
