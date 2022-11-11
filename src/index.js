@@ -1111,7 +1111,7 @@ const navbar = (() => {
         if (productsList.classList.contains('noProduct')) {
             productsList.classList.remove('noProduct')
         }   
-        
+
         const ul = document.createElement('ul');
         
         productsList.append(ul);
