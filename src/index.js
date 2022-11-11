@@ -18,7 +18,6 @@ const navbar = (() => {
     }
 
     data.products = getLocalProducts();
-    // data.tasks = getLocalTasks();
 
     // cache DOM
     const nav = document.querySelector('nav');
@@ -892,12 +891,23 @@ const navbar = (() => {
 
             if (!validation(formProps, this)) return
 
+            const productName = this.querySelector('.productName').textContent.trim();
+            const productItem = data.products.find(item => item.name === productName)
+
+            if (productName !== 'Inbox' && productItem === -1) return
+
+            if (productName === 'Inbox') {
+                task.productId = '';
+            } else {
+                task.productId = productItem.id
+            }
+
             task.priority = this.querySelector('.priority').dataset.color;
-            task.productName = this.querySelector('.productName').textContent.trim();
             task.day = formProps.day
             task.descript = formProps.descript
             task.name = formProps.name
             task.title = formProps.title
+            task.time = formProps.time
 
             localStorage.setItem('tasks', JSON.stringify(data.tasks))
 
