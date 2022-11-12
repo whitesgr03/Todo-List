@@ -672,10 +672,10 @@ const navbar = (() => {
                         <button type="button" class="optionButton">•••</button>
                         <ul class="optionList">
                             <li>
-                                <button class="editButton" type="button">Edit project name</button>
+                                <button class="editButton" type="button">Edit task</button>
                             </li>
                             <li>
-                                <button class="deleteButton"  type="button">Delete project</button>
+                                <button class="deleteButton"  type="button">Delete task</button>
                             </li>
                         </ul>
                     </div>
