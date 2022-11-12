@@ -14,16 +14,16 @@ const navbar = (() => {
     let page = 'Inbox';
     const data = {
         tasks: null,
-        products: null,
+        projects: null,
     }
 
-    data.products = getLocalProducts();
+    data.projects = getLocalProjects();
 
     // cache DOM
     const nav = document.querySelector('nav');
     // bind events
     nav.addEventListener('click', changePage)
-    nav.addEventListener('click', showAddProductForm)
+    nav.addEventListener('click', showAddProjectForm)
 
     createPages(page)
 
@@ -37,9 +37,10 @@ const navbar = (() => {
 
         page = navItem.querySelector('.title').textContent;
 
-        if (page === 'Products') {
-            page = 'Inbox'
-            showProductList();
+        if (e.target.closest('.projectsList')) {
+            page.targetId = +e.target.closest('.item').dataset.id;
+        }
+        if (page.name === 'Projects') {
             return
         }
 
@@ -254,8 +255,8 @@ const navbar = (() => {
                             </ul>   
                         </div>
                     </div>
-                    <div class="dropdown productDropdown">
-                        <button type="button" class="wrap dropDownButton productName">
+                    <div class="dropdown projectDropdown">
+                        <button type="button" class="wrap dropDownButton projectName">
                             <span class="icon box"></span>
                             Inbox
                         </button>
@@ -319,16 +320,16 @@ const navbar = (() => {
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
     function createTaskDropdown() {
-        const dropdownList = document.querySelector('.productDropdown .dropdownList ul')
+        const dropdownList = document.querySelector('.projectDropdown .dropdownList ul')
 
-        if (data.products.length === 0) return // 顯示尚未建立 product
+        if (data.projects.length === 0) return // 顯示尚未建立 project
 
-        for (let product of data.products) {
+        for (let project of data.projects) {
             const li = document.createElement('li');
             const button = `
-                <button type="button" class="wrap" tabIndex="-1">
-                    <span class="icon" style="--product-color:${product.hexCode}"></span>
-                    ${product.name}
+                <button type="button" class="wrap" tabIndex="-1" data-project-id="${project.id}">
+                    <span class="icon" style="--project-color:${project.hexCode}"></span>
+                    ${project.name}
                 </button>
             `;
             
@@ -660,10 +661,10 @@ const navbar = (() => {
                         <button type="button" class="optionButton">•••</button>
                         <ul class="optionList">
                             <li>
-                                <button class="editButton" type="button">Edit product name</button>
+                                <button class="editButton" type="button">Edit project name</button>
                             </li>
                             <li>
-                                <button class="deleteButton"  type="button">Delete product</button>
+                                <button class="deleteButton"  type="button">Delete project</button>
                             </li>
                         </ul>
                     </div>
@@ -686,8 +687,6 @@ const navbar = (() => {
 
             ul.append(li);
         }
-
-        showTasksCount()
 
         ul.addEventListener('pointerdown', editTaskItem);
         ul.addEventListener('pointerdown', deleteTaskItem);
@@ -767,8 +766,8 @@ const navbar = (() => {
                             </ul>   
                         </div>
                     </div>
-                    <div class="dropdown productDropdown">
-                        <button type="button" class="wrap dropDownButton productName">
+                    <div class="dropdown projectDropdown">
+                        <button type="button" class="wrap dropDownButton projectName">
                             <span class="icon box"></span>
                             Inbox
                         </button>
@@ -921,37 +920,37 @@ const navbar = (() => {
 
 
 
-    // Get all Products Data
-    function getLocalProducts() {
-        const item = localStorage.getItem('products');
+    // Get all Projects Data
+    function getLocalProjects() {
+        const item = localStorage.getItem('projects');
 
         if (!item) return []
 
-        const products = JSON.parse(item)
+        const projects = JSON.parse(item)
 
-        for (let item of products) {
+        for (let item of projects) {
             Object.assign(item,
-                handleProductDelete(item.id, item.name),
-                handleProductUpdate(item)
+                handleProjectDelete(item.id, item.name),
+                handleProjectUpdate(item)
             )
         }
         
-        return products
+        return projects
     }
 
-    // Product Form
-    function showAddProductForm(e) {
+    // Project Form
+    function showAddProjectForm(e) {
 
         const target = e.target.closest('.addButton')
         if (!target) return
 
-        createAddProductForm()
+        createAddProjectForm()
 
         showForm();
     }
-    function createAddProductForm() {
+    function createAddProjectForm() {
         const template = `
-            <h2>Add Product</h2>
+            <h2>Add Project</h2>
             <label for="name">
                 Name
                 <input class="disableOutline" name="name" type="text" id="name" maxlength="50" tabindex="0">
@@ -959,7 +958,7 @@ const navbar = (() => {
             <div class="dropdown">
                 <h3>Color</h3>
                 <button type="button" class="wrap colorButton">
-                    <span class="icon" style="--product-color:#000000"></span>
+                    <span class="icon" style="--project-color:#000000"></span>
                     Black
                 </button>
                 <div class="dropdownList">
@@ -974,23 +973,23 @@ const navbar = (() => {
             `;
         
         const form = document.createElement('form');
-        form.classList.add('productForm');
+        form.classList.add('projectForm');
         form.innerHTML = template;
 
         form.addEventListener('focusout', focusForm)
-        form.addEventListener('submit', addProduct)
+        form.addEventListener('submit', addProject)
 
         const overlay = document.querySelector('.overlay');
 
         overlay.append(form)
 
-        createProductDropdown();
+        createProjectDropdown();
 
-        form.addEventListener('click', showProductDropdown)
+        form.addEventListener('click', showProjectDropdown)
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
-    function createProductDropdown() {
+    function createProjectDropdown() {
         const dropdownList = document.querySelector('.dropdownList ul')
 
         for (let hax of COLOR_LIST) {
@@ -999,7 +998,7 @@ const navbar = (() => {
             const li = document.createElement('li');
             const button = `
                 <button type="button" class="wrap" tabIndex="-1">
-                    <span class="icon" style="--product-color:${color.hex};"></span>
+                    <span class="icon" style="--project-color:${color.hex};"></span>
                     ${color.name}
                 </button>
             `;
@@ -1045,8 +1044,8 @@ const navbar = (() => {
         }
     }
 
-    // Product Form Handler
-    function addProduct(e) {
+    // Project Form Handler
+    function addProject(e) {
         e.preventDefault();
         
         const formData = new FormData(this);
@@ -1054,69 +1053,68 @@ const navbar = (() => {
 
         if (!validation(formProps, this)) return
 
-        const hexCode = getComputedStyle(this.querySelector('.icon')).getPropertyValue('--product-color')
+        const hexCode = getComputedStyle(this.querySelector('.icon')).getPropertyValue('--project-color')
 
         if (COLOR_LIST.findIndex(item => item === hexCode) === -1) return
 
         formProps.hexCode = hexCode;
 
-        if ( data.products.length > 0) {
-            formProps.id = data.products.at(-1).id + 1;
+        if ( data.projects.length > 0) {
+            formProps.id = data.projects.at(-1).id + 1;
         } else {
             formProps.id = 1;
         }
 
-        data.products.push(formProps)
+        data.projects.push(formProps)
 
-        localStorage.setItem('products', JSON.stringify(data.products))
+        localStorage.setItem('projects', JSON.stringify(data.projects))
 
-        createProductList();
+        createProjectList();
 
-        const productButton = document.querySelector('.products');
-        productButton.classList.add('arrowDown');
+        const projectButton = document.querySelector('.projects');
+        projectButton.classList.add('arrowDown');
 
-        const productsList = document.querySelector('.productsList ul');
-        productsList.scrollTo({top: productsList.scrollHeight, behavior: 'smooth'});
+        const projectsList = document.querySelector('.projectsList ul');
+        projectsList.scrollTo({top: projectsList.scrollHeight, behavior: 'smooth'});
 
         closeForm();
     }
 
-    // Products List
-    function showProductList() {
-        const products = document.querySelector('.products')
+    // Projects List
+    function showProjectList() {
+        const projects = document.querySelector('.projects')
 
-        products.classList.toggle('arrowDown');
+        projects.classList.toggle('arrowDown');
 
-        if (products.classList.contains('arrowDown')) {
-            createProductList();
+        if (projects.classList.contains('arrowDown')) {
+            createProjectList();
         } else {
             createPages('Inbox')
         }
     }
-    function createProductList() {
+    function createProjectList() {
         
-        const productsList = document.querySelector('.productsList');
+        const projectsList = document.querySelector('.projectsList');
 
-        productsList.innerHTML = '';
+        projectsList.innerHTML = '';
 
-        data.products = getLocalProducts();
+        data.projects = getLocalProjects();
 
-        if (data.products.length === 0) {
-            console.log(productsList)
-            productsList.innerHTML = '<p>There is no product</p>'
-            productsList.classList.add('noProduct')
+        if (data.projects.length === 0) {
+            projectsList.innerHTML = '<p>There is no project</p>'
+            projectsList.classList.add('noProject')
             return
         }
 
-        if (productsList.classList.contains('noProduct')) {
-            productsList.classList.remove('noProduct')
+        if (projectsList.classList.contains('noProject')) {
+            projectsList.classList.remove('noProject')
         }   
 
         const ul = document.createElement('ul');
         
-        productsList.append(ul);
+        projectsList.append(ul);
 
-        for (let product of data.products) {
+        for (let project of data.projects) {
             const template = `
                 <div class="wrap">
                     <span class="icon"></span>
@@ -1126,10 +1124,10 @@ const navbar = (() => {
                     <button type="button" class="optionButton">•••</button>
                     <ul class="optionList">
                         <li>
-                            <button class="editButton" type="button">Edit product name</button>
+                            <button class="editButton" type="button">Edit project name</button>
                         </li>
                         <li>
-                            <button class="deleteButton"  type="button">Delete product</button>
+                            <button class="deleteButton"  type="button">Delete project</button>
                         </li>
                     </ul>
                 </div>
@@ -1138,55 +1136,55 @@ const navbar = (() => {
             const li = document.createElement('li');
 
             li.className = 'item'
-            li.dataset.id = product.id;
+            li.dataset.id = project.id;
             li.innerHTML = template;
-            li.querySelector('.title').textContent = product.name;
-            li.querySelector('.icon').style = `--product-color:${product.hexCode}`;
+            li.querySelector('.title').textContent = project.name;
+            li.querySelector('.icon').style = `--project-color:${project.hexCode}`;
 
             ul.append(li);
 
             if (li.querySelector('.title').scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
                 li.querySelector('.title').style.overflow = 'hidden';
-                li.querySelector('.title').title = product.name;
+                li.querySelector('.title').title = project.name;
             }
         }
 
-        productsList.append(ul);
+        projectsList.append(ul);
         
-        ul.addEventListener('pointerdown', editProductItem);
-        ul.addEventListener('pointerdown', deleteProductItem);
+        ul.addEventListener('pointerdown', editProjectItem);
+        ul.addEventListener('pointerdown', deleteProjectItem);
 
-        function editProductItem(e) {
+        function editProjectItem(e) {
             e.preventDefault(); 
             
             const editButton = e.target.closest('.editButton');
             if (!editButton) return
 
             const id = editButton.closest('.item').dataset.id
-            const index = data.products.findIndex(item => item.id === +id)
+            const index = data.projects.findIndex(item => item.id === +id)
 
             if (index === -1 || !id) return // 提示未找到項目
 
-            createEditProductForm(data.products[index]);
+            createEditProjectForm(data.projects[index]);
             showForm();
             
         }
-        function deleteProductItem(e) {
+        function deleteProjectItem(e) {
             const deleteButton = e.target.closest('.deleteButton');
 
             if (!deleteButton) return
 
             const id = deleteButton.closest('.item').dataset.id
-            const index = data.products.findIndex(item => item.id === +id)
+            const index = data.projects.findIndex(item => item.id === +id)
 
             if (index === -1 || !id) return // 提示未找到項目
 
-            data.products[index].remove(index);
+            data.projects[index].remove(index);
         }
     }
-    function createEditProductForm(product) {
+    function createEditProjectForm(project) {
         const template = `
-            <h2>Edit Product</h2>
+            <h2>Edit Project</h2>
             <label for="name">
                 Name
                 <input class="disableOutline" name="name" type="text" id="name" maxlength="50" tabindex="0">
@@ -1207,32 +1205,32 @@ const navbar = (() => {
             </div>  
             `;
 
-        const color = namedColors.find(color => color.hex === product.hexCode);
+        const color = namedColors.find(color => color.hex === project.hexCode);
         const form = document.createElement('form');
-        form.classList.add('productForm');
+        form.classList.add('projectForm');
         form.innerHTML = template;
 
-        form.elements.name.value = product.name;
+        form.elements.name.value = project.name;
 
         form.querySelector('.colorButton').append(color.name);
-        form.querySelector('.icon').style = `--product-color:${product.hexCode}`;
+        form.querySelector('.icon').style = `--project-color:${project.hexCode}`;
 
         form.addEventListener('focusout', focusForm)
-        form.addEventListener('submit', product.edit)
+        form.addEventListener('submit', project.edit)
 
         const overlay = document.querySelector('.overlay');
 
         overlay.append(form)
 
-        createProductDropdown();
+        createProjectDropdown();
 
-        form.addEventListener('click', showProductDropdown)
+        form.addEventListener('click', showProjectDropdown)
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
     
-    // Product item handle
-    function handleProductUpdate(product) {
+    // Project item handle
+    function handleProjectUpdate(project) {
         const edit = function (e) {
             e.preventDefault()
 
@@ -1241,30 +1239,30 @@ const navbar = (() => {
 
             if (!validation(formProps, this)) return
 
-            const hexCode = getComputedStyle(this.querySelector('.icon')).getPropertyValue('--product-color')
+            const hexCode = getComputedStyle(this.querySelector('.icon')).getPropertyValue('--project-color')
 
             if (COLOR_LIST.findIndex(item => item === hexCode) === -1) return
 
             formProps.hexCode = hexCode;
 
-            product.hexCode = hexCode;
-            product.name = formProps.name
+            project.hexCode = hexCode;
+            project.name = formProps.name
 
-            localStorage.setItem('products', JSON.stringify(data.products))
+            localStorage.setItem('projects', JSON.stringify(data.projects))
 
-            let productsList = document.querySelector('.productsList ul');
-            const productsListScrollBarPosition = productsList.scrollTop;
+            let projectsList = document.querySelector('.projectsList ul');
+            const projectsListScrollBarPosition = projectsList.scrollTop;
 
             let content = document.querySelector('.content');
             const contentScrollBarPosition = content.scrollTop;
 
-            createProductList();
-            if (page !== 'Inbox') {
+            createProjectList();
+            if (page.name !== 'Inbox') {
                 createPages(formProps.name)
             }
 
-            productsList = document.querySelector('.productsList ul');
-            productsList.scrollTo({ top: productsListScrollBarPosition });
+            projectsList = document.querySelector('.projectsList ul');
+            projectsList.scrollTo({ top: projectsListScrollBarPosition });
             content.scrollTo({ top: contentScrollBarPosition });
 
             closeForm();
@@ -1272,21 +1270,19 @@ const navbar = (() => {
 
         return { edit }
     }
-    function handleProductDelete(id, name) {
+    function handleProjectDelete(id, name) {
         const remove = function (index) {
 
-            data.products.splice(index, 1)
+            data.projects.splice(index, 1)
 
-            localStorage.setItem('products', JSON.stringify(data.products))
+            localStorage.setItem('projects', JSON.stringify(data.projects))
 
-            document.querySelector((`.productsList [data-id="${id}"]`)).remove()
-
-            data.tasks = data.tasks.filter(item => item.productId !== id)
+            data.tasks = data.tasks.filter(item => item.projectId !== id)
 
             localStorage.setItem('tasks', JSON.stringify(data.tasks))
 
-            let productsList = document.querySelector('.productsList ul');
-            const productsListScrollBarPosition = productsList.scrollTop;
+            let projectsList = document.querySelector('.projectsList ul');
+            const projectsListScrollBarPosition = projectsList.scrollTop;
 
             let content = document.querySelector('.content');
             let currentScrollBarPosition = 0;
