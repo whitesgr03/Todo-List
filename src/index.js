@@ -50,8 +50,6 @@ const navbar = (() => {
             return
         }
 
-        console.log(page.targetId)
-
         // 製作切換 project name
         createPages(page.name)
     }
@@ -853,16 +851,15 @@ const navbar = (() => {
 
         priorityButton.replaceWith(priorityElemClone)
 
-        if (task.productId) {
-            const productName = data.products.find(item => item.id === task.productId).name
 
-            const productNameButton = form.querySelector('.productName')
-            const allProductsNameDropDownButtons = Array.from(productNameButton.nextElementSibling.querySelectorAll('button'))
-            const productNameElem = allProductsNameDropDownButtons.find(item => item.textContent.trim() === productName)
+        if (task.projectId) {
+            const projectNameButton = form.querySelector('.projectName')
+            const allProjectsNameDropDownButtons = Array.from(projectNameButton.nextElementSibling.querySelectorAll('button'))
+            const projectNameElem = allProjectsNameDropDownButtons.find(item => +item.dataset.projectId === task.projectId)
 
-            const productNameElemClone = productNameElem.cloneNode(true)
-            productNameElemClone.classList.add(...productNameButton.classList)
-            productNameButton.replaceWith(productNameElemClone)
+            const projectNameElemClone = projectNameElem.cloneNode(true)
+            projectNameElemClone.classList.add(...projectNameButton.classList)
+            projectNameButton.replaceWith(projectNameElemClone)
         }
 
         form.elements.taskName.value = task.name;
@@ -882,9 +879,12 @@ const navbar = (() => {
 
             localStorage.setItem(type, JSON.stringify(data[type]))
 
-            document.querySelector((`.${type}List [data-id="${id}"]`)).remove()
+            let content = document.querySelector('.content');
+            let currentScrollBarPosition = 0;
 
-            showTasksCount();
+            createTasksList(page.name);
+            
+            content.scrollTo({ top: currentScrollBarPosition });
         }
 
         return { remove }
@@ -898,15 +898,19 @@ const navbar = (() => {
 
             if (!validation(formProps, this)) return
 
-            const productName = this.querySelector('.productName').textContent.trim();
-            const productItem = data.products.find(item => item.name === productName)
+            const project = this.querySelector('.projectName');
+            let projectItem = null
+            
+            if (project.dataset.projectId) {
+                projectItem = data.projects.find(item => item.id === +project.dataset.projectId)
+            }
 
-            if (productName !== 'Inbox' && productItem === -1) return
+            if (project.textContent.trim() !== 'Inbox' && projectItem === -1) return
 
-            if (productName === 'Inbox') {
-                task.productId = '';
+            if (projectItem) {
+                task.projectId = projectItem.id
             } else {
-                task.productId = productItem.id
+                task.projectId = '';
             }
 
             task.priority = this.querySelector('.priority').dataset.color;
@@ -921,7 +925,7 @@ const navbar = (() => {
             let content = document.querySelector('.content');
             const currentScrollBarPosition = content.scrollTop;
 
-            createTasksList(page);
+            createTasksList(page.name);
 
             content.scrollTo({ top: currentScrollBarPosition });
 
