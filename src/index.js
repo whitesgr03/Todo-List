@@ -626,13 +626,21 @@ const navbar = (() => {
             if (!showTaskButton) return;
         }
     }
-    function createTasksList(page) {
+    function createTasksList(pageName) {
 
         data.tasks = getLocalTasks();
 
-        if (data.tasks.length === 0) {
-            console.log("Haven't item");
-            return
+        let tasks = [];
+        switch (pageName) {
+            case 'Inbox':
+                tasks = data.tasks;
+                break;
+            case 'Today':
+                tasks = data.tasks.filter(item => isToday(new Date(item.day)))
+                break;
+            default: 
+                const project = data.projects.find(item => item.id === page.targetId)
+                tasks = data.tasks.filter(item => item.projectId === project.id)            
         }
 
         const content = document.querySelector('.content')
@@ -648,18 +656,11 @@ const navbar = (() => {
             content.append(ul);
         }
 
-        let tasks = null
+        showTasksCount()
 
-        switch (page) {
-            case 'Inbox':
-                tasks = data.tasks;
-                break;
-            case 'Today':
-                tasks = data.tasks.filter(item => isToday(new Date(item.day)))
-                break;
-            default: 
-                const product = data.products.find(item => item.name === page)
-                tasks = data.tasks.filter(item => item.productId === product.id)
+        if (tasks.length === 0) {
+            ul.insertAdjacentHTML('beforeend', '<h3 class="noTask">There is no Task</h3>');
+            return
         }
 
         for (let task of tasks) {
