@@ -11,7 +11,10 @@ import {format, isToday, isTomorrow} from 'date-fns';
 const navbar = (() => {
     const COLOR_LIST = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
 
-    let page = 'Inbox';
+    const page = {
+        name: 'Inbox',
+        targetId: null,
+    }
     const data = {
         tasks: null,
         projects: null,
@@ -25,7 +28,7 @@ const navbar = (() => {
     nav.addEventListener('click', changePage)
     nav.addEventListener('click', showAddProjectForm)
 
-    createPages(page)
+    createPages(page.name)
 
 
     // Change page init
@@ -35,17 +38,22 @@ const navbar = (() => {
 
         if (!navItem) return
 
-        page = navItem.querySelector('.title').textContent;
+        page.name = navItem.querySelector('.title').textContent;
 
         if (e.target.closest('.projectsList')) {
             page.targetId = +e.target.closest('.item').dataset.id;
         }
+
         if (page.name === 'Projects') {
+            page.name = 'Inbox'
+            showProjectList();
             return
         }
 
-        // 製作切換 product name
-        createPages(page)
+        console.log(page.targetId)
+
+        // 製作切換 project name
+        createPages(page.name)
     }
     function createPages(page) {
         const content = document.querySelector('.content')
@@ -409,15 +417,19 @@ const navbar = (() => {
 
         formProps.priority = this.querySelector('.priority').dataset.color
 
-        const productName = this.querySelector('.productName').textContent.trim();
-        const productItem = data.products.find(item => item.name === productName)
+        const project = this.querySelector('.projectName');
+        let projectItem = null
+        
+        if (project.dataset.projectId) {
+            projectItem = data.projects.find(item => item.id === +project.dataset.projectId)
+        }
 
-        if (productName !== 'Inbox' && productItem === -1) return
+        if (project.textContent.trim() !== 'Inbox' && projectItem === -1) return
 
-        if (productName === 'Inbox') {
-            formProps.productId = '';
+        if (projectItem) {
+            formProps.projectId = projectItem.id
         } else {
-            formProps.productId = productItem.id
+            formProps.projectId = '';
         }
 
         if (data.tasks.length > 0) {
@@ -430,7 +442,7 @@ const navbar = (() => {
 
         localStorage.setItem('tasks', JSON.stringify(data.tasks))
 
-        createTasksList(page);
+        createTasksList(page.name);
 
         closeForm();
     }
@@ -1009,7 +1021,7 @@ const navbar = (() => {
             dropdownList.append(li);
         }
     }
-    function showProductDropdown(e) {
+    function showProjectDropdown(e) {
         const button = e.target.closest('.colorButton');
 
         if (!button) return
@@ -1287,20 +1299,20 @@ const navbar = (() => {
             let content = document.querySelector('.content');
             let currentScrollBarPosition = 0;
 
-            if (page === 'Inbox') {
+            if (page.name === 'Inbox') {
                 currentScrollBarPosition = content.scrollTop;
             }
 
-            if (name === page) {
-                page = 'Inbox'
+            if (name === page.name) {
+                page.name = 'Inbox'
             }
 
-            createProductList();
-            createPages(page)
-
-            productsList = document.querySelector('.productsList ul');
-            productsList.scrollTo({ top: productsListScrollBarPosition });
-
+            createProjectList();
+            if (projectsList = document.querySelector('.projectsList ul')) {
+                projectsList.scrollTo({ top: projectsListScrollBarPosition });
+            }
+            
+            createPages(page.name)
             content.scrollTo({ top: currentScrollBarPosition});
         }
 
