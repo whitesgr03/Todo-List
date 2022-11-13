@@ -931,17 +931,6 @@ const navbar = (() => {
 
         priorityButton.replaceWith(priorityElemClone)
 
-
-        if (task.projectId) {
-            const projectNameButton = form.querySelector('.projectName')
-            const allProjectsNameDropDownButtons = Array.from(projectNameButton.nextElementSibling.querySelectorAll('button'))
-            const projectNameElem = allProjectsNameDropDownButtons.find(item => +item.dataset.projectId === task.projectId)
-
-            const projectNameElemClone = projectNameElem.cloneNode(true)
-            projectNameElemClone.classList.add(...projectNameButton.classList)
-            projectNameButton.replaceWith(projectNameElemClone)
-        }
-
         form.elements.taskName.value = task.name;
         form.elements.descript.value = task.descript;
 
