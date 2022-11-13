@@ -103,7 +103,7 @@ nav .wrap {
     margin-top: 20px;
 }
 
-.menu .item:not(.products):hover {
+.menu .item:not(.projects):hover {
     background-color: var(--nav-hover-color);
 }
 
@@ -158,9 +158,8 @@ nav .wrap {
     grid-area: content;
     padding: 30px 10%;
     overflow: scroll;
+    position: relative;
 }
-
-
 
 .content .wrap {
     display: flex;
@@ -169,7 +168,6 @@ nav .wrap {
     flex: 1;
     column-gap: 20px;
 }
-
 
 /* top block */
 
@@ -281,7 +279,7 @@ nav .wrap {
     height: 10px;
     margin: 0 7.5px;
     border-radius: 50%;
-    background-color: var(--product-color); 
+    background-color: var(--project-color); 
     display: inline-block;
 }
 
@@ -290,7 +288,7 @@ nav .wrap {
     height: 10px;
     margin: 7.5px;
     border-radius: 50%;
-    background-color: var(--product-color);
+    background-color: var(--project-color);
     display: inline-block;
 }
 
@@ -340,7 +338,7 @@ nav .wrap {
     z-index: 1;
 }
 
-.taskFormButtons .productDropdown .dropdownList {
+.taskFormButtons .projectDropdown .dropdownList {
     overflow-y: auto;
 }
 
@@ -364,6 +362,13 @@ nav .wrap {
 
 .tasksList {
     margin: 30px 0;
+}
+
+.tasksList .noTask {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .tasksList .item {
@@ -419,7 +424,7 @@ nav .wrap {
 
 
 /* task checkbox block */
-.tasksList .item input[type="checkbox"] {
+.tasksList .complete[type="checkbox"] {
     appearance: none;
     position: absolute;
     right: 100%;
@@ -436,7 +441,7 @@ nav .wrap {
 }
 
 
-.tasksList .item input[type="checkbox"]::before {
+.tasksList .complete[type="checkbox"]::before {
     content: "";
     width: 20px;
     height: 20px;
@@ -446,16 +451,16 @@ nav .wrap {
     background-size: cover;
 }
 
-.tasksList .item input[type="checkbox"]:checked::before {
+.tasksList .complete[type="checkbox"]:checked::before {
     transform: scale(.9);
     filter: invert(21%) sepia(98%) saturate(4405%) hue-rotate(109deg) brightness(95%) contrast(102%);
 }
 
-.tasksList .item input[type="checkbox"]:checked {
+.tasksList .complete[type="checkbox"]:checked {
     border-color: var(--checkbox-color);
 }
 
-.tasksList .item input[type="checkbox"]:hover {
+.tasksList .complete[type="checkbox"]:hover {
     outline: 2px solid currentColor;
     outline-offset: 2px;
 }
@@ -463,39 +468,39 @@ nav .wrap {
 
 
 
-/* products block */
+/* projects block */
 
-.products {
+.projects {
     position: relative;
 }
 
-.products.arrowDown + .productsList {
+.projects.arrowDown + .projectsList {
     max-height: 300px;
     height: 300px;
     transition: max-height .2s ease-in;
 }
 
-.productsList.noProduct {
+.projectsList.noProject {
         display: flex;
         justify-content: center;
         align-items: center;
         transition: none;
 }
 
-.products.arrowDown + .productsList.noProduct {
+.projects.arrowDown + .projectsList.noProject {
     transition: none;
 }
 
-li.products.arrowRight .icon {
+li.projects.arrowRight .icon {
     background-image: url('../img/chevron-right.svg');
     transition: transform .2s ease-in-out;
 }
 
-li.products.arrowRight.arrowDown .icon {
+li.projects.arrowRight.arrowDown .icon {
     transform: rotate(90deg);
 }
 
-.products .addButton {
+.projects .addButton {
     font-size: 1.5rem;
     cursor: pointer;
     flex: 0 1 25px;
@@ -504,48 +509,48 @@ li.products.arrowRight.arrowDown .icon {
     padding: 0 5px;
 }
 
-.products .addButton:hover {
+.projects .addButton:hover {
     background-color: var(--nav-hover-color);
 }
 
 
-/* productsList block */
+/* projectsList block */
 
-.productsList {
+.projectsList {
     max-height: 0;
     height: 0;
     overflow: hidden;
     transition: max-height .15s ease-out, height .15s ease-out;
 }
 
-.productsList > ul {
+.projectsList > ul {
     height: 100%;
     overflow-y: scroll;
 }
 
-.productsList .icon{
+.projectsList .icon{
     width: 10px;
     height: 10px;
     margin: 0 7.5px;
     border-radius: 50%;
-    background-color: var(--product-color)
+    background-color: var(--project-color)
 }
 
-.productsList .title {
+.projectsList .title {
     width: 150px;
     flex: 1;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.productsList .optionButton {
+.projectsList .optionButton {
     cursor: pointer;
     flex: 0 1 25px;
     text-align: center;
     color: rgb(160, 160, 160);
 }
 
-.productsList .optionButton:hover {
+.projectsList .optionButton:hover {
     color: rgb(0, 0, 0);
 }
 
@@ -619,9 +624,9 @@ li.products.arrowRight.arrowDown .icon {
 }
 
 
-/* productForm  block */
+/* projectForm  block */
 
-.productForm {
+.projectForm {
     display: none;
     width: 400px;
     padding: 30px;
@@ -630,18 +635,18 @@ li.products.arrowRight.arrowDown .icon {
     border-radius: 10px;
 }
 
-.productForm h3 {
+.projectForm h3 {
     padding-bottom: 10px;
 }
 
-.productForm label{
+.projectForm label{
     margin: 30px 0;
     display: flex;
     flex-direction: column;
     font-size: 1.2rem;
 }
 
-.productForm [name="name"] {
+.projectForm [name="name"] {
     margin-top: 10px;
     border: 0;
     border-bottom: 1px solid var(--main-dark-color);
@@ -649,43 +654,43 @@ li.products.arrowRight.arrowDown .icon {
     padding: 5px;
 }
 
-.productForm [name="name"].disableOutline {
+.projectForm [name="name"].disableOutline {
     outline: 0;
 }
 
 
-.productForm {
+.projectForm {
     display: flex;
     align-items: center;
 }
 
-.productForm .icon {
+.projectForm .icon {
     width: 10px;
     height: 10px;
     margin: 0 7.5px;
     border-radius: 50%;
-    background-color: var(--product-color);
+    background-color: var(--project-color);
     display: inline-block;
 }
 
-.productForm .colorButton {
+.projectForm .colorButton {
     border-radius: 5px;
     border: 1px solid var(--main-dark-color);
     width: 100%;
     transition: border-radius .2s ease-in;
 }
 
-.productForm .colorButton.showList {
+.projectForm .colorButton.showList {
     border-radius: 5px 5px 0 0;
     transition: border-radius .05s ease-in;
 }
 
-.productForm .colorButton.showList+.dropdownList {
+.projectForm .colorButton.showList+.dropdownList {
     max-height: 100px;
     transition: max-height .1s ease-in;
 }
 
-.productForm .colorButton + .dropdownList>ul {
+.projectForm .colorButton + .dropdownList>ul {
     border-radius: 0 0 5px 5px;
     border-top: 0;
 }
@@ -693,14 +698,14 @@ li.products.arrowRight.arrowDown .icon {
 
 /* dropdown block */
 
-.productForm .dropdown {
+.projectForm .dropdown {
     position: relative;
     flex: 1;
 }
 
 /* dropdownList block */
 
-.productForm .dropdownList {
+.projectForm .dropdownList {
     position: absolute;
     max-height: 0;
     top: 100%;
@@ -709,7 +714,7 @@ li.products.arrowRight.arrowDown .icon {
     overflow: hidden;
     transition: max-height .15s ease-out;
 }
-.productForm .dropdownList > ul {
+.projectForm .dropdownList > ul {
     background-color: var(--main-color);
     height: 100%;
     overflow-y: scroll;
@@ -717,7 +722,7 @@ li.products.arrowRight.arrowDown .icon {
     flex-direction: column;
     border: 1px solid var(--main-dark-color);
 }
-.productForm .dropdownList .item:hover {
+.projectForm .dropdownList .item:hover {
     background-color: var(--nav-hover-color);
 }
 
