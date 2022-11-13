@@ -582,6 +582,22 @@ const navbar = (() => {
         this.style.height = 0;
         this.style.height = `${this.scrollHeight}px`;
     }
+    function showCompletedTasks(e) {
+        const showTaskButton = e.target.closest('.showTaskButton');
+        
+        if (!showTaskButton) return;
+
+        if (!showTaskButton.classList.contains('showAll')) {
+            createTasksList(page.name, true)
+            showTaskButton.classList.add('showAll');
+            showTaskButton.textContent = 'Hide completed tasks'
+        } else {
+            createTasksList(page.name)
+            showTaskButton.classList.remove('showAll');
+            showTaskButton.textContent = 'Show completed tasks'
+        }
+
+    }
     function setTasksComplete(e) {
         const setCompleteButton = e.target.closest('.setCompleteButton');
         
@@ -692,7 +708,7 @@ const navbar = (() => {
             const date = getDate(task.day, task.time)
 
             const template = `
-                <input type="checkbox" style="--priority-color:${task.priority}">
+                <input class="complete" type="checkbox" style="--priority-color:${task.priority}">
                 <div class="wrap">
                     <h3 class="title"></h3>
                     <div class="option">
@@ -722,6 +738,10 @@ const navbar = (() => {
             li.dataset.id = task.id;
             li.querySelector('.title').textContent = task.name;
             li.querySelector('.description').textContent = task.descript;
+
+            if (showAll && task.completed) {
+                li.querySelector('.complete[type="checkbox"]').checked = true;
+            }
 
             ul.append(li);
         }
