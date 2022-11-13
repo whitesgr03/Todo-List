@@ -290,6 +290,8 @@ const navbar = (() => {
         form.classList.add('taskForm')
         form.innerHTML = template;
 
+        form.elements.day.value = format(new Date(), 'yyyy-MM-dd')
+
         form.addEventListener('focusout', focusForm)
         form.addEventListener('submit', addTask)
         
