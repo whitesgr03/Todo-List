@@ -907,7 +907,7 @@ const navbar = (() => {
             localStorage.setItem(type, JSON.stringify(data[type]))
 
             let content = document.querySelector('.content');
-            let currentScrollBarPosition = 0;
+            let currentScrollBarPosition = content.scrollTop;
 
             createTasksList(page.name);
             
@@ -1295,17 +1295,19 @@ const navbar = (() => {
             let projectsList = document.querySelector('.projectsList ul');
             const projectsListScrollBarPosition = projectsList.scrollTop;
 
-            let content = document.querySelector('.content');
-            const contentScrollBarPosition = content.scrollTop;
-
             createProjectList();
-            if (page.name !== 'Inbox') {
-                createPages(formProps.name)
-            }
 
             projectsList = document.querySelector('.projectsList ul');
             projectsList.scrollTo({ top: projectsListScrollBarPosition });
-            content.scrollTo({ top: contentScrollBarPosition });
+
+            if (page.name !== 'Inbox') {
+                let content = document.querySelector('.content');
+                const contentScrollBarPosition = content.scrollTop;
+
+                createPages(formProps.name)
+
+                content.scrollTo({ top: contentScrollBarPosition });
+            }
 
             closeForm();
         }
@@ -1326,23 +1328,25 @@ const navbar = (() => {
             let projectsList = document.querySelector('.projectsList ul');
             const projectsListScrollBarPosition = projectsList.scrollTop;
 
+            createProjectList();
+
+            if (projectsList = document.querySelector('.projectsList ul')) {
+                projectsList.scrollTo({ top: projectsListScrollBarPosition });
+            }
+
             let content = document.querySelector('.content');
             let currentScrollBarPosition = 0;
-
-            if (page.name === 'Inbox') {
-                currentScrollBarPosition = content.scrollTop;
-            }
 
             if (name === page.name) {
                 page.name = 'Inbox'
             }
 
-            createProjectList();
-            if (projectsList = document.querySelector('.projectsList ul')) {
-                projectsList.scrollTo({ top: projectsListScrollBarPosition });
+            if (page.name === 'Inbox') {
+                currentScrollBarPosition = content.scrollTop;
             }
             
             createPages(page.name)
+
             content.scrollTo({ top: currentScrollBarPosition});
         }
 
