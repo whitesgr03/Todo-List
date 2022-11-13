@@ -42,6 +42,8 @@ const navbar = (() => {
 
         if (e.target.closest('.projectsList')) {
             page.targetId = +e.target.closest('.item').dataset.id;
+        } else {
+            page.targetId = null;
         }
 
         if (page.name === 'Projects') {
@@ -624,7 +626,7 @@ const navbar = (() => {
 
 
     // Tasks List
-    function createTasksTopBar(name) {
+    function createTasksTopBar(pageName) {
         const content = document.querySelector('.content')
 
         const template = `
@@ -649,7 +651,7 @@ const navbar = (() => {
         div.innerHTML = template;
 
         const title = div.querySelector('.title');
-        title.textContent = name;
+        title.textContent = pageName;
 
         content.prepend(div);
 
@@ -664,6 +666,7 @@ const navbar = (() => {
         div.addEventListener('click', showAddTaskForm)
     }
     function createTasksList(pageName, showAll = null) {
+        
 
         data.tasks = getLocalTasks();
 
@@ -1008,7 +1011,7 @@ const navbar = (() => {
 
         for (let item of projects) {
             Object.assign(item,
-                handleProjectDelete(item.id, item.name),
+                handleProjectDelete(item.id),
                 handleProjectUpdate(item)
             )
         }
@@ -1321,8 +1324,6 @@ const navbar = (() => {
 
             if (COLOR_LIST.findIndex(item => item === hexCode) === -1) return
 
-            formProps.hexCode = hexCode;
-
             project.hexCode = hexCode;
             project.name = formProps.name
 
@@ -1336,8 +1337,9 @@ const navbar = (() => {
             projectsList = document.querySelector('.projectsList ul');
             projectsList.scrollTo({ top: projectsListScrollBarPosition });
 
-            if (page.name !== 'Inbox') {
+            if (page.targetId === project.id) {
                 let content = document.querySelector('.content');
+
                 const contentScrollBarPosition = content.scrollTop;
 
                 createPages(formProps.name)
@@ -1350,7 +1352,7 @@ const navbar = (() => {
 
         return { edit }
     }
-    function handleProjectDelete(id, name) {
+    function handleProjectDelete(id) {
         const remove = function (index) {
 
             data.projects.splice(index, 1)
@@ -1370,19 +1372,17 @@ const navbar = (() => {
                 projectsList.scrollTo({ top: projectsListScrollBarPosition });
             }
 
-            let content = document.querySelector('.content');
+            const content = document.querySelector('.content');
             let currentScrollBarPosition = 0;
-
-            if (name === page.name) {
+        
+            if (page.targetId === id) {
                 page.name = 'Inbox'
-            }
-
-            if (page.name === 'Inbox') {
+            } else {
                 currentScrollBarPosition = content.scrollTop;
             }
-            
+                
             createPages(page.name)
-
+            
             content.scrollTo({ top: currentScrollBarPosition});
         }
 
