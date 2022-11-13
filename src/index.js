@@ -52,7 +52,6 @@ const navbar = (() => {
             return
         }
 
-        // 製作切換 project name
         createPages(page.name)
     }
     function createPages(page) {
@@ -199,7 +198,7 @@ const navbar = (() => {
         for (let item of tasks) {
             
             Object.assign(item,
-                handleTaskDelete(item.id),
+                handleTaskDelete(),
                 handleTaskUpdate(item)
             )
         }
@@ -330,7 +329,7 @@ const navbar = (() => {
     function createTaskDropdown() {
         const dropdownList = document.querySelector('.projectDropdown .dropdownList ul')
 
-        if (data.projects.length === 0) return // 顯示尚未建立 project
+        if (data.projects.length === 0) return
 
         for (let project of data.projects) {
             const li = document.createElement('li');
@@ -761,7 +760,7 @@ const navbar = (() => {
             const id = editButton.closest('.item').dataset.id
             const index = data.tasks.findIndex(item => item.id === +id)
 
-            if (index === -1 || !id) return // 提示未找到項目
+            if (index === -1 || !id) return 
 
             createEditTaskForm(data.tasks[index]);
             showForm();
@@ -775,7 +774,7 @@ const navbar = (() => {
             const id = deleteButton.closest('.item').dataset.id
             const index = data.tasks.findIndex(item => item.id === +id)
 
-            if (index === -1 || !id) return // 提示未找到項目
+            if (index === -1 || !id) return
 
             data.tasks[index].remove(index, 'tasks');
         }
@@ -938,7 +937,7 @@ const navbar = (() => {
     }
 
     // Task item handle
-    function handleTaskDelete(id) {
+    function handleTaskDelete() {
         const remove = (index, type) => {
 
             data[type].splice(index, 1)
@@ -1244,7 +1243,7 @@ const navbar = (() => {
             const id = editButton.closest('.item').dataset.id
             const index = data.projects.findIndex(item => item.id === +id)
 
-            if (index === -1 || !id) return // 提示未找到項目
+            if (index === -1 || !id) return
 
             createEditProjectForm(data.projects[index]);
             showForm();
@@ -1258,7 +1257,7 @@ const navbar = (() => {
             const id = deleteButton.closest('.item').dataset.id
             const index = data.projects.findIndex(item => item.id === +id)
 
-            if (index === -1 || !id) return // 提示未找到項目
+            if (index === -1 || !id) return 
 
             data.projects[index].remove(index);
         }
