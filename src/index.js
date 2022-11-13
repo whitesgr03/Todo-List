@@ -346,6 +346,19 @@ const navbar = (() => {
             li.innerHTML = button;
             
             dropdownList.append(li);
+
+            if (page.targetId === project.id ) {
+                const projectNameButton = document.querySelector('.projectName')
+
+                const div = document.createElement('div');
+                div.innerHTML = button;
+                
+                div.firstElementChild.classList.add(...projectNameButton.classList)
+
+                projectNameButton.replaceWith(div.firstElementChild)
+
+            }
+
         }
     }
     function showTaskDropdown(e) {
