@@ -582,6 +582,29 @@ const navbar = (() => {
         this.style.height = 0;
         this.style.height = `${this.scrollHeight}px`;
     }
+    function setTasksComplete(e) {
+        const setCompleteButton = e.target.closest('.setCompleteButton');
+        
+        if (!setCompleteButton) return;
+
+        const allCheckbox = Array.from(document.querySelectorAll('.tasksList [type="checkbox"]'))
+
+        for (let checkbox of allCheckbox) {
+            
+            if (checkbox.checked) {
+                const id = +checkbox.closest('.item').dataset.id;
+
+                const item = data.tasks.find(item => item.id === id)
+
+                item.completed = true;
+            }
+        }
+
+        localStorage.setItem('tasks', JSON.stringify(data.tasks))
+
+        createTasksList(page.name);
+    }
+
 
 
     // Tasks List
@@ -596,6 +619,9 @@ const navbar = (() => {
             <div class="option">
                 <button type="button" class="optionButton">◦◦◦</button>
                 <ul class="optionList">
+                    <li>
+                        <button class="setCompleteButton" type="button">Set task to completed</button>
+                    </li>
                     <li>
                         <button class="showTaskButton" type="button">Show completed tasks</button>
                     </li>
@@ -617,6 +643,7 @@ const navbar = (() => {
         }
         title.style.flex = 1;
 
+        div.addEventListener('pointerdown', setTasksComplete)
         div.addEventListener('pointerdown', showCompletedTasks)
         div.addEventListener('click', showAddTaskForm)
 
@@ -936,8 +963,6 @@ const navbar = (() => {
 
         return { edit }
     }
-
-
 
     // Get all Projects Data
     function getLocalProjects() {
