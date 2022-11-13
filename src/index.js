@@ -746,6 +746,7 @@ const navbar = (() => {
             ul.append(li);
         }
 
+        ul.addEventListener('click', changeCompleteState);
         ul.addEventListener('pointerdown', editTaskItem);
         ul.addEventListener('pointerdown', deleteTaskItem);
 
@@ -775,6 +776,21 @@ const navbar = (() => {
 
             data.tasks[index].remove(index, 'tasks');
         }
+
+        function changeCompleteState(e) {
+            const checkbox = e.target.closest('.complete[type="checkbox"]');
+
+            if (!checkbox || checkbox.checked) return
+
+            const id = +checkbox.closest('.item').dataset.id;
+
+            const item = data.tasks.find(item => item.id === id)
+
+            item.completed = false;
+
+            localStorage.setItem('tasks', JSON.stringify(data.tasks))
+        }
+
     }
     function createEditTaskForm(task) {
         const template = `
