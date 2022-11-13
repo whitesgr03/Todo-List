@@ -436,6 +436,8 @@ const navbar = (() => {
             formProps.id = 1;
         }
 
+        formProps.completed = false;
+
         data.tasks.push(formProps)
 
         localStorage.setItem('tasks', JSON.stringify(data.tasks))
