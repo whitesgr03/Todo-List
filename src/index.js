@@ -646,28 +646,26 @@ const navbar = (() => {
         div.addEventListener('pointerdown', setTasksComplete)
         div.addEventListener('pointerdown', showCompletedTasks)
         div.addEventListener('click', showAddTaskForm)
-
-        function showCompletedTasks(e) {
-            const showTaskButton = e.target.closest('.showTaskButton');
-            
-            if (!showTaskButton) return;
-        }
     }
-    function createTasksList(pageName) {
+    function createTasksList(pageName, showAll = null) {
 
         data.tasks = getLocalTasks();
 
-        let tasks = [];
+        let tasks = data.tasks;
+
+        if (!showAll) {
+            tasks = data.tasks.filter(item => !item.completed);
+        }
+
         switch (pageName) {
             case 'Inbox':
-                tasks = data.tasks;
                 break;
             case 'Today':
-                tasks = data.tasks.filter(item => isToday(new Date(item.day)))
+                tasks = tasks.filter(item => isToday(new Date(item.day)))
                 break;
             default: 
                 const project = data.projects.find(item => item.id === page.targetId)
-                tasks = data.tasks.filter(item => item.projectId === project.id)            
+                tasks = tasks.filter(item => item.projectId === project.id)            
         }
 
         const content = document.querySelector('.content')
