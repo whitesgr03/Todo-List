@@ -86,8 +86,6 @@ const todoList = (() => {
 
 
     if (!target.classList.contains('active')) return 
-        if (!target.classList.contains('active')) return 
-    if (!target.classList.contains('active')) return 
     
     this.addEventListener('pointerdown', closeOptionListWithClick)
     this.addEventListener('scroll', closeOptionListWithScroll, {
