@@ -5,11 +5,12 @@ import './css/style.css';
 
 // library
 import namedColors from 'color-name-list';
-import {format, isToday, isTomorrow} from 'date-fns';
+import { format, isToday, isTomorrow } from 'date-fns';
 
+const todoList = (() => {
 
-const navbar = (() => {
     const COLOR_LIST = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
+
 
     const page = {
         name: 'Inbox',
@@ -21,17 +22,18 @@ const navbar = (() => {
     }
 
     data.projects = getLocalProjects();
-
     // cache DOM
     const nav = document.querySelector('nav');
+    const projectsButton = nav.querySelector('.projects');
+
     // bind events
     nav.addEventListener('click', changePage)
-    nav.addEventListener('click', showAddProjectForm)
+    projectsButton.addEventListener('click', showAddProjectForm)
+    document.addEventListener('pointerdown', showOption);
 
     createPages(page.name)
 
-
-    // Change page init
+    // event methods
     function changePage(e) {
 
         const navItem = e.target.closest('.wrap')
@@ -47,11 +49,17 @@ const navbar = (() => {
         }
 
         if (page.name === 'Projects') {
-            page.name = 'Inbox'
-            showProjectList();
-            return
-        }
+            
+            projectsButton.classList.toggle('arrowDown');
+            
 
+            if (projectsButton.classList.contains('arrowDown')) {
+                showProjectList();
+                return
+            }
+
+            page.name = 'Inbox'
+        }
         createPages(page.name)
     }
     function createPages(page) {
@@ -62,11 +70,48 @@ const navbar = (() => {
         createTasksTopBar(page)
 
         createTasksList(page)
-        document.addEventListener('pointerdown', showOptionList);
+    }
+    function showOption(e) {
+    const target = e.target.closest('.option')
+
+    if (!target) return
+
+    const optionCoord = target.getBoundingClientRect()
+
+    const optionList = target.querySelector('.optionList');
+    optionList.style.top = `${optionCoord.bottom + 10}px`;
+    optionList.style.left = `${optionCoord.left - (optionList.clientWidth - optionCoord.width) / 2}px`;
+
+    target.classList.toggle('active');
+
+
+    if (!target.classList.contains('active')) return 
+        if (!target.classList.contains('active')) return 
+    if (!target.classList.contains('active')) return 
+    
+    this.addEventListener('pointerdown', closeOptionListWithClick)
+    this.addEventListener('scroll', closeOptionListWithScroll, {
+        capture: true,
+        once: true
+    })
+
+        function closeOptionListWithClick(e) {
+        
+        const secondTarget = e.target.closest('.option')
+            console.log(secondTarget !== target)
+            if (!secondTarget || secondTarget !== target) {
+            console.log('remove')
+            target.classList.remove('active');
+        }
+        this.removeEventListener('pointerdown', closeOptionListWithClick)
+    }
+    function closeOptionListWithScroll() {
+        target.classList.remove('active');
+    }
     }
 
 
-    // General
+    // General Event Methods
     function focusForm(e) {
         const target = e.relatedTarget;
         const firstField = this.querySelector('[tabIndex]')
@@ -86,40 +131,7 @@ const navbar = (() => {
         const firstField = currentForm.querySelector('[tabIndex]')
         firstField.focus();
     }
-    function showOptionList(e) {
-        const target = e.target.closest('.option')
 
-        if (!target) return
-
-        const optionCoord = target.getBoundingClientRect()
-
-        const optionList = target.querySelector('.optionList');
-        optionList.style.top = `${optionCoord.bottom + 10}px`;
-        optionList.style.left = `${optionCoord.left - (optionList.clientWidth - optionCoord.width) / 2}px`;
-
-        target.classList.toggle('active');
-
-
-        if (!target.classList.contains('active')) return 
-        
-        this.addEventListener('pointerdown', closeOptionListWithClick)
-        this.addEventListener('scroll', closeOptionListWithScroll, {
-            capture: true,
-            once: true
-        })
-
-        function closeOptionListWithClick(e) {
-            const secondTarget = e.target.closest('.option')
-
-            if (!secondTarget || secondTarget !== target) {
-                target.classList.remove('active');
-            }
-            this.removeEventListener('pointerdown', closeOptionListWithClick)
-        }
-        function closeOptionListWithScroll() {
-            target.classList.remove('active');
-        }
-    }
     function activeCloseButton(e) {
 
         const cancelButton = e.target.closest('.cancel');
@@ -1073,6 +1085,7 @@ const navbar = (() => {
 
         overlay.addEventListener('pointerdown', activeCloseButton)
     }
+
     function createProjectDropdown() {
         const dropdownList = document.querySelector('.dropdownList ul')
 
@@ -1166,15 +1179,15 @@ const navbar = (() => {
 
     // Projects List
     function showProjectList() {
-        const projects = document.querySelector('.projects')
+        // const projects = document.querySelector('.projects')
 
-        projects.classList.toggle('arrowDown');
-
-        if (projects.classList.contains('arrowDown')) {
+        // projects.classList.toggle('arrowDown');
+        // console.log(projects)
+        // if (projects.classList.contains('arrowDown')) {
             createProjectList();
-        } else {
-            createPages('Inbox')
-        }
+        // } else {
+        //     createPages('Inbox')
+        // }
     }
     function createProjectList() {
         
