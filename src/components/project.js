@@ -59,3 +59,7 @@ const createProjectMethod = ()=> {
         createProject,
     }
 }
+
+export {
+    createProjectMethod,
+}
