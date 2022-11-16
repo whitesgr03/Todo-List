@@ -20,11 +20,13 @@ const createSidebar = () => {
     // cache DOM
     const nav = document.querySelector('nav');
     const projectsButton = nav.querySelector('.projects');
+    const projectsList = nav.querySelector('.projectsList');
+    
     
     const init = () => {
         nav.addEventListener('click', changePage)
         projectsButton.addEventListener('click', showProjectForm)
-        projectsButton.addEventListener('click', createProjectList)
+        projectsButton.addEventListener('click', showProjectList)
     }
 
     function changePage (e) {
@@ -297,9 +299,6 @@ const createSidebar = () => {
     }
 };
 
-
 export {
     createSidebar,
 }
-
-
