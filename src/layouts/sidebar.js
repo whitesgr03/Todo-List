@@ -11,14 +11,12 @@ const createSidebar = () => {
     const { getAllProjects, createProject, deleteProject } = createProjectMethods()
     const { validation, focusOnForm, showForm, closeForm, getHaxList } = createEventMethods();
 
+    const HAX_LIST = getHaxList()
     const page = {
         name: 'Inbox',
         targetId: null,
     }
 
-    const {getAllProjects} = createProjectMethod()
-    const {focusOnForm, showForm} = createEventMethods();
-    
     // cache DOM
     const nav = document.querySelector('nav');
     const projectsButton = nav.querySelector('.projects');
