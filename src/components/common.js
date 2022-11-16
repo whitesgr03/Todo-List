@@ -2,6 +2,11 @@
     
 function createEventMethods() {
 
+    const HAX_LIST = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
+
+    const getHaxList = () => {
+        return HAX_LIST
+    }
     const focusOnForm = function(e) {
         const target = e.relatedTarget;
         const firstField = this.querySelector('[tabIndex]')
