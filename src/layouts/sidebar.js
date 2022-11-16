@@ -136,19 +136,19 @@ const createSidebar = () => {
             closeForm();
         }
     }
+    function showProjectList(e) {
         const wrap = e.target.closest('.wrap')
 
         if (!wrap) return
 
-        const projectsList = nav.querySelector('.projectsList');
-
         projectsButton.classList.toggle('arrowDown');
 
+        if (projectsButton.classList.contains('arrowDown')) {
+            createProjectList()
+        }
+    }
+    function createProjectList () {
         projectsList.innerHTML = '';
-
-        if (projectsList.classList.contains('noProject')) {
-            projectsList.classList.remove('noProject')
-        }   
 
         const projects = getAllProjects();
 
@@ -157,6 +157,10 @@ const createSidebar = () => {
             projectsList.classList.add('noProject')
             return
         }
+
+        if (projectsList.classList.contains('noProject')) {
+            projectsList.classList.remove('noProject')
+        }   
 
         const ul = document.createElement('ul');
         
@@ -196,86 +200,42 @@ const createSidebar = () => {
                 li.querySelector('.title').title = project.name;
             }
         }
-        
-        ul.addEventListener('pointerdown', editProjectItem);
-        ul.addEventListener('pointerdown', deleteProjectItem);
 
-        function editProjectItem(e) {
-            e.preventDefault(); 
-            
-            const editButton = e.target.closest('.editButton');
-            if (!editButton) return
+        projectsList.append(ul);
 
-            const id = editButton.closest('.item').dataset.id
-            const index = projects.findIndex(item => item.id === +id)
 
-            if (index === -1 || !id) return
+        // ul.addEventListener('pointerdown', editProject);
+        ul.addEventListener('pointerdown', handleDeleteProject);
 
-            console.log(projects[index])
+        function handleDeleteProject(e) { 
 
-            // createEditProjectForm(projects[index]);
-            // showForm();
-            
-        }
-        function deleteProjectItem(e) {
             const deleteButton = e.target.closest('.deleteButton');
 
             if (!deleteButton) return
 
             const id = deleteButton.closest('.item').dataset.id
-            const index = projects.findIndex(item => item.id === +id)
 
-            if (index === -1 || !id) return 
+            if (!id) return
 
-            console.log(projects[index])
-
-            // projects[index].remove(index);
-        }
-    }
-    function createAddProjectForm(e) {
-
-        const addButton = e.target.closest('.addButton')
-        if (!addButton) return
-
-        const template = `
-            <h2>Add Project</h2>
-            <label for="name">
-                Name
-                <input class="disableOutline" name="name" type="text" id="name" maxlength="50" tabindex="0">
-            </label>
-            <div class="dropdown">
-                <h3>Color</h3>
-                <button type="button" class="wrap colorButton">
-                    <span class="icon" style="--project-color:#000000"></span>
-                    Black
-                </button>
-                <div class="dropdownList">
-                    <ul>
-                    </ul>   
-                </div>
-            </div>
-            <div class="submitButton">
-                <button type="button" class="cancel">Cancel</button>
-                <button type="submit" name="submit" class="submit" disable>Add task</button>
-            </div>  
-            `;
+            const result = deleteProject(id)
         
-        const overlay = document.querySelector('.overlay');
+            if (!result) return
 
-        const form = document.createElement('form');
+            let ul = projectsList.firstElementChild
 
-        form.classList.add('projectForm');
-        form.innerHTML = template;
+            const projectsListScrollBarPosition = ul.scrollTop;
 
-        overlay.append(form)
+            createProjectList();
 
-        createDropdown();
+            if (ul = nav.querySelector('.projectsList ul')) {
+                ul.scrollTo({ top: projectsListScrollBarPosition });
+            }
 
-        form.addEventListener('focusout', focusOnForm)
-        form.addEventListener('submit', createProject)
-        form.addEventListener('click', showDropdown)
 
-        showForm();
+        
+
+        }
+
     }
     function createDropdown() {
         const dropdownList = document.querySelector('.dropdownList ul')
