@@ -23,7 +23,7 @@ const createSidebar = () => {
     
     const init = () => {
         nav.addEventListener('click', changePage)
-        projectsButton.addEventListener('click', createAddProjectForm)
+        projectsButton.addEventListener('click', showProjectForm)
         projectsButton.addEventListener('click', createProjectList)
     }
 
@@ -50,8 +50,92 @@ const createSidebar = () => {
         console.log(page.name)
         // createPages(page.name)
     }
-    function createProjectList(e) {
+    function showProjectForm(e) {
+        const addButton = e.target.closest('.addButton')
+        if (!addButton) return
 
+        createProjectForm()
+    }
+    function createProjectForm (project = null) {
+        const template = `
+            <h2>Edit Project</h2>
+            <label for="name">
+                Name
+                <input class="disableOutline" name="name" type="text" id="name" maxlength="50" tabindex="0">
+            </label>
+            <div class="dropdown">
+                <h3>Color</h3>
+                <button type="button" class="wrap colorButton">
+                    <span class="icon" style="--project-color:#000000"></span>
+                    Black
+                </button>
+                <div class="dropdownList">
+                    <ul>
+                    </ul>   
+                </div>
+            </div>
+            <div class="submitButton">
+                <button type="button" class="cancel">Cancel</button>
+                <button type="submit" name="submit" class="submit" disable>Add task</button>
+            </div>  
+            `;
+        const form = document.createElement('form');
+        form.classList.add('projectForm');
+        form.innerHTML = template;
+
+        const overlay = document.querySelector('.overlay');
+
+        overlay.append(form)
+
+        createDropdown();
+
+        if (project) {
+            const color = namedColors.find(color => color.hex === project.hexCode);
+
+            form.elements.name.value = project.name;
+
+            form.querySelector('.colorButton').append(color.name);
+            form.querySelector('.icon').style = `--project-color:${project.hexCode}`;
+
+            // form.addEventListener('submit', updateProject)
+        } else {
+            form.addEventListener('submit', handleCreateProject)
+        }
+
+        form.addEventListener('focusout', focusOnForm)
+        form.addEventListener('click', showDropdown)
+
+        showForm();
+
+        function handleCreateProject(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const formProps = Object.fromEntries(formData);
+
+            if (!validation(formProps, this)) return
+
+            const hexCode = getComputedStyle(this.querySelector('.icon')).getPropertyValue('--project-color')
+
+            if (HAX_LIST.findIndex(item => item === hexCode) === -1) return
+
+            formProps.hexCode = hexCode;
+
+            const result = createProject(formProps)
+
+            if (!result) return
+
+            const projectButton = document.querySelector('.projects');
+            projectButton.classList.add('arrowDown');
+
+            createProjectList()
+
+            const ul = projectsList.firstElementChild
+            ul.scrollTo({top: ul.scrollHeight, behavior: 'smooth'});
+
+            closeForm();
+        }
+    }
         const wrap = e.target.closest('.wrap')
 
         if (!wrap) return
