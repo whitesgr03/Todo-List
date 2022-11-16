@@ -2,7 +2,6 @@
 
 import './css/style.css';
 
-
 import { createTodoList } from './todoList'
 
 
