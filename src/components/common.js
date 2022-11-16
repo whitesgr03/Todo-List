@@ -13,7 +13,6 @@ function createEventMethods() {
 
         if (target && !target.closest('form')) firstField.focus()
     }
-
     const showForm = () => {
         const overlay = document.querySelector('.overlay');
 
@@ -26,6 +25,8 @@ function createEventMethods() {
         const firstField = currentForm.querySelector('[tabIndex]')
         firstField.focus();
 
+        overlay.addEventListener('pointerdown', isClosedByPointer)
+    }
     const closeForm = () => {
         const overlay = document.querySelector('.overlay');
         const currentForm = overlay.firstElementChild;
@@ -69,10 +70,20 @@ function createEventMethods() {
     }
         return isValid
     }
+    function isClosedByPointer (e) {
+        const cancelButton = e.target.closest('.cancel');
+
+        if (!cancelButton && e.target !== this) return
+        
+        closeForm()
+    }
 
     return {
         focusOnForm,
         showForm,
+        closeForm,
+        validation,
+        getHaxList,
     }
 }
 
