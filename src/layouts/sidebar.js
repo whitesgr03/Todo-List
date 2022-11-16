@@ -1,13 +1,15 @@
 'use strict'
 
 // From component folder
-import { createProjectMethod, createEventMethods } from '../components';
+import { createProjectMethods, createEventMethods } from '../components';
 
 // From library
 import namedColors from 'color-name-list';
 
+
 const createSidebar = () => {
-    const HAX_LIST = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
+    const { getAllProjects, createProject, deleteProject } = createProjectMethods()
+    const { validation, focusOnForm, showForm, closeForm, getHaxList } = createEventMethods();
 
     const page = {
         name: 'Inbox',
