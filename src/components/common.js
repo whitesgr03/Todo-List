@@ -26,22 +26,49 @@ function createEventMethods() {
         const firstField = currentForm.querySelector('[tabIndex]')
         firstField.focus();
 
-        overlay.addEventListener('pointerdown', closeForm)
+    const closeForm = () => {
+        const overlay = document.querySelector('.overlay');
+        const currentForm = overlay.firstElementChild;
 
-        function closeForm(e) {
-            const cancelButton = e.target.closest('.cancel');
+        currentForm.remove();
+        
+        overlay.className = 'overlay';
+        document.body.style.overflow = "auto";
 
-            if (!cancelButton && e.target !== this) return
+        overlay.removeEventListener('pointerdown', isClosedByPointer)
+    }
+    const validation = (formProps, form)  =>{
+    let isValid = true;
 
-            currentForm.remove();
+    for (let field in formProps) {
+        const elem = form.elements[field]
 
-            overlay.className = 'overlay';
-            document.body.style.overflow = "auto";
+        if (elem.dataset.skipValid && elem.classList.contains('disableOutline')) {
+            continue
+        }
 
-            this.removeEventListener('pointerdown', closeForm)
+        if (!elem.classList.contains('disableOutline')) {
+            isValid = false;
+            elem.focus();
+            return
+        }
+
+        const value = formProps[field].trim();
+
+        if (value.length === 0) {
+            const elem = form.elements[field]
+        
+            isValid = false;
+            elem.focus();
+            elem.classList.remove('disableOutline')
+
+            elem.addEventListener('blur', disableOutLine)
+
+            return isValid
         }
     }
-
+        return isValid
+    }
 
     return {
         focusOnForm,
