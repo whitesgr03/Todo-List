@@ -128,34 +128,58 @@ const createSidebar = () => {
         
         showForm();
     }
+    function createDropdown() {
+        const dropdownList = document.querySelector('.dropdownList ul')
 
-        function handleCreateProject(e) {
-            e.preventDefault();
+        for (let hax of HAX_LIST) { 
+            const color = namedColors.find(color => color.hex === hax);
 
-            const formData = new FormData(this);
-            const formProps = Object.fromEntries(formData);
+            const li = document.createElement('li');
+            const button = `
+                <button type="button" class="wrap" tabIndex="-1">
+                    <span class="icon" style="--project-color:${color.hex};"></span>
+                    <span>${color.name}</span>
+                </button>
+            `;
+            
+            li.className = 'item'
+            li.innerHTML = button;
+            
+            dropdownList.append(li);
+        }
+    }
+    function showDropdown(e) {
+        const colorButton = e.target.closest('.colorButton');
 
-            if (!validation(formProps, this)) return
+        if (!colorButton) return
 
-            const hexCode = getComputedStyle(this.querySelector('.icon')).getPropertyValue('--project-color')
+        colorButton.classList.toggle('showList')
 
-            if (HAX_LIST.findIndex(item => item === hexCode) === -1) return
+        if (colorButton.classList.contains('showList')) {
+            this.addEventListener('pointerup', closeDropdown)
+            this.addEventListener('pointerdown', changeColor)
+        }
 
-            formProps.hexCode = hexCode;
+        function closeDropdown(e) {
+            if (e.target !== colorButton) {
+                colorButton.classList.remove('showList')
+            }
 
-            const result = createProject(formProps)
+            this.removeEventListener('pointerup', closeDropdown)
+            this.removeEventListener('pointerdown', changeColor);
+        }
 
-            if (!result) return
+        function changeColor(e) {
+            const target = e.target.closest('.wrap')
+                
+            if (!target || target === colorButton) return
 
-            const projectButton = document.querySelector('.projects');
-            projectButton.classList.add('arrowDown');
+            const selectElem = target.cloneNode(true)
 
-            createProjectList()
+            selectElem.classList.add('colorButton')
+            selectElem.tabIndex = 0;
 
-            const ul = projectsList.firstElementChild
-            ul.scrollTo({top: ul.scrollHeight, behavior: 'smooth'});
-
-            closeForm();
+            colorButton.replaceWith(selectElem)
         }
     }
     function showProjectList(e) {
