@@ -565,7 +565,6 @@ li.projects.arrowRight.arrowDown .icon {
     font-size: 1rem;
     white-space: nowrap;
     visibility: hidden;
-    pointer-events: none;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -574,7 +573,6 @@ li.projects.arrowRight.arrowDown .icon {
 
 .option.active .optionList{
     visibility: visible;
-    pointer-events: auto;
 }
 
 
