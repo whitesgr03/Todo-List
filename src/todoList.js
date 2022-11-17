@@ -13,7 +13,7 @@ function createTodoList() {
 
         // createMain()
 
-        document.addEventListener('pointerdown', showOption);
+        document.addEventListener('click', showOption);
     }
 
     function showOption(e) {
