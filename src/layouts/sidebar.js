@@ -12,6 +12,14 @@ const createSidebar = () => {
     const { validation, focusOnForm, showForm, closeForm, getHaxList } = createEventMethods();
 
     const HAX_LIST = getHaxList()
+
+    const data = {
+        projects: null,
+        tasks: null,
+    }
+
+    data.projects = getLocalProjects();
+
     const page = {
         name: 'Inbox',
         targetId: null,
