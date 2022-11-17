@@ -212,22 +212,43 @@ const createSidebar = () => {
             createProjectItem(project)
         }
     }
+    function createProjectItem(project) {
+        const template = `
+            <div class="wrap">
+                <div class="icon"></div>
+                <div class="title"></div>
+            </div>
+            <div class="option">
+                <button type="button" class="optionButton">•••</button>
+                <ul class="optionList">
+                    <li>
+                        <button class="editButton" type="button">Edit project name</button>
+                    </li>
+                    <li>
+                        <button class="deleteButton"  type="button">Delete project</button>
+                    </li>
+                </ul>
+            </div>
+        `;
 
-            const li = document.createElement('li');
+        const li = document.createElement('li');
 
-            li.className = 'item'
-            li.dataset.id = project.id;
-            li.innerHTML = template;
-            li.querySelector('.title').textContent = project.name;
-            li.querySelector('.icon').style = `--project-color:${project.hexCode}`;
+        li.className = 'item'
+        li.dataset.id = project.id;
+        li.innerHTML = template;
+        li.querySelector('.title').textContent = project.name;
+        li.querySelector('.icon').style = `--project-color:${project.hexCode}`;
 
-            ul.append(li);
+        document.body.append(li)
 
-            if (li.querySelector('.title').scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
-                li.querySelector('.title').style.overflow = 'hidden';
-                li.querySelector('.title').title = project.name;
-            }
+        const ul = document.querySelector('.projectsList ul');
+        ul.append(li)
+
+        if (li.querySelector('.title').scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
+            li.querySelector('.title').style.overflow = 'hidden';
+            li.querySelector('.title').title = project.name;
         }
+    }
 
         projectsList.append(ul);
 
