@@ -39,6 +39,7 @@ const createSidebar = () => {
         projectsList.addEventListener('pointerdown', handleDelete);
         projectsList.addEventListener('pointerdown', editProject);
 
+        createProjectList();
     }
 
     function changePage (e) {
