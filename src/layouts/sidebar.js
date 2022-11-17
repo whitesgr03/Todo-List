@@ -250,95 +250,109 @@ const createSidebar = () => {
         }
     }
 
-        projectsList.append(ul);
+    function handleCreate(e) {
+            e.preventDefault();
 
+            const formData = new FormData(this);
+            const formProps = Object.fromEntries(formData);
 
-        // ul.addEventListener('pointerdown', editProject);
-        ul.addEventListener('pointerdown', handleDeleteProject);
+            if (!validation(formProps, this)) return
 
-        function handleDeleteProject(e) { 
+            const hexCode = getComputedStyle(this.querySelector('.icon')).getPropertyValue('--project-color')
 
-            const deleteButton = e.target.closest('.deleteButton');
+            if (HAX_LIST.findIndex(item => item === hexCode) === -1) return
 
-            if (!deleteButton) return
+            formProps.hexCode = hexCode;
 
-            const id = deleteButton.closest('.item').dataset.id
-
-            if (!id) return
-
-            const result = deleteProject(id)
+        const { id, status } = createLocalProject(formProps)
         
-            if (!result) return
-
-            let ul = projectsList.firstElementChild
-
-            const projectsListScrollBarPosition = ul.scrollTop;
-
-            createProjectList();
-
-            if (ul = nav.querySelector('.projectsList ul')) {
-                ul.scrollTo({ top: projectsListScrollBarPosition });
-            }
-
-
+            if (!status) return
         
+            formProps.id = id
 
-        }
+            createProjectItem(formProps)
+        
+            data.projects.push(formProps)
+
+            projectsButton.classList.add('arrowDown');
+
+            const ul = projectsList.firstElementChild
+            ul.scrollTo({top: ul.scrollHeight, behavior: 'smooth'});
+
+            closeForm();
+    }
+    function handleDelete(e) { 
+
+        const deleteButton = e.target.closest('.deleteButton');
+
+        if (!deleteButton) return
+
+        const item = deleteButton.closest('.item')
+
+        const id = +item.dataset.id
+
+        if (!id) return
+
+        const project = data.projects.find(item => item.id === id)
+
+        const {status} = deleteLocalProject(project.id)
+
+        if (!status) return
+
+        item.remove()
+
+        const ul = projectsList.firstElementChild
+        ul.scrollTo({ top: ul.scrollTop });
 
     }
-    function createDropdown() {
-        const dropdownList = document.querySelector('.dropdownList ul')
+    function handleUpdate(e) {
 
-        for (let hax of HAX_LIST) { 
-            const color = namedColors.find(color => color.hex === hax);
+        e.preventDefault();
 
-            const li = document.createElement('li');
-            const button = `
-                <button type="button" class="wrap" tabIndex="-1">
-                    <span class="icon" style="--project-color:${color.hex};"></span>
-                    ${color.name}
-                </button>
-            `;
-            
-            li.className = 'item'
-            li.innerHTML = button;
-            
-            dropdownList.append(li);
+        const formData = new FormData(this);
+        const formProps = Object.fromEntries(formData);
+
+        if (!validation(formProps, this)) return
+
+        const hexCode = getComputedStyle(this.querySelector('.icon')).getPropertyValue('--project-color')
+
+        if (HAX_LIST.findIndex(item => item === hexCode) === -1) return
+
+        formProps.hexCode = hexCode;
+        
+        const item = e.target.item;
+
+        const { status } = updateLocalProject(formProps, +item.dataset.id)
+        
+        if (!status) return
+    
+        item.querySelector('.title').textContent = formProps.name;
+        item.querySelector('.icon').style = `--project-color:${formProps.hexCode}`;
+
+        if (item.querySelector('.title').scrollWidth > 150) {   // 不支援觸控以及鍵盤和螢幕閱讀器使用者
+            item.querySelector('.title').style.overflow = 'hidden';
+            item.querySelector('.title').title = formProps.name;
         }
+
+        const ul = projectsList.firstElementChild
+        ul.scrollTo({ top: ul.scrollTop });
+
+        closeForm();
     }
-    function showDropdown(e) {
-        const colorButton = e.target.closest('.colorButton');
+    function editProject(e) {
+        const editButton = e.target.closest('.editButton');
 
-        if (!colorButton) return
+        if (!editButton) return
 
-        colorButton.classList.toggle('showList')
+        const item = editButton.closest('.item');
 
-        if (colorButton.classList.contains('showList')) {
-            this.addEventListener('pointerup', closeDropdown)
-            this.addEventListener('pointerdown', changeColor)
-        }
+        const id = +item.dataset.id;
 
-        function closeDropdown(e) {
-            if (e.target !== colorButton) {
-                colorButton.classList.remove('showList')
-            }
+        if (!id) return
 
-            this.removeEventListener('pointerup', closeDropdown)
-            this.removeEventListener('pointerdown', changeColor);
-        }
+        const project = data.projects.find(item => item.id === id);
 
-        function changeColor(e) {
-            const target = e.target.closest('.wrap')
-                
-            if (!target || target === colorButton) return
-
-            const selectElem = target.cloneNode(true)
-
-            selectElem.classList.add('colorButton')
-            selectElem.tabIndex = 0;
-
-            colorButton.replaceWith(selectElem)
-        }
+        createProjectForm(project, item);
     }
 
     return {
