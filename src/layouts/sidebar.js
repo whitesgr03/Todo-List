@@ -8,7 +8,7 @@ import namedColors from 'color-name-list';
 
 
 const createSidebar = () => {
-    const { getAllProjects, createProject, deleteProject } = createProjectMethods()
+    const { getLocalProjects, createLocalProject, deleteLocalProject, updateLocalProject } = createProjectMethods()
     const { validation, focusOnForm, showForm, closeForm, getHaxList } = createEventMethods();
 
     const HAX_LIST = getHaxList()
