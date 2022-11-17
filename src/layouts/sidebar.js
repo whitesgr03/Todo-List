@@ -70,9 +70,15 @@ const createSidebar = () => {
 
         createProjectForm()
     }
-    function createProjectForm (project = null) {
+    function createProjectForm(project = null, elem = null) {
+        let name = 'Add'
+
+        if (project) {
+            name = 'Edit'
+        }
+
         const template = `
-            <h2>Edit Project</h2>
+            <h2>${name} Project</h2>
             <label for="name">
                 Name
                 <input class="disableOutline" name="name" type="text" id="name" maxlength="50" tabindex="0">
@@ -81,7 +87,7 @@ const createSidebar = () => {
                 <h3>Color</h3>
                 <button type="button" class="wrap colorButton">
                     <span class="icon" style="--project-color:#000000"></span>
-                    Black
+                    <span>Black</span>
                 </button>
                 <div class="dropdownList">
                     <ul>
@@ -108,18 +114,20 @@ const createSidebar = () => {
 
             form.elements.name.value = project.name;
 
-            form.querySelector('.colorButton').append(color.name);
+            form.querySelector('.colorButton').lastElementChild.textContent = color.name;
             form.querySelector('.icon').style = `--project-color:${project.hexCode}`;
 
-            // form.addEventListener('submit', updateProject)
+            form.item = elem;
+            form.addEventListener('submit', handleUpdate)
         } else {
-            form.addEventListener('submit', handleCreateProject)
+            form.addEventListener('submit', handleCreate)
         }
 
         form.addEventListener('focusout', focusOnForm)
         form.addEventListener('click', showDropdown)
-
+        
         showForm();
+    }
 
         function handleCreateProject(e) {
             e.preventDefault();
