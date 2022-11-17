@@ -20,9 +20,11 @@ function createEventMethods() {
         document.body.style.overflow = "hidden";
 
         const currentForm = overlay.firstElementChild;
-        currentForm.classList.add('active');
 
+        currentForm.classList.add('active');
+        
         const firstField = currentForm.querySelector('[tabIndex]')
+
         firstField.focus();
 
         overlay.addEventListener('pointerdown', isClosedByPointer)
@@ -69,6 +71,10 @@ function createEventMethods() {
         }
     }
         return isValid
+    }
+    const disableOutLine = function() {
+        this.classList.add('disableOutline')
+        this.removeEventListener('blur', disableOutLine)
     }
     function isClosedByPointer (e) {
         const cancelButton = e.target.closest('.cancel');
