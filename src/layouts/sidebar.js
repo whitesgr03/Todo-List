@@ -194,11 +194,7 @@ const createSidebar = () => {
         }
     }
     function createProjectList () {
-        projectsList.innerHTML = '';
-
-        const projects = getAllProjects();
-
-        if (projects.length === 0) {
+        if (data.projects.length === 0) {
             projectsList.innerHTML = '<p>There is no project</p>'
             projectsList.classList.add('noProject')
             return
@@ -212,24 +208,10 @@ const createSidebar = () => {
         
         projectsList.append(ul);
 
-        for (let project of projects) {
-            const template = `
-                <div class="wrap">
-                    <span class="icon"></span>
-                    <span class="title"></span>
-                </div>
-                <div class="option">
-                    <button type="button" class="optionButton">•••</button>
-                    <ul class="optionList">
-                        <li>
-                            <button class="editButton" type="button">Edit project name</button>
-                        </li>
-                        <li>
-                            <button class="deleteButton"  type="button">Delete project</button>
-                        </li>
-                    </ul>
-                </div>
-            `;
+        for (let project of data.projects) {
+            createProjectItem(project)
+        }
+    }
 
             const li = document.createElement('li');
 
