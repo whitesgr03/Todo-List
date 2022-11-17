@@ -28,13 +28,17 @@ const createSidebar = () => {
     // cache DOM
     const nav = document.querySelector('nav');
     const projectsButton = nav.querySelector('.projects');
-    const projectsList = nav.querySelector('.projectsList');
+    const projectsList = nav.querySelector('.projectsList'); 
     
+
     
     const init = () => {
         nav.addEventListener('click', changePage)
         projectsButton.addEventListener('click', showProjectForm)
         projectsButton.addEventListener('click', showProjectList)
+        projectsList.addEventListener('pointerdown', handleDelete);
+        projectsList.addEventListener('pointerdown', editProject);
+
     }
 
     function changePage (e) {
