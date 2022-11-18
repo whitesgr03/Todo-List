@@ -169,25 +169,25 @@ nav .wrap {
     column-gap: 20px;
 }
 
-/* top block */
+/* titleBar block */
 
-.top {
+.titleBar {
     display: flex;
     align-items: center;
 }
 
-.top .addButton {
+.titleBar .addButton {
     font-size: 2rem;
 }
 
-.top .optionButton {
+.titleBar .optionButton {
     cursor: pointer;
     flex: 0 1 25px;
     margin-left: 20px;
     text-align: center;
 }
 
-.top .title {
+.titleBar .title {
     width: 150px;
     white-space: nowrap;
     text-overflow: ellipsis;
