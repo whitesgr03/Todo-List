@@ -1,6 +1,6 @@
-export { createProjectMethod } from './project';
+export { createProjectMethods } from './handleProject';
 
-export { getLocalTasks } from './task';
+export { getLocalTasks } from './handleTask';
 
 export { createEventMethods } from './common'
 
