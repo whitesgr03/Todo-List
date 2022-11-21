@@ -50,9 +50,9 @@ const handleProject = (() => {
             return result
         }
 
-        for (let key in projects) {
+        for (let key in project) {
             if (data[key]) {
-                projects[key] = data[key]
+                project[key] = data[key]
             }
         }
 

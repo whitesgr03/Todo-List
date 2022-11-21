@@ -104,7 +104,7 @@ function createTodoList() {
         } else {
             tasks = data.tasks.filter(item => !item.completed);
         }
-        
+
 
         switch (page) {
             case 'Inbox':
@@ -114,9 +114,10 @@ function createTodoList() {
                 break;
             default:
                 const project = data.projects.find(project => project.id === item.id)
+                
                 tasks = tasks.filter(item => item.projectId === project.id)
         }
-
+        
         return tasks
     }
     function showOption(e) {
@@ -297,10 +298,10 @@ function createTodoList() {
         if (!status) return
     
         formProps.id = id
-
-        sidebar.createProjectItem(formProps)
     
         data.projects.push(formProps)
+
+        sidebar.createProjectList(data.projects)
 
         projectsButton.classList.add('arrowDown');
 
@@ -315,60 +316,46 @@ function createTodoList() {
 
         if (!deleteButton) return
 
-        const item = deleteButton.closest('.item')
+        const elem = deleteButton.closest('.item')
 
-        const id = +item.dataset.id
+        const id = +elem.dataset.id
 
         if (!id) return
 
         const index = data.projects.findIndex(project => project.id === id)
 
-        const {status} = handleProject.deleteLocalProject(data.projects[index].id)
+        const {status} = handleProject.deleteLocalProject(id)
 
         if (!status) return;
 
         data.projects.splice(index, 1)
 
-        item.remove()
+        elem.remove()
 
-        const ul = projectsList.firstElementChild
+        let ul = projectsList.firstElementChild
         ul.scrollTo({ top: ul.scrollTop });
 
-         // 還要針對 task 的變動作反應
 
-        // const remove = function (index) {
+        for (let [index, task] of data.tasks.entries()) {
 
-    //     dataProjects.splice(index, 1)
+            if (task.projectId === id) {
+                handleTask.deleteLocalTask(task.id)
 
-    //     localStorage.setItem('projects', JSON.stringify(dataProjects))
+            }
+        }
 
-    //     data.tasks = data.tasks.filter(item => item.projectId !== id)
+        data.tasks = data.tasks.filter(task => task.projectId !== id)
 
-    //     localStorage.setItem('tasks', JSON.stringify(data.tasks))
+        if (item.id === id) {
+            item.name = 'Inbox'
+            item.id = null
+        }
 
-        // let projectsList = document.querySelector('.projectsList ul');
-        // const projectsListScrollBarPosition = projectsList.scrollTop;
+        changeTitle(item.name)
+        main.createTasksList(filterTasks(item.name))
 
-        // createProjectList();
-
-        // if (projectsList = document.querySelector('.projectsList ul')) {
-        //     projectsList.scrollTo({ top: projectsListScrollBarPosition });
-        // }
-
-    //     const content = document.querySelector('.content');
-    //     let currentScrollBarPosition = 0;
-    
-    //     if (page.targetId === id) {
-    //         itemName = 'Inbox'
-    //     } else {
-    //         currentScrollBarPosition = content.scrollTop;
-    //     }
-            
-    //     createPages(itemName)
-        
-    //     content.scrollTo({ top: currentScrollBarPosition});
-    // }
-
+        ul = tasksList.firstElementChild
+        ul.scrollTo({ top: ul.scrollTop });
     }
     function updateProject(item, index) {
         return function (e) {
@@ -688,3 +675,6 @@ function createTodoList() {
 export {
     createTodoList,
 }
+
+
+// 完成 刪除 project 後連同 task 也刪除
