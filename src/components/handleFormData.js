@@ -1,12 +1,7 @@
-'use strict'    
-    
-function createEventMethods() {
+'use strict'
 
-    const HAX_LIST = ['#e97451', '#f4a461', '#e7c068', '#2b9890', '#a2cffe', '#000000']
+const handleFormDOM = (() => {
 
-    const getHaxList = () => {
-        return HAX_LIST
-    }
     const focusOnForm = function(e) {
         const target = e.relatedTarget;
         const firstField = this.querySelector('[tabIndex]')
@@ -40,42 +35,26 @@ function createEventMethods() {
 
         overlay.removeEventListener('pointerdown', isClosedByPointer)
     }
-    const validation = (formProps, form)  =>{
-    let isValid = true;
-
-    for (let field in formProps) {
-        const elem = form.elements[field]
-
-        if (elem.dataset.skipValid && elem.classList.contains('disableOutline')) {
-            continue
+    const limitLines = function (e) {
+        if (e.code === 'Backspace') return;
+        
+        if (!this.has(e.target.scrollHeight)) {
+            e.preventDefault();
         }
+    }
+    const limitCharacters = function(e) {
+        const valueLength = e.target.value.length
 
-        if (!elem.classList.contains('disableOutline')) {
-            isValid = false;
-            elem.focus();
+        if (valueLength > this) {
+            e.target.value = e.target.value.slice(0, this)
             return
         }
-
-        const value = formProps[field].trim();
-
-        if (value.length === 0) {
-            const elem = form.elements[field]
-        
-            isValid = false;
-            elem.focus();
-            elem.classList.remove('disableOutline')
-
-            elem.addEventListener('blur', disableOutLine)
-
-            return isValid
-        }
     }
-        return isValid
+    const autoResize = function() {
+        this.style.height = 0;
+        this.style.height = `${this.scrollHeight}px`;
     }
-    const disableOutLine = function() {
-        this.classList.add('disableOutline')
-        this.removeEventListener('blur', disableOutLine)
-    }
+
     function isClosedByPointer (e) {
         const cancelButton = e.target.closest('.cancel');
 
@@ -88,11 +67,12 @@ function createEventMethods() {
         focusOnForm,
         showForm,
         closeForm,
-        validation,
-        getHaxList,
+        limitLines,
+        limitCharacters,
+        autoResize,
     }
-}
+})()
 
 export {
-    createEventMethods,
+    handleFormDOM
 }

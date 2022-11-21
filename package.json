@@ -28,6 +28,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "color-name-list": "^9.21.0"
+    "color-name-list": "^9.21.0",
+    "date-fns": "^2.29.3"
   }
 }

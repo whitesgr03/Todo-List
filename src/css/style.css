@@ -189,6 +189,7 @@ nav .wrap {
 
 .titleBar .title {
     width: 150px;
+    flex: 1;
     white-space: nowrap;
     text-overflow: ellipsis;
 }

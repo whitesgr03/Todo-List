@@ -1,6 +1,8 @@
-export { createProjectMethods } from './handleProject';
+export { handleProject } from './handleProject';
 
-export { getLocalTasks } from './handleTask';
+export { handleTask } from './handleTask';
 
-export { createEventMethods } from './common'
+export { handleFormDOM } from './handleFormData'
+
+export { handleValidation } from './handleValidation'
 
