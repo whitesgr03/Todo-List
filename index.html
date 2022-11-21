@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+    <html lang="en"><head><script defer src="runtime.bundle.js"></script><script defer src="index.bundle.js"></script></head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ToDo List</title>
+    <body>
+        <div class="container">
+            <header>
+                <h1>ToDo List</h1>
+            </header>
+            <main>
+                <div class="overlay"></div>
+                <nav>
+                    <ul class="menu">
+                        <li class="item">
+                            <div class="wrap">
+                                <span class="icon box"></span>
+                                <span class="title">Inbox</span>
+                            </div>
+                            <span class="inbox taskCount"></span>
+                        </li>
+                        <li class="item">
+                            <div class="wrap">
+                                <span class="icon order"></span>
+                                <span class="title">Today</span>
+                            </div>
+                            <span class="today taskCount"></span>
+                        </li>
+                        <li class="item projects arrowRight">
+                            <div class="wrap">
+                                <span class="icon"></span>
+                                <span class="title">Projects</span>
+                            </div>
+                            <span class="addButton">+</span>
+                        </li>
+                        <li class="projectsList">
+                            <ul></ul>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="content">
+                    <div class="titleBar">
+                        <div class="wrap">
+                            <h2 class="title"></h2>
+                            <button type="button" class="addButton">+</button>
+                        </div>
+                        <div class="option">
+                            <button type="button" class="optionButton">◦◦◦</button>
+                            <ul class="optionList">
+                                <li>
+                                    <button class="setCompleteButton" type="button">Set task to completed</button>
+                                </li>
+                                <li>
+                                    <button class="showTaskButton" type="button">Show completed tasks</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ul class="tasksList">
+                        <div></div>
+                    </ul>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
