@@ -1,9 +1,9 @@
-'use strict'
+"use strict";
 
-import './css/style.css';
+import "./css/style.css";
 
-import { createTodoList } from './todoList'
+import { createTodoList } from "./todoList";
 
-const todoList = createTodoList();     // 建立 new todo
+const todoList = createTodoList(); // 建立 new todo
 
-todoList.init();                       // 開始建立變數以及監聽event
+todoList.init(); // 開始建立變數以及監聽event

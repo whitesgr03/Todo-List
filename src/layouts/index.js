@@ -1,3 +1,3 @@
-export { sidebar } from './sidebar';
+export { sidebar } from "./sidebar";
 
-export { main } from './main'
+export { main } from "./main";

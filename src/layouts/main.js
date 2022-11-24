@@ -1,33 +1,34 @@
-'use strict'
+"use strict";
 
 // From library
-import { format, isToday, isTomorrow } from 'date-fns';
+import { format, isToday, isTomorrow } from "date-fns";
 
 // 只做渲染列表和 compos method 並回傳給todoList
 
 const main = (() => {
-
     const createTasksList = (tasks) => {
+        const tasksList = document.querySelector(".tasksList");
 
-        const tasksList = document.querySelector('.tasksList');
+        tasksList.firstElementChild.remove();
 
-        tasksList.firstElementChild.remove()
+        const div = document.createElement("div");
 
-        const div = document.createElement('div');
-    
-        tasksList.append(div)
+        tasksList.append(div);
 
         if (tasks.length === 0) {
-            div.insertAdjacentHTML('beforeend', '<h3 class="noTask">There is no Task</h3>');
-            return
+            div.insertAdjacentHTML(
+                "beforeend",
+                '<h3 class="noTask">There is no Task</h3>'
+            );
+            return;
         }
-        
+
         for (let task of tasks) {
-            createTaskItem(task)
+            createTaskItem(task);
         }
-    }
+    };
     const createTaskItem = (task) => {
-        const date = formatDate(task.day, task.time)
+        const date = formatDate(task.day, task.time);
 
         const template = `
             <input class="complete" type="checkbox" style="--priority-color:${task.priority}">
@@ -53,22 +54,21 @@ const main = (() => {
             
         `;
 
-        const li = document.createElement('li');
+        const li = document.createElement("li");
 
-        li.className = 'item'
+        li.className = "item";
         li.innerHTML = template;
         li.dataset.id = task.id;
-        li.querySelector('.title').textContent = task.name;
-        li.querySelector('.description').textContent = task.descript;
+        li.querySelector(".title").textContent = task.name;
+        li.querySelector(".description").textContent = task.descript;
 
         if (task.completed) {
             li.querySelector('.complete[type="checkbox"]').checked = true;
         }
 
-
-        const div = document.querySelector('.tasksList div');
-        div.append(li)
-    }
+        const div = document.querySelector(".tasksList div");
+        div.append(li);
+    };
     const createTaskForm = (task) => {
         const template = `
             <h2>Add Task</h2>
@@ -141,94 +141,102 @@ const main = (() => {
                 </div>
         `;
 
-        const form = document.createElement('form');
-        form.classList.add('taskForm')
+        const form = document.createElement("form");
+        form.classList.add("taskForm");
         form.innerHTML = template;
 
         if (task) {
             form.elements.day.value = task.day;
             form.elements.time.value = task.time;
 
-            const priorityButton = form.querySelector('.priority')
+            const priorityButton = form.querySelector(".priority");
 
-            const allPriorityDropDownButtons =  Array.from(priorityButton.nextElementSibling.querySelectorAll('button'))
-            const priorityElem = allPriorityDropDownButtons.find(item => item.dataset.color === task.priority)
+            const allPriorityDropDownButtons = Array.from(
+                priorityButton.nextElementSibling.querySelectorAll("button")
+            );
+            const priorityElem = allPriorityDropDownButtons.find(
+                (item) => item.dataset.color === task.priority
+            );
 
-            const priorityElemClone = priorityElem.cloneNode(true)
-            priorityElemClone.classList.add(...priorityButton.classList)
+            const priorityElemClone = priorityElem.cloneNode(true);
+            priorityElemClone.classList.add(...priorityButton.classList);
 
-            priorityButton.replaceWith(priorityElemClone)
+            priorityButton.replaceWith(priorityElemClone);
 
             form.elements.taskName.value = task.name;
             form.elements.descript.value = task.descript;
-
         } else {
-            form.elements.day.value = format(new Date(), 'yyyy-MM-dd')
+            form.elements.day.value = format(new Date(), "yyyy-MM-dd");
         }
 
-        const overlay = document.querySelector('.overlay');
+        const overlay = document.querySelector(".overlay");
 
-        overlay.append(form)
+        overlay.append(form);
 
-        return form
-    }
+        return form;
+    };
     const createTaskProductNameDropdown = (projects, id) => {
-        const dropdownList = document.querySelector('.projectDropdown .dropdownList ul')
+        const dropdownList = document.querySelector(
+            ".projectDropdown .dropdownList ul"
+        );
 
-        if (projects.length === 0) return
+        if (projects.length === 0) return;
 
         for (let project of projects) {
-            const li = document.createElement('li');
+            const li = document.createElement("li");
             const button = `
                 <button type="button" class="wrap" tabIndex="-1" data-project-id="${project.id}">
                     <span class="icon" style="--project-color:${project.hexCode}"></span>
                     ${project.name}
                 </button>
             `;
-            
-            li.className = 'item'
+
+            li.className = "item";
             li.innerHTML = button;
 
             if (project.id === id) {
-                const projectNameButton = document.querySelector('.projectName')
+                const projectNameButton =
+                    document.querySelector(".projectName");
 
-                const div = document.createElement('div');
+                const div = document.createElement("div");
                 div.innerHTML = button;
-                
-                div.firstElementChild.classList.add(...projectNameButton.classList)
 
-                projectNameButton.replaceWith(div.firstElementChild)
+                div.firstElementChild.classList.add(
+                    ...projectNameButton.classList
+                );
+
+                projectNameButton.replaceWith(div.firstElementChild);
             }
-            
+
             dropdownList.append(li);
         }
-    }
+    };
 
-    function formatDate (day, time) {
+    function formatDate(day, time) {
         let tokens = null;
-        let timeTokens = ''
-        let date = new Date(day)
-        
+        let timeTokens = "";
+        let date = new Date(day);
+
         if (time) {
             date = new Date(`${day}T${time}`);
-            timeTokens = ' HH:mm'
+            timeTokens = " HH:mm";
         }
 
-        const distanceDays = date.getDate() - new Date().getDate()
+        const distanceDays = date.getDate() - new Date().getDate();
 
         if (isToday(date)) {
             tokens = "'Today'";
         } else if (isTomorrow(date)) {
             tokens = "'Tomorrow'";
         } else if (distanceDays >= 2 && distanceDays <= 7) {
-            tokens = 'EEEE';
+            tokens = "EEEE";
         } else {
-            tokens = 'd MMM';
+            tokens = "d MMM";
         }
 
-        tokens += timeTokens
+        tokens += timeTokens;
 
-        return format(date, tokens)
+        return format(date, tokens);
     }
 
     return {
@@ -236,10 +244,7 @@ const main = (() => {
         createTaskForm,
         createTaskItem,
         createTaskProductNameDropdown,
-        
-    }
+    };
 })();
 
-export {
-    main,
-}
+export { main };

@@ -1,7 +1,7 @@
 /* normalize */
-@import url('https://necolas.github.io/normalize.css/latest/normalize.css');
+@import url("https://necolas.github.io/normalize.css/latest/normalize.css");
 /* Noto Sans */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 
 :root {
     --main-color: rgb(255, 255, 255);
@@ -14,10 +14,14 @@
 
 * {
     box-sizing: border-box;
-    font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-ul, h2, h3{
+ul,
+h2,
+h3 {
     padding: 0;
     margin: 0;
 }
@@ -26,7 +30,8 @@ span {
     font-size: 1rem;
 }
 
-ul, li {
+ul,
+li {
     list-style: none;
 }
 
@@ -46,9 +51,9 @@ button {
 .container {
     display: grid;
     grid-template: auto 85vh / 1fr;
-    grid-template-areas: 
-    'header'
-    'main';
+    grid-template-areas:
+        "header"
+        "main";
     height: 100vh;
 }
 
@@ -59,7 +64,7 @@ header {
     display: flex;
     align-items: center;
     padding: 0px 30px;
-    background-color: var(--header-background-color)
+    background-color: var(--header-background-color);
 }
 
 /* main block */
@@ -68,7 +73,7 @@ main {
     grid-area: main;
     display: grid;
     grid-template: 1fr / 1fr 3fr;
-    grid-template-areas:'nav content';
+    grid-template-areas: "nav content";
 }
 
 /* nav block */
@@ -76,7 +81,7 @@ main {
 nav {
     grid-area: nav;
     padding: 10px 30px;
-    background-color: var(--nav-background-color)
+    background-color: var(--nav-background-color);
 }
 
 nav .wrap {
@@ -88,11 +93,9 @@ nav .wrap {
     column-gap: 20px;
 }
 
-
 /* menu block */
 
-
-.menu .item{
+.menu .item {
     padding-right: 10px;
     border-radius: 10px;
     display: flex;
@@ -112,8 +115,6 @@ nav .wrap {
     text-align: center;
 }
 
-
-
 /* icon block */
 
 .icon {
@@ -124,33 +125,36 @@ nav .wrap {
 }
 
 .icon.box {
-    background-image: url('../img/box.png');
+    background-image: url("../img/box.png");
 }
 
 .icon.order {
-    background-image: url('../img/order.png');
+    background-image: url("../img/order.png");
 }
 
 .icon.calendar {
-    background-image: url('../img/calendar.png');
+    background-image: url("../img/calendar.png");
 }
 
 .icon.flag {
-    background-image: url('../img/flag.png');
+    background-image: url("../img/flag.png");
 }
 .icon.flag.critical {
-    filter: invert(32%) sepia(68%) saturate(1344%) hue-rotate(333deg) brightness(94%) contrast(90%);
+    filter: invert(32%) sepia(68%) saturate(1344%) hue-rotate(333deg)
+        brightness(94%) contrast(90%);
 }
 .icon.flag.high {
-    filter: invert(48%) sepia(95%) saturate(1851%) hue-rotate(10deg) brightness(106%) contrast(94%);}
+    filter: invert(48%) sepia(95%) saturate(1851%) hue-rotate(10deg)
+        brightness(106%) contrast(94%);
+}
 .icon.flag.medium {
-    filter: invert(34%) sepia(93%) saturate(2503%) hue-rotate(205deg) brightness(92%) contrast(89%);
+    filter: invert(34%) sepia(93%) saturate(2503%) hue-rotate(205deg)
+        brightness(92%) contrast(89%);
 }
 .icon.flag.low {
-    filter: invert(65%) sepia(12%) saturate(2183%) hue-rotate(87deg) brightness(106%) contrast(82%);
+    filter: invert(65%) sepia(12%) saturate(2183%) hue-rotate(87deg)
+        brightness(106%) contrast(82%);
 }
-
-
 
 /* content block */
 
@@ -203,7 +207,7 @@ nav .wrap {
     margin-top: 10%;
     background-color: var(--main-color);
     border-radius: 10px;
-    box-shadow: 0px 3px 10px 10px rgba(0, 0, 0, .1);
+    box-shadow: 0px 3px 10px 10px rgba(0, 0, 0, 0.1);
 }
 
 .taskForm label {
@@ -227,7 +231,6 @@ nav .wrap {
     outline: 0;
 }
 
-
 /* taskFormButtons block */
 
 .taskFormButtons {
@@ -247,26 +250,24 @@ nav .wrap {
 }
 
 .taskFormButtons input:hover {
-    background-color: var(--nav-background-color)
+    background-color: var(--nav-background-color);
 }
 
 .taskFormButtons input[type="time"] {
     letter-spacing: 1px;
 }
 
-
 .taskFormButtons input[type="time"].disableOutline:focus,
-.taskFormButtons input[type="date"].disableOutline:focus{
+.taskFormButtons input[type="date"].disableOutline:focus {
     outline: none;
 }
-
 
 .taskFormButtons .dropdown {
     position: relative;
 }
 
 .taskFormButtons .dropdown button:hover {
-    background-color: var(--nav-background-color)
+    background-color: var(--nav-background-color);
 }
 
 .taskFormButtons .dropdown .dropDownButton {
@@ -275,12 +276,12 @@ nav .wrap {
     border-radius: 10px;
 }
 
-.taskFormButtons .dropdown:last-of-type .item:nth-child(n+2) .icon {
+.taskFormButtons .dropdown:last-of-type .item:nth-child(n + 2) .icon {
     width: 10px;
     height: 10px;
     margin: 0 7.5px;
     border-radius: 50%;
-    background-color: var(--project-color); 
+    background-color: var(--project-color);
     display: inline-block;
 }
 
@@ -302,7 +303,7 @@ nav .wrap {
 }
 
 .taskFormButtons .message::before {
-    content: '!';
+    content: "!";
     width: 20px;
     height: 20px;
     background-color: var(--main-dark-color);
@@ -325,9 +326,6 @@ nav .wrap {
     border: 1px solid var(--header-background-color);
 }
 
-
-
-
 /* dropdownList block */
 
 .taskFormButtons .dropdownList {
@@ -343,10 +341,10 @@ nav .wrap {
     overflow-y: auto;
 }
 
-.taskFormButtons .dropDownButton.showList+.dropdownList {
+.taskFormButtons .dropDownButton.showList + .dropdownList {
     max-height: 1000px;
     border: 0;
-    transition: max-height .1s ease-in;
+    transition: max-height 0.1s ease-in;
 }
 
 .taskFormButtons .dropdownList ul {
@@ -356,7 +354,7 @@ nav .wrap {
     box-shadow: 0px 0px 10px 10px rgb(0 0 0 / 10%);
     display: flex;
     flex-direction: column;
-    border: .5px solid var(--main-dark-color);
+    border: 0.5px solid var(--main-dark-color);
 }
 
 /* tasksList block */
@@ -397,7 +395,7 @@ nav .wrap {
 .tasksList .item:hover .optionButton {
     visibility: visible;
 }
-.tasksList .option.active .optionButton{
+.tasksList .option.active .optionButton {
     display: block;
     color: rgb(0, 0, 0);
 }
@@ -415,14 +413,13 @@ nav .wrap {
     align-items: center;
     column-gap: 5px;
     margin-bottom: 10px;
-    background-color: var(--nav-background-color)
+    background-color: var(--nav-background-color);
 }
 
 .tasksList .dueDate .icon {
-    width: .8rem;
-    height: .8rem;
+    width: 0.8rem;
+    height: 0.8rem;
 }
-
 
 /* task checkbox block */
 .tasksList .complete[type="checkbox"] {
@@ -441,20 +438,20 @@ nav .wrap {
     cursor: pointer;
 }
 
-
 .tasksList .complete[type="checkbox"]::before {
     content: "";
     width: 20px;
     height: 20px;
     transform: scale(0);
     transition: 120ms transform ease-in-out;
-    background-image: url('../img/check.png');
+    background-image: url("../img/check.png");
     background-size: cover;
 }
 
 .tasksList .complete[type="checkbox"]:checked::before {
-    transform: scale(.9);
-    filter: invert(21%) sepia(98%) saturate(4405%) hue-rotate(109deg) brightness(95%) contrast(102%);
+    transform: scale(0.9);
+    filter: invert(21%) sepia(98%) saturate(4405%) hue-rotate(109deg)
+        brightness(95%) contrast(102%);
 }
 
 .tasksList .complete[type="checkbox"]:checked {
@@ -466,9 +463,6 @@ nav .wrap {
     outline-offset: 2px;
 }
 
-
-
-
 /* projects block */
 
 .projects {
@@ -478,14 +472,14 @@ nav .wrap {
 .projects.arrowDown + .projectsList {
     max-height: 300px;
     height: 300px;
-    transition: max-height .2s ease-in;
+    transition: max-height 0.2s ease-in;
 }
 
 .projectsList.noProject {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: none;
 }
 
 .projects.arrowDown + .projectsList.noProject {
@@ -493,8 +487,8 @@ nav .wrap {
 }
 
 li.projects.arrowRight .icon {
-    background-image: url('../img/chevron-right.svg');
-    transition: transform .2s ease-in-out;
+    background-image: url("../img/chevron-right.svg");
+    transition: transform 0.2s ease-in-out;
 }
 
 li.projects.arrowRight.arrowDown .icon {
@@ -514,14 +508,13 @@ li.projects.arrowRight.arrowDown .icon {
     background-color: var(--nav-hover-color);
 }
 
-
 /* projectsList block */
 
 .projectsList {
     max-height: 0;
     height: 0;
     overflow: hidden;
-    transition: max-height .15s ease-out, height .15s ease-out;
+    transition: max-height 0.15s ease-out, height 0.15s ease-out;
 }
 
 .projectsList > ul {
@@ -529,12 +522,12 @@ li.projects.arrowRight.arrowDown .icon {
     overflow-y: scroll;
 }
 
-.projectsList .icon{
+.projectsList .icon {
     width: 10px;
     height: 10px;
     margin: 0 7.5px;
     border-radius: 50%;
-    background-color: var(--project-color)
+    background-color: var(--project-color);
 }
 
 .projectsList .title {
@@ -555,7 +548,6 @@ li.projects.arrowRight.arrowDown .icon {
     color: rgb(0, 0, 0);
 }
 
-
 /* optionList */
 
 .optionList {
@@ -572,18 +564,14 @@ li.projects.arrowRight.arrowDown .icon {
     overflow: hidden;
 }
 
-.option.active .optionList{
+.option.active .optionList {
     visibility: visible;
 }
-
 
 .optionList button {
     width: 100%;
     padding: 10px;
 }
-
-
-
 
 /* overlay block */
 
@@ -595,7 +583,7 @@ li.projects.arrowRight.arrowDown .icon {
     bottom: 0;
     right: 0;
     z-index: 1;
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0.2);
     justify-content: center;
     align-items: flex-start;
 }
@@ -622,7 +610,6 @@ li.projects.arrowRight.arrowDown .icon {
     align-items: center;
 }
 
-
 /* projectForm  block */
 
 .projectForm {
@@ -638,7 +625,7 @@ li.projects.arrowRight.arrowDown .icon {
     padding-bottom: 10px;
 }
 
-.projectForm label{
+.projectForm label {
     margin: 30px 0;
     display: flex;
     flex-direction: column;
@@ -656,7 +643,6 @@ li.projects.arrowRight.arrowDown .icon {
 .projectForm [name="name"].disableOutline {
     outline: 0;
 }
-
 
 .projectForm {
     display: flex;
@@ -676,24 +662,23 @@ li.projects.arrowRight.arrowDown .icon {
     border-radius: 5px;
     border: 1px solid var(--main-dark-color);
     width: 100%;
-    transition: border-radius .2s ease-in;
+    transition: border-radius 0.2s ease-in;
 }
 
 .projectForm .colorButton.showList {
     border-radius: 5px 5px 0 0;
-    transition: border-radius .05s ease-in;
+    transition: border-radius 0.05s ease-in;
 }
 
-.projectForm .colorButton.showList+.dropdownList {
+.projectForm .colorButton.showList + .dropdownList {
     max-height: 100px;
-    transition: max-height .1s ease-in;
+    transition: max-height 0.1s ease-in;
 }
 
-.projectForm .colorButton + .dropdownList>ul {
+.projectForm .colorButton + .dropdownList > ul {
     border-radius: 0 0 5px 5px;
     border-top: 0;
 }
-
 
 /* dropdown block */
 
@@ -711,7 +696,7 @@ li.projects.arrowRight.arrowDown .icon {
     height: 100px;
     width: 100%;
     overflow: hidden;
-    transition: max-height .15s ease-out;
+    transition: max-height 0.15s ease-out;
 }
 .projectForm .dropdownList > ul {
     background-color: var(--main-color);
@@ -740,7 +725,7 @@ li.projects.arrowRight.arrowDown .icon {
 }
 
 .submitButton .cancel {
-    background-color: var(--nav-background-color)
+    background-color: var(--nav-background-color);
 }
 
 .submitButton .cancel:hover {
@@ -750,7 +735,7 @@ li.projects.arrowRight.arrowDown .icon {
 
 .submitButton .submit {
     color: var(--main-color);
-    background-color: var(--header-background-color)
+    background-color: var(--header-background-color);
 }
 
 .submitButton .submit:hover {
